@@ -1,0 +1,6 @@
+{
+  "short_name": "crypto.gg",
+  "name": "Crypto investing game",
+  "start_url": ".",
+  "display": "standalone"
+}
