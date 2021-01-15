@@ -10,17 +10,20 @@ const menuItems = [
   {
     name: 'OVERVIEW',
     path: '/overview',
-    active: true
+    active: false,
+    width: '180px'
   },
   {
     name: 'TRADE',
     path: '/trade',
-    active: false
+    active: true,
+    width: '180px'
   },
   {
     name: 'LEADERBOARD',
     path: '/leaderboard',
-    active: false
+    active: false,
+    width: '220px'
   }
 ]
 
@@ -35,7 +38,7 @@ function Header() {
             <LocalBarIcon className={classes.content} />
           </Box>
           {menuItems.map(item => {
-            return <Link to={item.path} key={item.name} className={classes.item}>
+            return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
               <Box className={classes.content}>{item.name}</Box>
               {item.active && <Box className={classes.activeContent} />}
             </Link>
