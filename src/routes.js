@@ -1,13 +1,18 @@
 import Overview from "./containers/overview";
+import Leaderboard from "./containers/leaderboard";
 import Trade from "./containers/trade";
 
 export const routes = [
   {
-    path: '/',
+    path: '/overview',
     content: Overview
   },
   {
     path: '/trade',
     content: Trade
+  },
+  {
+    path: '/leaderboard',
+    content: Leaderboard
   }
 ]

@@ -9,6 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
 import Header from './components/header'
+import { mainTheme } from './themes'
 import { routes } from './routes'
 
 function App() {
@@ -18,14 +19,16 @@ function App() {
         <CssBaseline />
         <Box className='background'>
           {backgroundEffect()}
-          <Box className='main'>
-            <Header />
-            <Switch>
-              {routes.map((route, index) => {
-                return <Route key={index} path={route.path} component={route.content} />
-              })}
-            </Switch>
-          </Box>
+          <ThemeProvider theme={mainTheme}>
+            <Box className='main'>
+              <Header />
+              <Switch>
+                {routes.map((route, index) => {
+                  return <Route key={index} path={route.path} component={route.content} />
+                })}
+              </Switch>
+            </Box>
+          </ThemeProvider>
         </Box>
       </ThemeProvider>
     </Router>

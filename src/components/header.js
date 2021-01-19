@@ -54,7 +54,7 @@ export default Header
 const useStyles = makeStyles({
   header: {
     width: '100%',
-    height: '60px',
+    height: '55px',
     backgroundColor: '#1E2530',
     paddingRight: '10px',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.1)',
@@ -65,12 +65,12 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '60px',
+    height: '55px',
     width: '180px',
     borderRight: '2px solid black',
     transform: 'skew(-35deg)',
     letterSpacing: '3px',
-    fontSize: '15px'
+    fontSize: '14px'
   },
   logo: {
     width: '100px',
