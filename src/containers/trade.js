@@ -17,9 +17,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Scrollbars } from 'react-custom-scrollbars'
 
 import clsx from 'clsx'
+import { MarketTable } from '../components/table'
 import DataTable from '../components/table'
 import SimpleTable from '../components/simpleTable'
 import { SearchBar } from '../components/searchBar'
+
+import { motion } from 'framer-motion'
 
 const tradeCells = [
   { id: 'rank', align: 'left', label: '#' },
@@ -62,39 +65,45 @@ function Trade() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
       <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
-        <Box mb={1} width='1050px' display='flex'>
-          <Typography color='textPrimary' variant='h4'>Portfolio</Typography>
-        </Box>
-        <Box display='flex' direction='row' justifyContent='space-between' className={classes.portfolioContainer}>
-          <Box display='flex' flexDirection='column' justifyContent='space-between'>
-            <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='body2' color='textSecondary'>Total Assets</Typography>
-              <Typography color='textPrimary' variant='h4'>$999.000</Typography>
+        <motion.div
+          initial={{opacity: 0.5}}
+          animate={{opacity: 1}}
+          transition={{ ease: "linear", duration: 0.5 }}
+        >
+          <Box mb={1} width='1050px' display='flex'>
+            <Typography color='textPrimary' variant='h4'>Portfolio</Typography>
+          </Box>
+          <Box display='flex' direction='row' justifyContent='space-between' className={classes.portfolioContainer}>
+            <Box display='flex' flexDirection='column' justifyContent='space-between'>
+              <Box className={clsx(classes.infoBox, classes.customBox)}>
+                <Typography variant='body2' color='textSecondary'>Total Assets</Typography>
+                <Typography color='textPrimary' variant='h4'>$999.000</Typography>
+              </Box>
+              <Box className={clsx(classes.infoBox, classes.customBox)}>
+                <Typography variant='body2' color='textSecondary'>Available Cash</Typography>
+                <Typography color='textPrimary' variant='h4'>$999.000</Typography>
+              </Box>
             </Box>
-            <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='body2' color='textSecondary'>Available Cash</Typography>
-              <Typography color='textPrimary' variant='h4'>$999.000</Typography>
+            <Box className={clsx(classes.assetsContainer, classes.customBox)}>
+              <Scrollbars>
+                <SimpleTable
+                  cells={assetCells}
+                  data={assetTestData}
+                />
+              </Scrollbars>
             </Box>
           </Box>
-          <Box className={clsx(classes.assetsContainer, classes.customBox)}>
-            <Scrollbars>
-              <SimpleTable
-                cells={assetCells}
-                data={assetTestData}
-              />
-            </Scrollbars>
+          <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
+            <Typography color='textPrimary' variant='h4'>Market</Typography>
+            <SearchBar />
           </Box>
-        </Box>
-        <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
-          <Typography color='textPrimary' variant='h4'>Market</Typography>
-          <SearchBar />
-        </Box>
-        <Box className={clsx(classes.tableContainer, classes.customBox)}>
-          <DataTable
-            cells={tradeCells}
-            data={testData}
-          />
-        </Box>
+          <Box className={clsx(classes.tableContainer, classes.customBox)}>
+            <MarketTable
+              cells={tradeCells}
+              data={testData}
+            />
+          </Box>
+        </motion.div>
       </Grid >
     </Scrollbars >
   )

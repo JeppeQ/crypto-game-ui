@@ -28,7 +28,7 @@ const buyButton = withStyles(() => ({
 
 }))
 
-function DataTable(props) {
+export function MarketTable(props) {
   const classes = useStyles()
 
   return (
@@ -67,7 +67,34 @@ function DataTable(props) {
   )
 }
 
-export default DataTable
+export function LeaderboardTable(props) {
+  const classes = useStyles()
+
+  return (
+    <Table component={Paper} className={classes.table}>
+      <TableHead>
+        <TableRow>
+          {props.cells.map(cell => (
+            <CustomTableCell key={cell.id} align={cell.align}>
+              <Typography variant='body' color='textSecondary'>{cell.label}</Typography>
+            </CustomTableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {props.data.map(row => (
+          <TableRow key={row._id}>
+            <TableCell>{row.rank}</TableCell>
+            <TableCell>{row.player}</TableCell>
+            <TableCell>{row.mainAsset}</TableCell>
+            <TableCell align='right'>{row.positionChangeDay}</TableCell>
+            <TableCell align='right'>{row.netWorth}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+}
 
 const useStyles = makeStyles({
   table: {

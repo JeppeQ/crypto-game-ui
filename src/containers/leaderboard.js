@@ -17,25 +17,25 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Scrollbars } from 'react-custom-scrollbars'
 
 import clsx from 'clsx'
-import DataTable from '../components/table'
-import SimpleTable from '../components/simpleTable'
+import { LeaderboardTable } from '../components/table'
 import { SearchBar } from '../components/searchBar'
+
+import { motion } from 'framer-motion'
 
 const tradeCells = [
   { id: 'rank', tooltip: false, disablePadding: true, label: '#' },
-  { id: 'coin', label: 'Coin' },
-  { id: 'price', label: 'Price' },
-  { id: 'priceChangeDay', label: '24h' },
-  { id: 'marketCap', label: 'Market Cap' },
-  { id: 'buy', label: 'Buy' }
+  { id: 'player', label: 'Player' },
+  { id: 'mainAsset', label: 'Main Asset' },
+  { id: 'positionChangeDay', label: '24h', align: 'right' },
+  { id: 'price', label: 'Networth', align: 'right' },
 ]
 
 const testData = [
-  { rank: '1', coin: 'Bitcoin', symbol: 'BTC', price: '$34300', priceChangeDay: '12%', marketCap: '36B' },
-  { rank: '2', coin: 'Ethereum', symbol: 'ETH', price: '$1200', priceChangeDay: '12%', marketCap: '16B' },
-  { rank: '3', coin: 'Yearn Finance', symbol: 'YFI', price: '$32300', priceChangeDay: '5%', marketCap: '1B' },
-  { rank: '4', coin: 'Alpha Finance', symbol: 'ALPHA', price: '$0.45', priceChangeDay: '22%', marketCap: '754M' },
-  { rank: '5', coin: 'Nebulas', symbol: 'NAS', price: '$0.31', priceChangeDay: '1%', marketCap: '24M' },
+  { rank: '1', player: '0x0E43Axdm4ee', netWorth: '$34300', positionChangeDay: '+2', mainAsset: 'BTC' },
+  { rank: '2', player: '0x0E43Axdm4ee', netWorth: '$1200', positionChangeDay: '+5', mainAsset: 'ETH' },
+  { rank: '3', player: '0x0E43Axdm4ee', netWorth: '$32300', positionChangeDay: '-1', mainAsset: 'LTC' },
+  { rank: '4', player: '0x0E43Axdm4ee', netWorth: '$0.45', positionChangeDay: '+5', mainAsset: 'NAS' },
+  { rank: '5', player: '0x0E43Axdm4ee', netWorth: '$0.31', positionChangeDay: '-10', mainAsset: 'YFI' },
 ]
 
 function Leaderboard() {
@@ -46,32 +46,38 @@ function Leaderboard() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
       <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
-        <Box mb={'45px'} width='1050px' display='flex' justifyContent='space-between'>
-          <Box className={clsx(classes.infoBox, classes.customBox)}>
-            <Typography variant='body2' color='textSecondary'>Net worth</Typography>
-            <Typography color='textPrimary' variant='h4'>$54.231</Typography>
+        <motion.div
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          transition={{ ease: "linear", duration: 0.5 }}
+        >
+          <Box mb={'45px'} width='1050px' display='flex' justifyContent='space-between'>
+            <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography variant='body2' color='textSecondary'>Net worth</Typography>
+              <Typography color='textPrimary' variant='h4'>$54.231</Typography>
+            </Box>
+            <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography variant='body2' color='textSecondary'>Position</Typography>
+              <Typography color='textPrimary' variant='h4'>532</Typography>
+            </Box>
+            <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography variant='body2' color='textSecondary'>Players</Typography>
+              <Typography color='textPrimary' variant='h4'>13.312</Typography>
+            </Box>
           </Box>
-          <Box className={clsx(classes.infoBox, classes.customBox)}>
-            <Typography variant='body2' color='textSecondary'>Position</Typography>
-            <Typography color='textPrimary' variant='h4'>532</Typography>
+          <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
+            <Typography color='textPrimary' variant='h4'>Leaderboard</Typography>
+            <SearchBar />
           </Box>
-          <Box className={clsx(classes.infoBox, classes.customBox)}>
-            <Typography variant='body2' color='textSecondary'>Players</Typography>
-            <Typography color='textPrimary' variant='h4'>13.312</Typography>
+          <Box className={clsx(classes.tableContainer, classes.customBox)}>
+            <LeaderboardTable
+              cells={tradeCells}
+              data={testData}
+            />
           </Box>
-        </Box>
-        <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
-          <Typography color='textPrimary' variant='h4'>Leaderboard</Typography>
-          <SearchBar />
-        </Box>
-        <Box className={clsx(classes.tableContainer, classes.customBox)}>
-          <DataTable
-            cells={tradeCells}
-            data={testData}
-          />
-        </Box>
+        </motion.div>
       </Grid >
-    </Scrollbars >
+    </Scrollbars>
   )
 }
 
