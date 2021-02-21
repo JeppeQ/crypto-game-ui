@@ -1,5 +1,16 @@
+@font-face {
+  font-family: "astrospace";
+  src: local("AstroSpace"),
+    url("./fonts/AstroSpace.ttf") format("truetype");
+  font-weight: normal;
+}
+
 a {
   text-decoration: none;
+}
+
+.spaceFont {
+  font-family: 'astrospace' !important;
 }
 
 .background {

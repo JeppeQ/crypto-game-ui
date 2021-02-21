@@ -17,26 +17,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Scrollbars } from 'react-custom-scrollbars'
 
 import clsx from 'clsx'
-import { LeaderboardTable } from '../components/table'
-import { SearchBar } from '../components/searchBar'
+import { LeaderboardTable } from '../components/tables/leaderboardTable'
 
 import { motion } from 'framer-motion'
 
-const tradeCells = [
-  { id: 'rank', tooltip: false, disablePadding: true, label: '#' },
-  { id: 'player', label: 'Player' },
-  { id: 'mainAsset', label: 'Main Asset' },
-  { id: 'positionChangeDay', label: '24h', align: 'right' },
-  { id: 'price', label: 'Networth', align: 'right' },
-]
-
-const testData = [
-  { rank: '1', player: '0x0E43Axdm4ee', netWorth: '$34300', positionChangeDay: '+2', mainAsset: 'BTC' },
-  { rank: '2', player: '0x0E43Axdm4ee', netWorth: '$1200', positionChangeDay: '+5', mainAsset: 'ETH' },
-  { rank: '3', player: '0x0E43Axdm4ee', netWorth: '$32300', positionChangeDay: '-1', mainAsset: 'LTC' },
-  { rank: '4', player: '0x0E43Axdm4ee', netWorth: '$0.45', positionChangeDay: '+5', mainAsset: 'NAS' },
-  { rank: '5', player: '0x0E43Axdm4ee', netWorth: '$0.31', positionChangeDay: '-10', mainAsset: 'YFI' },
-]
 
 function Leaderboard() {
   const classes = useStyles()
@@ -53,28 +37,19 @@ function Leaderboard() {
         >
           <Box mb={'45px'} width='1050px' display='flex' justifyContent='space-between'>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='body2' color='textSecondary'>Net worth</Typography>
+              <Typography variant='h6'>Net worth</Typography>
               <Typography color='textPrimary' variant='h4'>$54.231</Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='body2' color='textSecondary'>Position</Typography>
+              <Typography variant='h6'>Position</Typography>
               <Typography color='textPrimary' variant='h4'>532</Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='body2' color='textSecondary'>Players</Typography>
+              <Typography variant='h6'>Players</Typography>
               <Typography color='textPrimary' variant='h4'>13.312</Typography>
             </Box>
           </Box>
-          <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
-            <Typography color='textPrimary' variant='h4'>Leaderboard</Typography>
-            <SearchBar />
-          </Box>
-          <Box className={clsx(classes.tableContainer, classes.customBox)}>
-            <LeaderboardTable
-              cells={tradeCells}
-              data={testData}
-            />
-          </Box>
+          <LeaderboardTable />
         </motion.div>
       </Grid >
     </Scrollbars>

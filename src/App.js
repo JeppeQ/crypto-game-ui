@@ -15,22 +15,20 @@ import { routes } from './routes'
 function App() {
   return (
     <Router>
-      <ThemeProvider>
-        <CssBaseline />
-        <Box className='background'>
-          {backgroundEffect()}
-          <ThemeProvider theme={mainTheme}>
-            <Box className='main'>
-              <Header />
-              <Switch>
-                {routes.map((route, index) => {
-                  return <Route key={index} path={route.path} component={route.content} />
-                })}
-              </Switch>
-            </Box>
-          </ThemeProvider>
-        </Box>
-      </ThemeProvider>
+      <Box className='background'>
+        {backgroundEffect()}
+        <ThemeProvider theme={mainTheme}>
+          <CssBaseline />
+          <Box className='main'>
+            <Header />
+            <Switch>
+              {routes.map((route, index) => {
+                return <Route key={index} path={route.path} component={route.content} />
+              })}
+            </Switch>
+          </Box>
+        </ThemeProvider>
+      </Box>
     </Router>
   )
 }

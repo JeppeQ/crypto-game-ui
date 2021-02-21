@@ -124,6 +124,7 @@ const useStyles = makeStyles({
     padding: '0 20px',
     borderRadius: '20px',
     border: '1px solid white',
-    color: 'white'
+    color: 'white',
+    width: '25px'
   }
 });
