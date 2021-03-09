@@ -9,11 +9,8 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 
-import { overviewReducer, initialOverviewState } from '../reducers/overviewReducer'
-
 function Overview() {
   const classes = useStyles()
-  const [overviewState, dispatchOverview] = useReducer(overviewReducer, initialOverviewState);
 
   return (
     <Scrollbars
