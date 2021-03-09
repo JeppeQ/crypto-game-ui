@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import NumberFormat from 'react-number-format'
+
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
@@ -7,9 +9,11 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles, makeStyles } from '@material-ui/core/styles'
+
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
+import { HistoryDialog } from '../dialogs/historyDialog'
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -35,7 +39,9 @@ const testData = [
 ]
 
 export function LeaderboardTable(props) {
-  const classes = styles()
+  const _classes = styles()
+  const classes = useStyles()
+  const [viewHistory, setViewHistory] = useState(null)
 
   return (
     <React.Fragment>
@@ -43,7 +49,7 @@ export function LeaderboardTable(props) {
         <Typography variant='h3'>Leaderboard</Typography>
         <SearchBar />
       </Box>
-      <Table component={Paper} className={classes.table}>
+      <Table component={Paper} className={_classes.table}>
         <TableHead>
           <TableRow>
             {cells.map(cell => (
@@ -59,13 +65,36 @@ export function LeaderboardTable(props) {
               <TableCell>{row.rank}</TableCell>
               <TableCell>{row.player}</TableCell>
               <TableCell>{row.mainAsset}</TableCell>
-              <TableCell align='right'>{row.positionChangeDay}</TableCell>
-              <TableCell align='right'>{row.netWorth}</TableCell>
-              <TableCell align='center'><Box className={classes.viewLink}>VIEW</Box></TableCell>
+              <TableCell align='right'>
+                {row.positionChangeDay}
+              </TableCell>
+              <TableCell align='right'>
+                <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
+              </TableCell>
+              <TableCell align='center'>
+                <Box className={classes.viewLink} onClick={() => setViewHistory(row.player)}>VIEW</Box>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {viewHistory && <HistoryDialog
+        open={viewHistory !== null}
+        close={() => setViewHistory(null)}
+        wallet={viewHistory}
+      />}
     </React.Fragment>
   )
 }
+
+const useStyles = makeStyles({
+  viewLink: {
+    cursor: 'pointer',
+    fontSize: '12px',
+    fontFamily: 'astrospace',
+    color: 'rgba(255, 255, 255)',
+    "&:hover": {
+      color: 'rgba(29, 255, 243, 0.4)'
+    }
+  },
+})

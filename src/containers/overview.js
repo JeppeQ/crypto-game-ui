@@ -1,12 +1,15 @@
 import React, { useReducer } from 'react'
+import { motion } from 'framer-motion'
+import { Scrollbars } from 'react-custom-scrollbars'
+import clsx from 'clsx'
+
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import clsx from 'clsx'
+import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { Typography } from '@material-ui/core'
+
 import { overviewReducer, initialOverviewState } from '../reducers/overviewReducer'
-import { motion } from 'framer-motion'
 
 function Overview() {
   const classes = useStyles()
@@ -29,15 +32,15 @@ function Overview() {
           <Box mb={'45px'} width='1050px' display='flex'>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>prize pool</Typography>
-              <Typography color='textPrimary' variant='h4'>$12.300</Typography>
+              <Typography color='textPrimary' variant='h4'>$2000</Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>game begins in</Typography>
               <Typography color='textPrimary' variant='h4'>23D 14H</Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='h6'>sign up</Typography>
-              <Typography color='textPrimary' variant='h4'>Entry fee: 50dai</Typography>
+              <Typography variant='h6'>free entry</Typography>
+              <Button variant='contained' color='primary'>sign up now</Button>
             </Box>
           </Box>
           <Box mt={10}>

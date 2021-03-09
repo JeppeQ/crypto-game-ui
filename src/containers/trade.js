@@ -4,11 +4,11 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
 
 import clsx from 'clsx'
 import { MarketTable } from '../components/tables/marketTable'
 import { PortfolioTable } from '../components/tables/portfolioTable'
-import { MarketGrid } from '../components/tables/marketGrid'
 import { motion } from 'framer-motion'
 
 function Trade() {
@@ -31,11 +31,15 @@ function Trade() {
             <Box display='flex' flexDirection='column' justifyContent='space-between'>
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Total Assets</Typography>
-                <Typography color='textPrimary' variant='h4'>$50,000</Typography>
+                <Typography color='textPrimary' variant='h4'>
+                  {<NumberFormat value={50000} thousandSeparator displayType={'text'} prefix={'$'} />}
+                </Typography>
               </Box>
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Available Cash</Typography>
-                <Typography color='textPrimary' variant='h4'>$50,000</Typography>
+                <Typography color='textPrimary' variant='h4'>
+                  {<NumberFormat value={50000} thousandSeparator displayType={'text'} prefix={'$'} />}
+                </Typography>
               </Box>
             </Box>
             <Box className={clsx(classes.assetsContainer, classes.customBox)}>

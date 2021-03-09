@@ -8,9 +8,11 @@ import {
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Box from '@material-ui/core/Box'
+
 import Header from './components/header'
 import { mainTheme } from './themes'
 import { routes } from './routes'
+import { Web3Provider } from './contexts/web3';
 
 function App() {
   return (
@@ -19,14 +21,16 @@ function App() {
         {backgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <Box className='main'>
-            <Header />
-            <Switch>
-              {routes.map((route, index) => {
-                return <Route key={index} path={route.path} component={route.content} />
-              })}
-            </Switch>
-          </Box>
+          <Web3Provider>
+            <Box className='main'>
+              <Header />
+              <Switch>
+                {routes.map((route, index) => {
+                  return <Route key={index} path={route.path} component={route.content} />
+                })}
+              </Switch>
+            </Box>
+          </Web3Provider>
         </ThemeProvider>
       </Box>
     </Router>

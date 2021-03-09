@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from "react-router-dom"
+import { motion } from 'framer-motion'
+import clsx from 'clsx'
+
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import LocalBarIcon from '@material-ui/icons/LocalBar'
-import { motion, useAnimation } from 'framer-motion'
+
+import { Web3Context } from '../contexts/web3'
 
 const menuItems = [
   {
@@ -36,6 +39,7 @@ function Header() {
   const classes = useStyles()
   const location = useLocation()
   const [active, setActive] = useState({})
+  const web3 = useContext(Web3Context)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path))
@@ -45,7 +49,7 @@ function Header() {
     <Grid container className={classes.header} justify='space-between' alignItems='center'>
       <Grid item>
         <Grid container>
-          <motion.div 
+          <motion.div
             className={classes.activeContent}
             animate={{ left: active.left, width: active.activeWidth }}
             transition={{ duration: 0.2 }}
@@ -64,6 +68,11 @@ function Header() {
           })}
         </Grid>
       </Grid>
+      <Grid item>
+        <Button onClick={web3.connect}>
+          connect wallet
+        </Button>
+      </Grid>
     </Grid>
   )
 }
@@ -75,7 +84,7 @@ const useStyles = makeStyles({
     width: '100%',
     height: '55px',
     background: 'linear-gradient(to left, rgba(30,37,48,0.2), rgba(30,37,48,1) 70%)',
-    paddingRight: '10px',
+    paddingRight: '15px',
     position: 'absolute',
     zIndex: '2'
   },

@@ -4,7 +4,10 @@ export const mainTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#049c93'
+      main: '#058665',
+    },
+    secondary: {
+      main: '#c50606',
     }
   },
   typography: {

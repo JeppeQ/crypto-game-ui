@@ -15,6 +15,7 @@ import List from '@material-ui/core/List'
 import Tooltip from '@material-ui/core/Tooltip'
 import { makeStyles } from '@material-ui/core/styles'
 import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
 
 import clsx from 'clsx'
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
@@ -38,15 +39,19 @@ function Leaderboard() {
           <Box mb={'45px'} width='1050px' display='flex' justifyContent='space-between'>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
-              <Typography color='textPrimary' variant='h4'>$54.231</Typography>
+              <Typography color='textPrimary' variant='h4'>
+                <NumberFormat value={54231} displayType={'text'} thousandSeparator prefix={'$'} />
+              </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Position</Typography>
-              <Typography color='textPrimary' variant='h4'>532</Typography>
+              <Typography color='textPrimary' variant='h4'>#532</Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
-              <Typography color='textPrimary' variant='h4'>13.312</Typography>
+              <Typography color='textPrimary' variant='h4'>
+                <NumberFormat value={13213} displayType={'text'} thousandSeparator />
+              </Typography>
             </Box>
           </Box>
           <LeaderboardTable />

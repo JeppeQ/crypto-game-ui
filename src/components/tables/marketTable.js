@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import NumberFormat from 'react-number-format'
-import { API_ENDPOINT } from '../../config'
-import { withStyles } from '@material-ui/core/styles'
+
+import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
@@ -13,13 +12,14 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/lab/Skeleton'
-
-import { BuyDialog } from '../dialog'
-import { styles } from './styles'
-import { SearchBar } from '../searchBar'
-
 import ArrowBack from '@material-ui/icons/ArrowBackIos'
 import ArrowForward from '@material-ui/icons/ArrowForwardIos'
+
+import { styles } from './styles'
+import { SearchBar } from '../searchBar'
+import { BuyDialog } from '../dialogs/buyDialog'
+import * as tokenApi from '../../api/token'
+
 
 const PAGE_SIZE = 50
 
@@ -38,22 +38,10 @@ const cells = [
   { id: 'buy', label: 'Buy', align: 'center' }
 ]
 
-async function fetchData(orderBy, direction, page, search) {
-  const url = `${API_ENDPOINT}/token/list`
-  const response = await axios.get(url, {
-    params: {
-      orderBy,
-      direction,
-      page,
-      search
-    }
-  }).catch(err => console.log(err))
-
-  return response.data
-}
-
 export function MarketTable(props) {
-  const classes = styles()
+  const _classes = styles()
+  const classes = useStyles()
+
   const [buy, setBuy] = useState()
   const [market, setMarket] = useState([])
   const [total, setTotal] = useState(0)
@@ -68,7 +56,7 @@ export function MarketTable(props) {
     setLoading(true)
     const time = +new Date()
 
-    const data = await fetchData(orderBy, direction, page, search)
+    const data = await tokenApi.getMarket(orderBy, direction, page, search)
     setMarket(data.rows)
     setTotal(data.count)
 
@@ -146,14 +134,14 @@ export function MarketTable(props) {
         <Typography variant='h3'>Market</Typography>
         <SearchBar search={value => searchCoin(value)} value={search} />
       </Box>
-      <Table component={Paper} className={classes.table}>
+      <Table component={Paper} className={_classes.table}>
         <TableHead>
           <TableRow>
             {cells.map(cell => (
               <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
                 <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
                   {orderBy === cell.id
-                    ? <Typography variant='body' color='textSecondary' className={classes.activeColumn}>{cell.label}</Typography>
+                    ? <Typography variant='body' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
                     : <Typography variant='body' color='textSecondary'>{cell.label}</Typography>
                   }
                 </Box>
@@ -199,8 +187,8 @@ export function MarketTable(props) {
             </TableCell>
             <TableCell align='center'>
               <Box display='flex' justifyContent='space-evenly'>
-                <ArrowBack className={classes.pageArrow} onClick={() => previousPage()} />
-                <ArrowForward className={classes.pageArrow} onClick={() => nextPage()} />
+                <ArrowBack className={_classes.pageArrow} onClick={() => previousPage()} />
+                <ArrowForward className={_classes.pageArrow} onClick={() => nextPage()} />
               </Box>
             </TableCell>
           </TableRow>
@@ -217,3 +205,15 @@ export function MarketTable(props) {
     </React.Fragment >
   )
 }
+
+const useStyles = makeStyles({
+  buyButton: {
+    padding: '1px 0',
+    fontSize: '13px',
+    fontWeight: 'bold',
+    backgroundColor: 'green',
+    "&:hover": {
+      backgroundColor: '#00af00'
+    }
+  },
+})
