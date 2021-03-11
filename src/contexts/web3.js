@@ -83,12 +83,28 @@ export const Web3Provider = ({ children }) => {
     setProvider(provider)
   }
 
+  const signup = async () => {
+    if (!web3) {
+      await connect()
+    }
+
+    const message = "Hi, join the contest and compete for a prize!"
+    const hexMsg = convertUtf8ToHex(message);
+
+    const result = await web3.eth.personal.sign(hexMsg, address);
+    // // verify signature
+    // const signer = recoverPersonalSignature(result, message);
+    // const verified = signer.toLowerCase() === address.toLowerCase();
+
+  }
+
   return (
     <Web3Context.Provider
       value={{
         web3,
+        address,
         connect,
-        address
+        signup
       }}
     >
       {children}
