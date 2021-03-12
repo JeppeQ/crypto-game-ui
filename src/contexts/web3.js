@@ -4,7 +4,7 @@ import Web3Modal from 'web3modal'
 
 function initWeb3(provider) {
   const web3 = new Web3(provider);
-  
+
   web3.eth.extend({
     methods: [
       {
@@ -14,7 +14,7 @@ function initWeb3(provider) {
       }
     ]
   });
-  
+
   return web3
 }
 
@@ -51,7 +51,7 @@ export const Web3Provider = ({ children }) => {
     provider.on("accountsChanged", async (accounts) => {
       await setAddress(accounts[0])
     })
-  
+
     provider.on("chainChanged", async (chainId) => {
       const networkId = await web3.eth.net.getId()
       await setChainId(chainId)
@@ -88,14 +88,26 @@ export const Web3Provider = ({ children }) => {
       await connect()
     }
 
-    const message = "Hi, join the contest and compete for a prize!"
-    const hexMsg = convertUtf8ToHex(message);
+    const msgParams = [
+      {
+        type: 'string',      // Any valid solidity type
+        name: 'Message',     // Any string label you want
+        value: 'Hi, Alice!'  // The value to sign
+     },
+     {   
+       type: 'uint32',
+          name: 'A number',
+          value: '1337'
+      }
+    ]
 
-    const result = await web3.eth.personal.sign(hexMsg, address);
-    // // verify signature
-    // const signer = recoverPersonalSignature(result, message);
-    // const verified = signer.toLowerCase() === address.toLowerCase();
-
+    web3.currentProvider.send({
+      method: 'eth_signTypedData',
+      params: [msgParams, address],
+      from: address,
+    }, (err, result) => {
+      console.log(result)
+    })
   }
 
   return (
