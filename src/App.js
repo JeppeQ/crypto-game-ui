@@ -12,7 +12,8 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './themes'
 import { routes } from './routes'
-import { Web3Provider } from './contexts/web3';
+import { Web3Provider } from './contexts/web3'
+import { PlayerProvider } from './contexts/player'
 
 function App() {
   return (
@@ -21,16 +22,18 @@ function App() {
         {backgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <Web3Provider>
-            <Box className='main'>
-              <Header />
-              <Switch>
-                {routes.map((route, index) => {
-                  return <Route key={index} path={route.path} component={route.content} />
-                })}
-              </Switch>
-            </Box>
-          </Web3Provider>
+          <PlayerProvider>
+            <Web3Provider>
+              <Box className='main'>
+                <Header />
+                <Switch>
+                  {routes.map((route, index) => {
+                    return <Route key={index} path={route.path} component={route.content} />
+                  })}
+                </Switch>
+              </Box>
+            </Web3Provider>
+          </PlayerProvider>
         </ThemeProvider>
       </Box>
     </Router>

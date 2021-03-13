@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useContext } from 'react'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 import clsx from 'clsx'
@@ -10,10 +10,20 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 
 import { Web3Context } from '../contexts/web3'
+import { PlayerContext } from '../contexts/player'
 
 function Overview() {
   const classes = useStyles()
+  const player = useContext(PlayerContext)
   const web3 = useContext(Web3Context)
+
+  const joinContest = () => {
+    if (player.info.address) {
+      player.signup()
+    } else {
+      web3.connect(true)
+    }
+  }
 
   return (
     <Scrollbars
@@ -40,7 +50,7 @@ function Overview() {
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>free entry</Typography>
-              <Button variant='contained' color='primary'>sign up now</Button>
+              {!player.info.tournamentId && <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>}
             </Box>
           </Box>
           <Box mt={10}>

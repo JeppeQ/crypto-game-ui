@@ -52,24 +52,26 @@ export function MarketTable(props) {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
-  useEffect(async () => {
-    setLoading(true)
-    const time = +new Date()
+  useEffect(() => {
+    async function fetchMarket() {
+      setLoading(true)
+      const time = +new Date()
 
-    const data = await tokenApi.getMarket(orderBy, direction, page, search)
-    setMarket(data.rows)
-    setTotal(data.count)
+      const data = await tokenApi.getMarket(orderBy, direction, page, search)
+      setMarket(data.rows)
+      setTotal(data.count)
 
-    if (first) {
-      setTimeout(() => {
+      if (first) {
+        setTimeout(() => {
+          setLoading(false)
+          setFirst(false)
+        }, Math.max(0,
+          500 - (+new Date() - time)))
+      } else {
         setLoading(false)
-        setFirst(false)
-      }, Math.max(0,
-        500 - (+new Date() - time)))
-    } else {
-      setLoading(false)
+      }
     }
-
+    fetchMarket()
   }, [page, orderBy, direction, search])
 
   function headerClick(id, sortable) {

@@ -47,7 +47,6 @@ function Trade() {
             </Box>
           </Box>
           <MarketTable />
-          {/* <MarketGrid /> */}
         </motion.div>
       </Grid >
     </Scrollbars >

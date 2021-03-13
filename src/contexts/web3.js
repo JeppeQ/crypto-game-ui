@@ -1,6 +1,9 @@
-import React, { createContext, useState, useEffect } from "react"
+import React, { createContext, useContext } from "react"
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
+
+import { PlayerContext } from './player'
+import * as playerApi from '../api/player'
 
 function initWeb3(provider) {
   const web3 = new Web3(provider);
@@ -30,93 +33,62 @@ const web3Modal = new Web3Modal({
 export const Web3Context = createContext()
 
 export const Web3Provider = ({ children }) => {
-  const [web3, setWeb3] = useState()
-  const [connected, setConnected] = useState(false)
-  const [address, setAddress] = useState("")
-  const [chainId, setChainId] = useState(1)
-  const [networkId, setNetworkId] = useState(1)
-  const [provider, setProvider] = useState()
+  const player = useContext(PlayerContext)
 
-  useEffect(() => {
-    if (web3Modal.cachedProvider) {
-      connect()
-    }
-  }, [])
-
-  const subscribeProvider = async (provider) => {
-    if (!provider.on) {
-      return
-    }
-
-    provider.on("accountsChanged", async (accounts) => {
-      await setAddress(accounts[0])
-    })
-
-    provider.on("chainChanged", async (chainId) => {
-      const networkId = await web3.eth.net.getId()
-      await setChainId(chainId)
-      await setNetworkId(networkId)
-    })
-
-    provider.on("networkChanged", async (networkId) => {
-      const chainId = await web3.eth.chainId()
-      await setChainId(chainId)
-      await setNetworkId(networkId)
-    });
-  }
-
-  const connect = async () => {
+  const connect = async (signup = false) => {
     const provider = await web3Modal.connect()
-
-    subscribeProvider(provider)
 
     const web3 = initWeb3(provider)
     const accounts = await web3.eth.getAccounts()
-    const networkId = await web3.eth.net.getId()
     const chainId = await web3.eth.chainId()
 
-    setWeb3(web3)
-    setAddress(accounts[0])
-    setChainId(chainId)
-    setNetworkId(networkId)
-    setConnected(true)
-    setProvider(provider)
+    signMessage({ web3, address: accounts[0], chainId }, signup)
   }
 
-  const signup = async () => {
-    if (!web3) {
-      await connect()
-    }
-
-    const msgParams = [
-      {
-        type: 'string',      // Any valid solidity type
-        name: 'Message',     // Any string label you want
-        value: 'Hi, Alice!'  // The value to sign
-     },
-     {   
-       type: 'uint32',
-          name: 'A number',
-          value: '1337'
+  const signMessage = ({ web3, address, chainId }, signup) => {
+    const data = JSON.stringify({
+      domain: {
+        chainId,
+        name: 'Sign up',
+        verifyingContract: 'http://localhost',
+        version: '1',
+      },
+      message: {
+        1: "Hi, sign this message to verify your identity!"
+      },
+      primaryType: 'EIP712Domain',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'string' },
+        ]
       }
-    ]
+    });
 
     web3.currentProvider.send({
-      method: 'eth_signTypedData',
-      params: [msgParams, address],
+      method: 'eth_signTypedData_v4',
+      params: [address, data],
       from: address,
-    }, (err, result) => {
-      console.log(result)
+    }, async (err, result) => {
+      if (err) return;
+    
+      const jwt = await playerApi.authenticate(result.result, data)
+      if (jwt) {
+        if (signup) {
+          player.signup(jwt)
+        } else {
+          player.getPlayerInfo(jwt)
+        }
+      }
     })
   }
 
   return (
     <Web3Context.Provider
       value={{
-        web3,
-        address,
         connect,
-        signup
       }}
     >
       {children}
