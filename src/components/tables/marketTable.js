@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NumberFormat from 'react-number-format'
-
 import { withStyles, makeStyles } from '@material-ui/core/styles'
+
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
@@ -154,7 +154,7 @@ export function MarketTable(props) {
         <TableBody>
           {first && loadingRow()}
           {!first && market.map(row => (
-            <TableRow key={row._id} >
+            <TableRow key={row.id} >
               <TableCell>{renderData(row.rank)}</TableCell>
               <TableCell>
                 {loading ? <Skeleton variant="text" animation="wave" /> :
@@ -173,7 +173,7 @@ export function MarketTable(props) {
                 {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}
               </TableCell>
               <TableCell align='center'>
-                <Button variant='contained' className={classes.buyButton} onClick={() => setBuy(true)}>Buy</Button>
+                <Button variant='contained' className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -200,8 +200,7 @@ export function MarketTable(props) {
         buy && <BuyDialog
           open={buy}
           close={() => setBuy(false)}
-          token={'alpha'}
-          cash={23000}
+          token={buy}
         />
       }
     </React.Fragment >

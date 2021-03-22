@@ -1,18 +1,21 @@
-import React, { } from 'react'
+import React, { useContext } from 'react'
+import { motion } from 'framer-motion'
+import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
+import clsx from 'clsx'
+
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
 
-import clsx from 'clsx'
 import { MarketTable } from '../components/tables/marketTable'
 import { PortfolioTable } from '../components/tables/portfolioTable'
-import { motion } from 'framer-motion'
+import { PlayerContext } from '../contexts/player'
 
 function Trade() {
   const classes = useStyles()
+  const player = useContext(PlayerContext)
 
   return (
     <Scrollbars
@@ -32,13 +35,13 @@ function Trade() {
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Total Assets</Typography>
                 <Typography color='textPrimary' variant='h4'>
-                  {<NumberFormat value={50000} thousandSeparator displayType={'text'} prefix={'$'} />}
+                  {<NumberFormat value={player.assetValue} thousandSeparator displayType={'text'} prefix={'$'} />}
                 </Typography>
               </Box>
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Available Cash</Typography>
                 <Typography color='textPrimary' variant='h4'>
-                  {<NumberFormat value={50000} thousandSeparator displayType={'text'} prefix={'$'} />}
+                  {<NumberFormat value={player.info.cash} thousandSeparator displayType={'text'} prefix={'$'} />}
                 </Typography>
               </Box>
             </Box>
@@ -67,7 +70,7 @@ const useStyles = makeStyles({
     marginBottom: '40px'
   },
   infoBox: {
-    width: '300px',
+    width: '280px',
     height: '130px',
     display: 'flex',
     flexDirection: 'column',
@@ -75,7 +78,7 @@ const useStyles = makeStyles({
     padding: '20px'
   },
   assetsContainer: {
-    width: '740px',
+    width: '760px',
     height: '270px'
   },
   customBox: {

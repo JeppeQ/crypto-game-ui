@@ -1,19 +1,20 @@
-import React from 'react'
+import React, { createContext, useContext } from 'react'
+import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
+
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
 
-import clsx from 'clsx'
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
-
-import { motion } from 'framer-motion'
-
+import { PlayerContext } from '../contexts/player'
 
 function Leaderboard() {
   const classes = useStyles()
+  const player = useContext(PlayerContext)
 
   return (
     <Scrollbars
@@ -29,7 +30,7 @@ function Leaderboard() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={54231} displayType={'text'} thousandSeparator prefix={'$'} />
+                <NumberFormat value={player.info.cash + player.assetValue} displayType={'text'} thousandSeparator prefix={'$'} />
               </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
@@ -60,7 +61,7 @@ const useStyles = makeStyles({
   },
   infoBox: {
     width: '330px',
-    height: '100px',
+    height: '110px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

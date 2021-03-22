@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
+
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import NumberFormat from 'react-number-format'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
-import { SellDialog } from '../dialogs/sellDialog'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { makeStyles } from '@material-ui/core/styles'
+import Skeleton from '@material-ui/lab/Skeleton'
+
 import { styles } from './styles'
+import { SellDialog } from '../dialogs/sellDialog'
+import { PlayerContext } from '../../contexts/player'
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -33,22 +37,15 @@ const cells = [
   { id: 'sell', label: 'Sell', align: 'center', sortable: false },
 ]
 
-const testData = [
-  { coin: 'Bitcoin', symbol: 'BTC', balance: 1.2, value: 23, return: 1000 },
-  { coin: 'Ethereum', symbol: 'ETH', balance: 10, value: 12, return: 1000 },
-  { coin: 'Alpha', symbol: 'ALPHA', balance: 100000, value: 12, return: 1000 },
-  { coin: 'Sushi', symbol: 'SUSHI', balance: 1230, value: 12, return: 1000 },
-  { coin: 'Aave', symbol: 'AAVE', balance: 500, value: 12, return: 1000 },
-]
-
 export function PortfolioTable() {
   const _classes = styles()
   const classes = useStyles()
+  const player = useContext(PlayerContext)
 
   const [sell, setSell] = useState()
   const [orderBy, setOrderBy] = useState()
   const [direction, setDirection] = useState()
-  const [portfolio, setPortfolio] = useState(testData)
+  const [loading, setLoading] = useState(false)
 
   function headerClick(id, sortable) {
     if (!sortable) {
@@ -69,14 +66,26 @@ export function PortfolioTable() {
 
   function sortPortfolio() {
     if (!orderBy) {
-      return portfolio
+      return player.holdings
     }
 
     if (direction === 'DESC') {
-      return portfolio.sort((a, b) => a[orderBy] < b[orderBy] ? -1 : 1)
+      return player.holdings.sort((a, b) => a[orderBy] < b[orderBy] ? -1 : 1)
     }
 
-    return portfolio.sort((a, b) => a[orderBy] > b[orderBy] ? -1 : 1)
+    return player.holdings.sort((a, b) => a[orderBy] > b[orderBy] ? -1 : 1)
+  }
+
+  function loadingRow() {
+    return (
+      <TableRow>
+        {cells.map(cell => (
+          <CustomTableCell key={'asset_loading_' + cell.id}>
+            <Skeleton variant="text" animation="wave" />
+          </CustomTableCell>
+        ))}
+      </TableRow>
+    )
   }
 
   return (
@@ -98,19 +107,33 @@ export function PortfolioTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {loading && loadingRow()}
+
+            {!loading && player.holdings.length === 0 && 
+              <Box p={2}>
+                <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
+              </Box>
+            }
+
             {sortPortfolio().map(row => (
-              <TableRow key={row._id}>
+              <TableRow key={row.id}>
                 <CustomTableCell>
                   <Box display='flex'>
-                    {row.coin}
+                    {row.name}
                     <Box ml={1}>
-                      <Typography variant='body' color='textSecondary'>{row.symbol}</Typography>
+                      <Typography variant='body' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
                     </Box>
                   </Box>
                 </CustomTableCell>
-                <CustomTableCell align='right'>{<NumberFormat value={row.balance} displayType={'text'} thousandSeparator />}</CustomTableCell>
-                <CustomTableCell align='right'>{<NumberFormat value={row.value} displayType={'text'} prefix={'$'} />}</CustomTableCell>
-                <CustomTableCell align='right'>{<NumberFormat value={row.return} displayType={'text'} prefix={'$'} />}</CustomTableCell>
+                <CustomTableCell align='right'>
+                  {<NumberFormat value={row.amount} displayType={'text'} thousandSeparator />}
+                </CustomTableCell>
+                <CustomTableCell align='right'>
+                  {<NumberFormat value={row.value} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
+                </CustomTableCell>
+                <CustomTableCell align='right' style={{ color: row.returns < 0 ? '#e15241' : '#8dc647' }}>
+                  {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
+                </CustomTableCell>
                 <CustomTableCell align='center'>
                   <Button variant='contained' className={classes.sellButton} onClick={() => setSell(true)}>Sell</Button>
                 </CustomTableCell>

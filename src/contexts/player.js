@@ -1,21 +1,36 @@
 import React, { createContext, useState, useEffect } from "react"
 
 import * as playerApi from '../api/player'
-
+import * as holdingApi from '../api/holding'
 
 export const PlayerContext = createContext()
 
 export const PlayerProvider = ({ children }) => {
-  const [info, setInfo] = useState({})
+  const [info, setInfo] = useState({ cash: 0 })
+  const [holdings, setHoldings] = useState([])
+  const [assetValue, setAssetValue] = useState(0)
 
   useEffect(() => {
-    getPlayerInfo()
+    update()
   }, [])
+
+  const update = () => {
+    getPlayerInfo()
+    getHoldings()
+  }
 
   const getPlayerInfo = async (jwt) => {
     const player = await playerApi.me(jwt)
     if (player) {
       setInfo(player)
+    }
+  }
+
+  const getHoldings = async () => {
+    const holdings = await holdingApi.getHoldings()
+    if (holdings) {
+      setHoldings(holdings)
+      setAssetValue(holdings.reduce((a, b) => a + (b.value || 0), 0))
     }
   }
 
@@ -30,8 +45,12 @@ export const PlayerProvider = ({ children }) => {
     <PlayerContext.Provider
       value={{
         info,
+        holdings,
+        assetValue,
         signup,
-        getPlayerInfo
+        update,
+        getPlayerInfo,
+        getHoldings
       }}
     >
       {children}

@@ -25,6 +25,9 @@ export const mainTheme = createMuiTheme({
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'astrospace',
       letterSpacing: '1px'
+    },
+    subtitle2: {
+      fontStyle: 'italic'
     }
   },
   overrides: {

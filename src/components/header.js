@@ -13,6 +13,7 @@ import LocalBarIcon from '@material-ui/icons/LocalBar'
 import { PlayerContext } from '../contexts/player'
 import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
+import axios from 'axios'
 
 const menuItems = [
   {
@@ -73,10 +74,18 @@ function Header() {
         </Grid>
       </Grid>
       <Grid item>
+        <Button style={{ marginRight: '10px' }} color='secondary' variant='outlined' onClick={() => {
+          axios.post('http://localhost:8080/api/leaderboard/update')
+        }}>Update Leaderboard</Button>
+        <Button color='secondary' variant='outlined' onClick={() => {
+          axios.post('http://localhost:8080/api/token/updateTokens')
+        }}>Update Market</Button>
+      </Grid>
+      <Grid item>
         {player.info.address
           ? <Button startIcon={<img src="https://homora-v2.alphafinance.io/static/logos/metamask-icon.png" width="21" height="21" />}>
-              {ellipseAddress(player.info.address, 4)}
-            </Button>
+            {ellipseAddress(player.info.address, 4)}
+          </Button>
           : <Button onClick={web3.connect}>
             connect wallet
           </Button>}
