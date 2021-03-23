@@ -165,7 +165,7 @@ export function LeaderboardTable() {
       {viewHistory && <HistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
-        wallet={viewHistory}
+        address={viewHistory}
       />}
     </React.Fragment>
   )
