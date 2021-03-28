@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -100,6 +101,18 @@ export function LeaderboardTable() {
     }
   }
 
+  function loadingRow() {
+    return (
+      <TableRow>
+        {cells.map(cell => (
+          <TableCell key={'loading_' + cell.id}>
+            <Skeleton variant="text" animation="wave" />
+          </TableCell>
+        ))}
+      </TableRow>
+    )
+  }
+
   function searchPlayer(address) {
     if (address !== search) {
       setPage(0)
@@ -129,7 +142,8 @@ export function LeaderboardTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {leaderboard.map(row => (
+          {first && loadingRow()}
+          {!first && leaderboard.map(row => (
             <TableRow key={row._id}>
               <TableCell>{row.rank}</TableCell>
               <TableCell>{row.address}</TableCell>

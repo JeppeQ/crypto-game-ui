@@ -14,6 +14,7 @@ import { mainTheme } from './themes'
 import { routes } from './routes'
 import { Web3Provider } from './contexts/web3'
 import { PlayerProvider } from './contexts/player'
+import { TournamentProvider } from './contexts/tournament'
 
 function App() {
   return (
@@ -22,18 +23,20 @@ function App() {
         {backgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <PlayerProvider>
-            <Web3Provider>
-              <Box className='main'>
-                <Header />
-                <Switch>
-                  {routes.map((route, index) => {
-                    return <Route key={index} path={route.path} component={route.content} />
-                  })}
-                </Switch>
-              </Box>
-            </Web3Provider>
-          </PlayerProvider>
+          <TournamentProvider>
+            <PlayerProvider>
+              <Web3Provider>
+                <Box className='main'>
+                  <Header />
+                  <Switch>
+                    {routes.map((route, index) => {
+                      return <Route key={index} path={route.path} component={route.content} />
+                    })}
+                  </Switch>
+                </Box>
+              </Web3Provider>
+            </PlayerProvider>
+          </TournamentProvider>
         </ThemeProvider>
       </Box>
     </Router>

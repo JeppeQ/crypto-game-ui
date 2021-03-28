@@ -21,7 +21,7 @@ export const mainTheme = createMuiTheme({
       fontSize: 35,
     },
     h6: {
-      fontSize: 14,
+      fontSize: 15,
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'astrospace',
       letterSpacing: '1px'

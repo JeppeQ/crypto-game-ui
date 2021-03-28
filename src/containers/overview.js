@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
 import clsx from 'clsx'
 
 import Box from '@material-ui/core/Box'
@@ -11,11 +12,13 @@ import { Typography } from '@material-ui/core'
 
 import { Web3Context } from '../contexts/web3'
 import { PlayerContext } from '../contexts/player'
+import { TournamentContext } from '../contexts/tournament'
 
 function Overview() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
   const web3 = useContext(Web3Context)
+  const tournament = useContext(TournamentContext)
 
   const joinContest = () => {
     if (player.info.address) {
@@ -23,6 +26,31 @@ function Overview() {
     } else {
       web3.connect(true)
     }
+  }
+
+  function countDownBox() {
+    return (
+      <Box display='flex' justifyContent='center'>
+        <Box className={classes.countDownUnit}>
+          <Typography variant='h3' className={classes.countDownText}>15</Typography>
+          <Typography className={classes.countDownSubText}>Days</Typography>
+        </Box>
+        <Box mt={0.5} mx={1}>
+          <Typography variant='h6'>:</Typography>
+        </Box>
+        <Box className={classes.countDownUnit}>
+          <Typography variant='h3' className={classes.countDownText}>0</Typography>
+          <Typography className={classes.countDownSubText}>hours</Typography>
+        </Box>
+        <Box mt={0.5} mx={1}>
+          <Typography variant='h6'>:</Typography>
+        </Box>
+        <Box className={classes.countDownUnit}>
+          <Typography variant='h3' className={classes.countDownText}>55</Typography>
+          <Typography className={classes.countDownSubText}>mins</Typography>
+        </Box>
+      </Box>
+    )
   }
 
   return (
@@ -42,11 +70,13 @@ function Overview() {
           <Box mb={'45px'} width='1050px' display='flex'>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>prize pool</Typography>
-              <Typography color='textPrimary' variant='h4'>$2000</Typography>
+              <Typography color='textPrimary' variant='h3'>
+                <NumberFormat value={tournament.info.price} displayType={'text'} prefix={'$'} />
+              </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>game begins in</Typography>
-              <Typography color='textPrimary' variant='h4'>23D 14H</Typography>
+              {countDownBox()}
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>free entry</Typography>
@@ -58,7 +88,7 @@ function Overview() {
           </Box>
         </motion.div>
       </Grid >
-    </Scrollbars>
+    </Scrollbars >
 
   )
 }
@@ -80,11 +110,14 @@ const useStyles = makeStyles({
     width: '350px',
     height: '120px',
     display: 'flex',
+    justifyContent: 'space-evenly',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
     padding: '20px',
     marginRight: '20px'
+  },
+  infoBoxHeadline: {
+    height: '30px'
   },
   assetsContainer: {
     width: '740px',
@@ -98,4 +131,21 @@ const useStyles = makeStyles({
     borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.2)'
   },
+  countDownUnit: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '5px',
+    marginBottom: '-10px'
+  },
+  countDownText: {
+    letterSpacing: '3px',
+    lineHeight: '30px'
+  },
+  countDownSubText: {
+    fontSize: '0.7rem',
+    textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.35)'
+  }
 });

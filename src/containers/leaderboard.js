@@ -35,7 +35,9 @@ function Leaderboard() {
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Position</Typography>
-              <Typography color='textPrimary' variant='h4'>#532</Typography>
+              <Typography color='textPrimary' variant='h4'>
+                <NumberFormat value={player.info.rank} displayType={'text'} prefix={'#'} thousandSeparator />
+              </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
