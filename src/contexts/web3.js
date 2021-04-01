@@ -1,12 +1,14 @@
 import React, { createContext, useContext } from "react"
 import Web3 from 'web3'
-import Web3Modal from 'web3modal'
 
 import { PlayerContext } from './player'
+import { MetaMaskDialog } from '../components/dialogs/metamaskDialog' 
 import * as playerApi from '../api/player'
 
-function initWeb3(provider) {
-  const web3 = new Web3(provider);
+function initWeb3() {
+  const web3 = new Web3(window.ethereum);
+
+  window.ethereum.enable()
 
   web3.eth.extend({
     methods: [
@@ -21,24 +23,18 @@ function initWeb3(provider) {
   return web3
 }
 
-const providerOptions = {}
-
-const web3Modal = new Web3Modal({
-  network: "mainnet", // optional
-  cacheProvider: true, // optional
-  providerOptions,
-  theme: 'dark'
-})
-
 export const Web3Context = createContext()
 
 export const Web3Provider = ({ children }) => {
   const player = useContext(PlayerContext)
 
   const connect = async (signup = false) => {
-    const provider = await web3Modal.connect()
+    if (!window.ethereum) {
+      console.log("No wallet installed")
+      return
+    }
 
-    const web3 = initWeb3(provider)
+    const web3 = initWeb3()
     const accounts = await web3.eth.getAccounts()
     const chainId = await web3.eth.chainId()
 
@@ -92,6 +88,7 @@ export const Web3Provider = ({ children }) => {
       }}
     >
       {children}
+      <MetaMaskDialog open={true} />
     </Web3Context.Provider>
   );
 };

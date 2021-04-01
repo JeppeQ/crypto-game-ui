@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import NumberFormat from 'react-number-format'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -18,6 +18,7 @@ import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { HistoryDialog } from '../dialogs/historyDialog'
 import * as leaderboardApi from '../../api/leaderboard'
+import { TournamentContext } from '../../contexts/tournament'
 
 const PAGE_SIZE = 50
 
@@ -50,6 +51,8 @@ export function LeaderboardTable() {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
+  const tournament = useContext(TournamentContext)
+
   useEffect(() => {
     async function fetchLeaderboard() {
       setLoading(true)
@@ -58,6 +61,7 @@ export function LeaderboardTable() {
       const data = await leaderboardApi.getLeaderboard(orderBy, direction, page, search)
       setleaderboard(data.rows)
       setTotal(data.count)
+      tournament.setPlayers(data.count)
 
       if (first) {
         setTimeout(() => {

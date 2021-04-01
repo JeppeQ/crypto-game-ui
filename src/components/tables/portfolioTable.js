@@ -107,15 +107,15 @@ export function PortfolioTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading && loadingRow()}
+            {player.assetsLoading && loadingRow()}
 
-            {!loading && player.holdings.length === 0 && 
+            {!player.assetsLoading && player.holdings.length === 0 && 
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {sortPortfolio().map(row => (
+            {!player.assetsLoading && sortPortfolio().map(row => (
               <TableRow key={row.id}>
                 <CustomTableCell>
                   <Box display='flex'>

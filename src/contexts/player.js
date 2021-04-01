@@ -6,9 +6,10 @@ import * as holdingApi from '../api/holding'
 export const PlayerContext = createContext()
 
 export const PlayerProvider = ({ children }) => {
-  const [info, setInfo] = useState({ cash: 0 })
+  const [info, setInfo] = useState({ cash: 0, rank: 0 })
   const [holdings, setHoldings] = useState([])
   const [assetValue, setAssetValue] = useState(0)
+  const [assetsLoading, loadAssets] = useState(true)
 
   useEffect(() => {
     update()
@@ -27,11 +28,13 @@ export const PlayerProvider = ({ children }) => {
   }
 
   const getHoldings = async () => {
+    loadAssets(true)
     const holdings = await holdingApi.getHoldings()
     if (holdings) {
       setHoldings(holdings)
       setAssetValue(holdings.reduce((a, b) => a + (b.value || 0), 0))
     }
+    loadAssets(false)
   }
 
   const signup = async (jwt) => {
@@ -50,7 +53,8 @@ export const PlayerProvider = ({ children }) => {
         signup,
         update,
         getPlayerInfo,
-        getHoldings
+        getHoldings,
+        assetsLoading
       }}
     >
       {children}

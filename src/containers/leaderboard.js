@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { useContext } from 'react'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -8,13 +8,16 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
 import { PlayerContext } from '../contexts/player'
+import { TournamentContext } from '../contexts/tournament'
 
 function Leaderboard() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
+  const tournament = useContext(TournamentContext)
 
   return (
     <Scrollbars
@@ -42,7 +45,10 @@ function Leaderboard() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={13213} displayType={'text'} thousandSeparator />
+                {tournament.players
+                  ? <NumberFormat value={tournament.players} displayType={'text'} thousandSeparator />
+                  : <Skeleton variant="text" animation="wave" width={125} />
+                }
               </Typography>
             </Box>
           </Box>
