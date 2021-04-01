@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react"
+import React, { createContext, useContext, useState } from "react"
 import Web3 from 'web3'
 
 import { PlayerContext } from './player'
@@ -27,10 +27,11 @@ export const Web3Context = createContext()
 
 export const Web3Provider = ({ children }) => {
   const player = useContext(PlayerContext)
+  const [metaMaskDialog, setMetaMaskDialog] = useState(false)
 
   const connect = async (signup = false) => {
     if (!window.ethereum) {
-      console.log("No wallet installed")
+      setMetaMaskDialog(true)
       return
     }
 
@@ -88,7 +89,7 @@ export const Web3Provider = ({ children }) => {
       }}
     >
       {children}
-      <MetaMaskDialog open={true} />
+      <MetaMaskDialog open={metaMaskDialog} close={() => setMetaMaskDialog(false)} />
     </Web3Context.Provider>
   );
 };
