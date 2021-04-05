@@ -36,7 +36,8 @@ export function BuyDialog(props) {
     } 
 
     await tradeApi.buyToken(props.token.id, amount)
-    player.getPlayerInfo()
+    player.update()
+    props.close()
   }
 
   const { name, price, symbol } = props.token

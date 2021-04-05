@@ -71,10 +71,14 @@ function Overview() {
                   </React.Fragment>)
               }
             </Box>
-            <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='h6'>free entry</Typography>
-              {!player.info.tournamentId && <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>}
-            </Box>
+            {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography variant='h6'>You are signed up</Typography>
+              <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>GOOD LUCK!</Typography>
+            </Box>}
+            {!player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography variant='h6'>Free entry</Typography>
+              <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
+            </Box>}
           </Box>
           <Box mt={10} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>How does it work?</Typography>

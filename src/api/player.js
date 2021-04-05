@@ -35,3 +35,9 @@ export async function signup(token) {
     return response.data
   }
 }
+
+export async function addEmail(email) {
+  const url = `${API_ROUTE}/email`
+  axios.post(url, { email }, { headers: buildApiHeaders() })
+    .catch(err => console.log(err))
+}

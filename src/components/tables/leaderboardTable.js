@@ -4,6 +4,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -19,6 +20,7 @@ import { SearchBar } from '../searchBar'
 import { HistoryDialog } from '../dialogs/historyDialog'
 import * as leaderboardApi from '../../api/leaderboard'
 import { TournamentContext } from '../../contexts/tournament'
+import { ellipseAddress } from '../../helpers/utilities'
 
 const PAGE_SIZE = 50
 
@@ -128,7 +130,7 @@ export function LeaderboardTable() {
     <React.Fragment>
       <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
         <Typography variant='h3'>Leaderboard</Typography>
-        <SearchBar search={value => searchPlayer(value)} value={search} />
+        <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search address...'} />
       </Box>
       <Table component={Paper} className={_classes.table}>
         <TableHead>
@@ -150,7 +152,11 @@ export function LeaderboardTable() {
           {!first && leaderboard.map(row => (
             <TableRow key={row._id}>
               <TableCell>{row.rank}</TableCell>
-              <TableCell>{row.address}</TableCell>
+              <TableCell>
+                <Button style={{ padding: '0px 5px' }}>
+                  {ellipseAddress(row.address, 8, 4)}
+                </Button>
+              </TableCell>
               <TableCell>{row.mainAsset}</TableCell>
               <TableCell align='right'>
                 {row.rankChange}
@@ -194,9 +200,9 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     fontSize: '12px',
     fontFamily: 'astrospace',
-    color: 'rgba(255, 255, 255)',
+    color: '#058665',
     "&:hover": {
-      color: 'rgba(29, 255, 243, 0.4)'
+      color: 'rgba(14, 70, 26, 0.9)'
     }
   },
 })

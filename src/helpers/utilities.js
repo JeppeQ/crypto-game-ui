@@ -1,3 +1,3 @@
-export function ellipseAddress(address, width) {
-  return `${address.slice(0, width)}...${address.slice(-width)}`;
+export function ellipseAddress(address, start, end) {
+  return `${address.slice(0, start)}...${address.slice(-end)}`.toUpperCase();
 }

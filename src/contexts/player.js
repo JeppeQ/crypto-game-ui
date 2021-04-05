@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react"
 
+import { SignedUpDialog } from '../components/dialogs/signedUpDialog' 
 import * as playerApi from '../api/player'
 import * as holdingApi from '../api/holding'
 
@@ -10,6 +11,7 @@ export const PlayerProvider = ({ children }) => {
   const [holdings, setHoldings] = useState([])
   const [assetValue, setAssetValue] = useState(0)
   const [assetsLoading, loadAssets] = useState(true)
+  const [emailDialog, showEmailDialog] = useState(false)
 
   useEffect(() => {
     update()
@@ -23,13 +25,13 @@ export const PlayerProvider = ({ children }) => {
   const getPlayerInfo = async (jwt) => {
     const player = await playerApi.me(jwt)
     if (player) {
-      setInfo(player)
+      setInfo({...info, ...player})
     }
   }
 
   const getHoldings = async () => {
     loadAssets(true)
-    const holdings = await holdingApi.getHoldings()
+    const holdings = await holdingApi.me()
     if (holdings) {
       setHoldings(holdings)
       setAssetValue(holdings.reduce((a, b) => a + (b.value || 0), 0))
@@ -41,6 +43,7 @@ export const PlayerProvider = ({ children }) => {
     const player = await playerApi.signup(jwt)
     if (player) {
       setInfo(player)
+      showEmailDialog(true)
     }
   }
 
@@ -58,6 +61,7 @@ export const PlayerProvider = ({ children }) => {
       }}
     >
       {children}
+      <SignedUpDialog open={emailDialog} close={() => showEmailDialog(false)} />
     </PlayerContext.Provider>
   );
 };

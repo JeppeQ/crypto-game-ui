@@ -37,7 +37,7 @@ export function SearchBar(props) {
         value={_value}
         onChange={e => setValue(e.target.value)}
         onBlur={setSearch}
-        placeholder='Search'
+        placeholder={props.placeholder || 'Search'}
         onKeyDown={handleKeyPress}
         endAdornment={props.value && <ClearIcon className={classes.removeSearch} onClick={removeSearch} />}
       />
@@ -48,7 +48,7 @@ export function SearchBar(props) {
 const useStyles = makeStyles({
   searchBar: {
     height: '42px',
-    width: '280px',
+    width: '320px',
     background: '#1E2530',
     borderRadius: '2px',
     display: 'flex',

@@ -40,7 +40,10 @@ export function HistoryDialog(props) {
       <Box className={clsx(_classes.dialog, classes.container)}>
         <Scrollbars autoHeight={true} autoHeightMax={580}>
           <Box p={2.5}>
-            <Typography className={classes.headline}>Portfolio</Typography>
+            <Box display='flex' alignItems='baseline' justifyContent='space-between'>
+              <Typography className={classes.headline}>Portfolio</Typography>
+              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.address}</Typography>
+            </Box>
             {PortfolioTable(props.address)}
             <Typography className={classes.headline}>Trade history</Typography>
             {TradeHistoryTable(props.address)}

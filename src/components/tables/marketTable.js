@@ -134,7 +134,7 @@ export function MarketTable(props) {
     <React.Fragment>
       <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
         <Typography variant='h3'>Market</Typography>
-        <SearchBar search={value => searchCoin(value)} value={search} />
+        <SearchBar search={value => searchCoin(value)} value={search} placeholder={'Search coin...'} />
       </Box>
       <Table component={Paper} className={_classes.table}>
         <TableHead>

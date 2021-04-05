@@ -84,7 +84,7 @@ function Header() {
       <Grid item>
         {player.info.address
           ? <Button startIcon={<img src="https://homora-v2.alphafinance.io/static/logos/metamask-icon.png" width="21" height="21" />}>
-            {ellipseAddress(player.info.address, 4)}
+            {ellipseAddress(player.info.address, 4, 4)}
           </Button>
           : <Button onClick={web3.connect}>
             connect wallet
