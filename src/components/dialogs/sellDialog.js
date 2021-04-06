@@ -39,8 +39,14 @@ export function SellDialog(props) {
       return
     }
 
-    await tradeApi.sellToken(props.token.id, amount)
-    player.update()
+    const status = await tradeApi.sellToken(props.token.id, amount)
+
+    if (status === 200) {
+      player.update()
+    } else if (status === 201) {
+      player.showTradeLimitDialog(true)
+    }
+
     props.close()
   }
 
@@ -88,7 +94,7 @@ export function SellDialog(props) {
           </Box>
           <Box display='flex' justifyContent='space-between' my={1}>
             <Typography variant='h6'>~total</Typography>
-            <Typography variant='h6'><NumberFormat value={amount * price} displayType={'text'} thousandSeparator prefix={'$'} /></Typography>
+            <Typography variant='h6'><NumberFormat value={amount * price} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} /></Typography>
           </Box>
           <DialogActions style={{ paddingRight: '0' }}>
             <CustomButton style={{ padding: '8px 15px' }} onClick={props.close} variant='outlined'>Cancel</CustomButton>

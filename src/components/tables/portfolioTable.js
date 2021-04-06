@@ -128,7 +128,7 @@ export function PortfolioTable() {
                   {<NumberFormat value={row.amount} displayType={'text'} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='right'>
-                  {<NumberFormat value={row.value} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
+                  {<NumberFormat value={row.value} displayType={'text'} prefix={'$'} decimalScale={2} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='right' style={{ color: row.returns < 0 ? '#e15241' : '#8dc647' }}>
                   {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}

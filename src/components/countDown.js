@@ -17,13 +17,15 @@ export function CountDown(props) {
 
   return (
     <Box display='flex' justifyContent='center'>
-      <Box className={classes.countDownUnit}>
-        <Typography variant='h3' className={classes.countDownText}>{Math.max(days, 0)}</Typography>
-        <Typography className={classes.countDownSubText}>Days</Typography>
-      </Box>
-      <Box mt={0.5} mx={1}>
-        <Typography variant='h6'>:</Typography>
-      </Box>
+      {!props.hideDays && <React.Fragment>
+        <Box className={classes.countDownUnit}>
+          <Typography variant='h3' className={classes.countDownText}>{Math.max(days, 0)}</Typography>
+          <Typography className={classes.countDownSubText}>Days</Typography>
+        </Box>
+        <Box mt={0.5} mx={1}>
+          <Typography variant='h6'>:</Typography>
+        </Box>
+      </React.Fragment>}
       <Box className={classes.countDownUnit}>
         <Typography variant='h3' className={classes.countDownText}>{Math.max(hours, 0)}</Typography>
         <Typography className={classes.countDownSubText}>hours</Typography>

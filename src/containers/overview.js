@@ -100,7 +100,7 @@ function Overview() {
             no spending limit, so you could go all-in on one crypto. <Box mt={1} />
             You can keep track of your investments in your portfolio, also found under the 'trade' tab.
             If you wish to sell one of your investments, click the red sell button next to the asset. Be aware
-            that there is a 2% sell fee, so choose your trades carefully.
+            that there is a daily limit of 10 trades, so choose your trades carefully.
           </Typography>
           <Box mt={5} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>Scoring and prizing</Typography>

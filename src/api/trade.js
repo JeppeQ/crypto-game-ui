@@ -8,7 +8,7 @@ export async function buyToken(tokenId, value) {
   const response = await axios.post(url, { tokenId, value }, { headers: buildApiHeaders() })
     .catch(err => console.log(err))
 
-  return response ? response.data : null
+  return response ? response.status : null
 }
 
 export async function sellToken(tokenId, amount) {
@@ -16,7 +16,7 @@ export async function sellToken(tokenId, amount) {
   const response = await axios.post(url, { tokenId, amount }, { headers: buildApiHeaders() })
     .catch(err => console.log(err))
 
-  return response ? response.data : null
+  return response ? response.status : null
 }
 
 export async function getTradeHistory(address) {

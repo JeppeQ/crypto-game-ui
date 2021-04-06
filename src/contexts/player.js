@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react"
 
-import { SignedUpDialog } from '../components/dialogs/signedUpDialog' 
+import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
+import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
 import * as playerApi from '../api/player'
 import * as holdingApi from '../api/holding'
 
@@ -12,6 +13,7 @@ export const PlayerProvider = ({ children }) => {
   const [assetValue, setAssetValue] = useState(0)
   const [assetsLoading, loadAssets] = useState(true)
   const [emailDialog, showEmailDialog] = useState(false)
+  const [tradeLimitDialog, showTradeLimitDialog] = useState(true)
 
   useEffect(() => {
     update()
@@ -58,11 +60,13 @@ export const PlayerProvider = ({ children }) => {
         update,
         getPlayerInfo,
         getHoldings,
-        assetsLoading
+        assetsLoading,
+        showTradeLimitDialog
       }}
     >
       {children}
       <SignedUpDialog open={emailDialog} close={() => showEmailDialog(false)} />
+      <TradeLimitDialog open={tradeLimitDialog} close={() => showTradeLimitDialog(false)} />
     </PlayerContext.Provider>
   );
 };
