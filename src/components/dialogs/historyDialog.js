@@ -95,6 +95,7 @@ function PortfolioTable(address) {
       setLoading(false)
     }
     getPortfolio()
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -149,6 +150,7 @@ function TradeHistoryTable(address) {
       setLoading(false)
     }
     getTradeHistory()
+    // eslint-disable-next-line
   }, [])
 
   return (

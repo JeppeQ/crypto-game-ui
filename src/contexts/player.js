@@ -15,6 +15,7 @@ export const PlayerProvider = ({ children }) => {
 
   useEffect(() => {
     update()
+    // eslint-disable-next-line
   }, [])
 
   const update = () => {

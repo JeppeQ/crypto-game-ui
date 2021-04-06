@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 
@@ -45,7 +45,6 @@ export function PortfolioTable() {
   const [sell, setSell] = useState()
   const [orderBy, setOrderBy] = useState()
   const [direction, setDirection] = useState()
-  const [loading, setLoading] = useState(false)
 
   function headerClick(id, sortable) {
     if (!sortable) {
@@ -66,7 +65,7 @@ export function PortfolioTable() {
 
   function sortPortfolio() {
     if (!orderBy) {
-      return player.holdings
+      return player.holdings.sort((a, b) => b['value'] - a['value'])
     }
 
     if (direction === 'DESC') {
@@ -135,7 +134,7 @@ export function PortfolioTable() {
                   {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='center'>
-                  <Button variant='contained' className={classes.sellButton} onClick={() => setSell(true)}>Sell</Button>
+                  <Button variant='contained' className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>
                 </CustomTableCell>
               </TableRow>
             ))}
@@ -144,7 +143,7 @@ export function PortfolioTable() {
         {sell && <SellDialog
           open={sell}
           close={() => setSell(false)}
-          token={'alpha'}
+          token={sell}
         />}
       </Scrollbars>
     </React.Fragment>

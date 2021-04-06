@@ -6,9 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Box from '@material-ui/core/Box'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
 import InputAdornment from '@material-ui/core/InputAdornment'
-import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Slider from '@material-ui/core/Slider'
@@ -30,7 +28,7 @@ export function BuyDialog(props) {
   }
 
   const buyToken = async () => {
-    if (!amount || amount < 1) {
+    if (!amount || amount < 10) {
       setError(true)
       return
     } 
@@ -70,7 +68,7 @@ export function BuyDialog(props) {
               startAdornment: (<InputAdornment position="start">$</InputAdornment>),
               endAdornment: (<Box className={_classes.maxButton} onClick={() => setAmount(player.info.cash)}>max</Box>)
             }}
-            helperText={error ? <Typography variant='subtitle2'>Minimum spend $1</Typography> : ''}
+            helperText={error ? <Typography variant='subtitle2'>Minimum spend $10</Typography> : ''}
             error={error}
           />
           <Box fullWidth px={'5px'}>

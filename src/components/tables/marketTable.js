@@ -72,6 +72,7 @@ export function MarketTable(props) {
       }
     }
     fetchMarket()
+    // eslint-disable-next-line
   }, [page, orderBy, direction, search])
 
   function headerClick(id, sortable) {

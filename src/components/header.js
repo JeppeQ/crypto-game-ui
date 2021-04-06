@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core'
 import LocalBarIcon from '@material-ui/icons/LocalBar'
 
 import { PlayerContext } from '../contexts/player'
@@ -83,7 +82,7 @@ function Header() {
       </Grid>
       <Grid item>
         {player.info.address
-          ? <Button startIcon={<img src="https://homora-v2.alphafinance.io/static/logos/metamask-icon.png" width="21" height="21" />}>
+          ? <Button startIcon={<img src="https://homora-v2.alphafinance.io/static/logos/metamask-icon.png" width="21" height="21" alt='metaMaskIcon' />}>
             {ellipseAddress(player.info.address, 4, 4)}
           </Button>
           : <Button onClick={web3.connect}>
