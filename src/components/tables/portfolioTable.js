@@ -125,7 +125,7 @@ export function PortfolioTable() {
                   </Box>
                 </CustomTableCell>
                 <CustomTableCell align='right'>
-                  {<NumberFormat value={row.amount} displayType={'text'} thousandSeparator />}
+                  {<NumberFormat value={row.amount} displayType={'text'} decimalScale={5} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='right'>
                   {<NumberFormat value={row.value} displayType={'text'} prefix={'$'} decimalScale={2} thousandSeparator />}

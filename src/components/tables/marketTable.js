@@ -10,6 +10,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/lab/Skeleton'
 import ArrowBack from '@material-ui/icons/ArrowBackIos'
@@ -160,15 +161,17 @@ export function MarketTable(props) {
               <TableCell>
                 {loading ? <Skeleton variant="text" animation="wave" /> :
                   <Box display='flex'>
-                    {renderData(row.name)}
+                    <Link href={`https://www.coingecko.com/en/coins/${row.id}`} target='_blank' color='textPrimary'>
+                      {renderData(row.name)}
+                    </Link>
                     <Box ml={1}>
                       <Typography variant='body' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
                     </Box>
                   </Box>}
               </TableCell>
-              <TableCell align='right'>{renderData(<NumberFormat value={row.price} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} />)}</TableCell>
+              <TableCell align='right'>{renderData(<NumberFormat value={row.price} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}</TableCell>
               <TableCell align='right' style={{ color: row.priceChangeDay < 0 ? '#e15241' : '#8dc647' }}>
-                {renderData(<NumberFormat value={row.priceChangeDay} displayType={'text'} suffix={'%'} decimalScale={1} />)}
+                {renderData(<NumberFormat value={row.priceChangeDay} displayType={'text'} suffix={'%'} />)}
               </TableCell>
               <TableCell align='right'>
                 {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}

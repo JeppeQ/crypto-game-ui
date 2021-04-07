@@ -120,7 +120,7 @@ function PortfolioTable(address) {
               </Box>
             </CustomTableCell>
             <CustomTableCell>
-              <NumberFormat value={token.amount} displayType={'text'} thousandSeparator decimalScale={2} />
+              <NumberFormat value={token.amount} displayType={'text'} thousandSeparator decimalScale={5} />
             </CustomTableCell>
             <CustomTableCell>
               <NumberFormat value={token.value} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} />
@@ -178,10 +178,10 @@ function TradeHistoryTable(address) {
               {trade.side}
             </CustomTableCell>
             <CustomTableCell>
-              <NumberFormat value={trade.price} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={4} />
+              <NumberFormat value={trade.price} displayType={'text'} thousandSeparator prefix={'$'} />
             </CustomTableCell>
             <CustomTableCell>
-              <NumberFormat value={trade.amount} displayType={'text'} thousandSeparator decimalScale={2} />
+              <NumberFormat value={trade.amount} displayType={'text'} thousandSeparator decimalScale={5} />
             </CustomTableCell>
             <CustomTableCell>
               <NumberFormat value={trade.price * trade.amount} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} />
