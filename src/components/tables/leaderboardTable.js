@@ -76,7 +76,7 @@ export function LeaderboardTable() {
       }
     }
     fetchLeaderboard()
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, orderBy, direction, search])
 
   function headerClick(id, sortable) {
@@ -187,11 +187,11 @@ export function LeaderboardTable() {
           </TableRow>
         </TableBody>
       </Table>
-      {viewHistory && <HistoryDialog
-        open={viewHistory !== null}
+      <HistoryDialog
+        open={viewHistory}
         close={() => setViewHistory(null)}
         address={viewHistory}
-      />}
+      />
     </React.Fragment>
   )
 }

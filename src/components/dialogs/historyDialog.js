@@ -95,8 +95,7 @@ function PortfolioTable(address) {
       setLoading(false)
     }
     getPortfolio()
-    // eslint-disable-next-line
-  }, [])
+  }, [address])
 
   return (
     <Table className={classes.table} style={{ marginBottom: '30px' }}>
@@ -150,8 +149,7 @@ function TradeHistoryTable(address) {
       setLoading(false)
     }
     getTradeHistory()
-    // eslint-disable-next-line
-  }, [])
+  }, [address])
 
   return (
     <Table className={classes.table}>

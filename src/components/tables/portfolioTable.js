@@ -17,6 +17,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import { styles } from './styles'
 import { SellDialog } from '../dialogs/sellDialog'
 import { PlayerContext } from '../../contexts/player'
+import { TournamentContext } from '../../contexts/tournament'
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -41,7 +42,8 @@ export function PortfolioTable() {
   const _classes = styles()
   const classes = useStyles()
   const player = useContext(PlayerContext)
-
+  const tournament = useContext(TournamentContext)
+  
   const [sell, setSell] = useState()
   const [orderBy, setOrderBy] = useState()
   const [direction, setDirection] = useState()
@@ -134,7 +136,7 @@ export function PortfolioTable() {
                   {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='center'>
-                  <Button variant='contained' className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>
+                  <Button variant='contained' disabled={!tournament.active} className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>
                 </CustomTableCell>
               </TableRow>
             ))}

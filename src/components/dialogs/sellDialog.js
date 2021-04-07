@@ -18,9 +18,10 @@ import { PlayerContext } from '../../contexts/player'
 
 export function SellDialog(props) {
   const _classes = styles()
+  const player = useContext(PlayerContext)
+
   const [amount, setAmount] = useState(0)
   const [error, setError] = useState()
-  const player = useContext(PlayerContext)
 
   const handleChange = (event) => {
     setError(false)

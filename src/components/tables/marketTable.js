@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import NumberFormat from 'react-number-format'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 
@@ -20,7 +20,7 @@ import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { BuyDialog } from '../dialogs/buyDialog'
 import * as tokenApi from '../../api/token'
-
+import { TournamentContext } from '../../contexts/tournament'
 
 const PAGE_SIZE = 50
 
@@ -42,7 +42,7 @@ const cells = [
 export function MarketTable(props) {
   const _classes = styles()
   const classes = useStyles()
-
+  
   const [buy, setBuy] = useState()
   const [market, setMarket] = useState([])
   const [total, setTotal] = useState(0)
@@ -52,6 +52,8 @@ export function MarketTable(props) {
   const [search, setSearch] = useState()
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
+
+  const tournament = useContext(TournamentContext)
 
   useEffect(() => {
     async function fetchMarket() {
@@ -73,7 +75,7 @@ export function MarketTable(props) {
       }
     }
     fetchMarket()
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, orderBy, direction, search])
 
   function headerClick(id, sortable) {
@@ -177,7 +179,7 @@ export function MarketTable(props) {
                 {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}
               </TableCell>
               <TableCell align='center'>
-                <Button variant='contained' className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
+                <Button variant='contained' disabled={!tournament.active} className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
               </TableCell>
             </TableRow>
           ))}
