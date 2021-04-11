@@ -46,7 +46,7 @@ function Header() {
   const web3 = useContext(Web3Context)
 
   useEffect(() => {
-    setActive(menuItems.find(item => location.pathname === item.path))
+    setActive(menuItems.find(item => location.pathname === item.path) || menuItems[0])
   }, [location])
 
   return (
