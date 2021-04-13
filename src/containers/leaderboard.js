@@ -33,7 +33,7 @@ function Leaderboard() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={player.info.cash + player.assetValue} displayType={'text'} thousandSeparator prefix={'$'} />
+                <NumberFormat value={player.info.cash + player.assetValue} decimalScale={2} displayType={'text'} thousandSeparator prefix={'$'} />
               </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>

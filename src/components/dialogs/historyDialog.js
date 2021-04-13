@@ -90,7 +90,7 @@ function PortfolioTable(address) {
       setLoading(true)
 
       const holdings = await holdingApi.getHoldings(address)
-      setPortfolio(holdings)
+      setPortfolio(holdings.sort((a, b) => b['value'] - a['value']))
 
       setLoading(false)
     }

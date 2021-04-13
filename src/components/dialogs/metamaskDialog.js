@@ -19,20 +19,19 @@ export function MetaMaskDialog(props) {
           <Typography className={_classes.title}>MetaMask required</Typography>
         </DialogTitle>
         <DialogContent>
-          <Box>
-            <Typography>
-              To join the contest, you need to have MetaMask installed. MetaMask is a browser extension
-            that helps you connect your wallet to blockchain apps. <br />
-            It only takes 2 minutes to install and create a cryptocurrency wallet.
-          </Typography>
+          <Box mb={1}>
+            <Typography variant='body'>
+              To join the contest, you must have MetaMask installed together with a wallet. MetaMask is a browser extension
+              that helps you connect your cryptocurrency wallet to blockchain apps. <br />It only takes a few minutes to set up.
+            </Typography>
           </Box>
           <Box my={1}>
             <Link target="_blank" href='https://metamask.io/download.html'>
-              Click here to download MetaMask.
+              Click here to download MetaMask and create a wallet.
             </Link>
           </Box>
           <DialogActions style={{ paddingRight: '0' }}>
-            <CustomButton style={{ padding: '8px 15px' }} onClick={props.close} variant='outlined'>continue</CustomButton>
+            <CustomButton style={{ padding: '8px 15px' }} onClick={() => window.location.reload()} variant='outlined'>continue</CustomButton>
           </DialogActions>
         </DialogContent>
       </Box>

@@ -24,7 +24,9 @@ export const TournamentProvider = ({ children }) => {
 
   const setTournamentActive = (tourney) => {
     const now = DateTime.utc()
-    if (now > tourney.start && now < tourney.end) {
+    const start = DateTime.fromISO(tourney.start)
+    const end = DateTime.fromISO(tourney.end)
+    if (now > start && now < end) {
       setActive(true)
     }
   }

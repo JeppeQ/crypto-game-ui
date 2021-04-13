@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import LocalBarIcon from '@material-ui/icons/LocalBar'
+import EcoIcon from '@material-ui/icons/Eco'
 
 import { PlayerContext } from '../contexts/player'
 import { Web3Context } from '../contexts/web3'
@@ -55,13 +55,14 @@ function Header() {
         <Grid container>
           <motion.div
             className={classes.activeContent}
+            style={{ left: active.left, width: active.activeWidth }}
             animate={{ left: active.left, width: active.activeWidth }}
             transition={{ duration: 0.2 }}
           >
             <Box className={classes.activeGlow} />
           </motion.div>
           <Box className={clsx(classes.logo, classes.item)}>
-            <LocalBarIcon className={classes.content} />
+            <EcoIcon className={classes.content} />
           </Box>
           {menuItems.map(item => {
             return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
@@ -126,8 +127,6 @@ const useStyles = makeStyles({
   },
   activeContent: {
     position: 'absolute',
-    left: '200px',
-    width: '178px',
     height: '100%',
     transform: 'skew(-35deg)',
     borderLeft: '4px solid rgba(255, 255, 255, 0.1)',

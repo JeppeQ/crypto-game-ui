@@ -10,8 +10,11 @@ export function CountDown(props) {
   const [now, setNow] = useState(DateTime.now())
 
   useEffect(() => {
+    if (props.date < now) {
+      window.location.reload()
+    }
     setTimeout(() => setNow(DateTime.now()), 60000)
-  }, [now])
+  }, [now, props.date])
 
   const { days, hours, minutes } = props.date.diff(now, ['days', 'hours', 'minutes'])
 

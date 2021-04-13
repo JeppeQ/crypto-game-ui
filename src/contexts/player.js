@@ -37,7 +37,7 @@ export const PlayerProvider = ({ children }) => {
     const holdings = await holdingApi.me()
     if (holdings) {
       setHoldings(holdings)
-      setAssetValue(holdings.reduce((a, b) => a + (b.value || 0), 0))
+      setAssetValue(Math.round(holdings.reduce((a, b) => a + (b.value || 0), 0) * 100) / 100)
     }
     loadAssets(false)
   }

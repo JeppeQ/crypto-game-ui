@@ -187,11 +187,11 @@ export function LeaderboardTable() {
           </TableRow>
         </TableBody>
       </Table>
-      <HistoryDialog
+      {viewHistory && <HistoryDialog
         open={viewHistory}
         close={() => setViewHistory(null)}
         address={viewHistory}
-      />
+      />}
     </React.Fragment>
   )
 }

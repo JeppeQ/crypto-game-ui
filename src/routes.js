@@ -14,5 +14,9 @@ export const routes = [
   {
     path: '/leaderboard',
     content: Leaderboard
+  },
+  {
+    path: '/*',
+    content: Overview
   }
 ]

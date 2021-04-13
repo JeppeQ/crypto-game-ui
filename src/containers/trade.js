@@ -35,7 +35,7 @@ function Trade() {
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Total Assets</Typography>
                 <Typography color='textPrimary' variant='h4'>
-                  {<NumberFormat value={player.assetValue} thousandSeparator displayType={'text'} prefix={'$'} />}
+                  {<NumberFormat value={player.assetValue} thousandSeparator decimalScale={2} displayType={'text'} prefix={'$'} />}
                 </Typography>
               </Box>
               <Box className={clsx(classes.infoBox, classes.customBox)}>

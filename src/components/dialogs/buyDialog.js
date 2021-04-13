@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import NumberFormat from 'react-number-format'
+import currency from 'currency.js'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -84,7 +85,7 @@ export function BuyDialog(props) {
               marks
               valueLabelDisplay="auto"
               valueLabelFormat={(x) => `${x}%`}
-              onChangeCommitted={(e, v) => { setAmount(player.info.cash / 100 * v) }}
+              onChangeCommitted={(e, v) => { setAmount(currency(player.info.cash / 100 * v).value) }}
             />
           </Box>
           <DialogActions style={{ paddingRight: '0' }}>
