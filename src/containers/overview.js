@@ -99,7 +99,7 @@ function Overview() {
             <Typography className={classes.breadText}>
               Once the competition begins, you'll be able to buy and sell cryptos from the market.
               The market can be found under the 'trade' tab. Once you have decided on a crypto,
-              click the green buy button, and choose how much you want to spend. There are currently
+              click the green buy button and choose how much you want to spend. There are currently
               no spending limit, so you could go all-in on one crypto.
           </Typography>
           </Box>
