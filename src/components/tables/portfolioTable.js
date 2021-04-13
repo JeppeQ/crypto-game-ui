@@ -31,10 +31,10 @@ const CustomTableCell = withStyles(() => ({
 }))(TableCell)
 
 const cells = [
-  { id: 'coin', label: 'Asset', align: 'left', sortable: true },
-  { id: 'balance', label: 'Balance', align: 'right', sortable: true },
+  { id: 'name', label: 'Asset', align: 'left', sortable: true },
+  { id: 'amount', label: 'Balance', align: 'right', sortable: true },
   { id: 'value', label: 'Value', align: 'right', sortable: true },
-  { id: 'return', label: 'Return', align: 'right', sortable: true },
+  { id: 'returns', label: 'Return', align: 'right', sortable: true },
   { id: 'sell', label: 'Sell', align: 'center', sortable: false },
 ]
 
