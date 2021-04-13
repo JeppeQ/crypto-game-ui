@@ -20,7 +20,17 @@ export const PlayerProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    const periodicFetch = setInterval(() => {
+      getHoldings()
+    }, 60000)
+
+    return () => clearInterval(periodicFetch)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const update = () => {
+    loadAssets(true)
     getPlayerInfo()
     getHoldings()
   }
@@ -28,12 +38,11 @@ export const PlayerProvider = ({ children }) => {
   const getPlayerInfo = async (jwt) => {
     const player = await playerApi.me(jwt)
     if (player) {
-      setInfo({...info, ...player})
+      setInfo({ ...info, ...player })
     }
   }
 
   const getHoldings = async () => {
-    loadAssets(true)
     const holdings = await holdingApi.me()
     if (holdings) {
       setHoldings(holdings)
@@ -59,7 +68,6 @@ export const PlayerProvider = ({ children }) => {
         signup,
         update,
         getPlayerInfo,
-        getHoldings,
         assetsLoading,
         showTradeLimitDialog
       }}

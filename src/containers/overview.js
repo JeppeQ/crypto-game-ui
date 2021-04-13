@@ -65,10 +65,12 @@ function Overview() {
                     <Typography variant='h6'>game begins in</Typography>
                     <CountDown date={DateTime.fromISO(tournament.info.start)} />
                   </React.Fragment>
-                  : <React.Fragment>
-                    <Typography variant='h6'>game ends in</Typography>
-                    <CountDown date={DateTime.fromISO(tournament.info.end)} />
-                  </React.Fragment>)
+                  : DateTime.fromISO(tournament.info.end) > DateTime.now()
+                    ? <React.Fragment>
+                      <Typography variant='h6'>game ends in</Typography>
+                      <CountDown date={DateTime.fromISO(tournament.info.end)} />
+                    </React.Fragment>
+                    : <Typography variant='h6'>game has ended</Typography>)
               }
             </Box>
             {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>

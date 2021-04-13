@@ -42,7 +42,7 @@ const cells = [
 export function MarketTable(props) {
   const _classes = styles()
   const classes = useStyles()
-  
+
   const [buy, setBuy] = useState()
   const [market, setMarket] = useState([])
   const [total, setTotal] = useState(0)
@@ -55,14 +55,18 @@ export function MarketTable(props) {
 
   const tournament = useContext(TournamentContext)
 
+  async function updateMarket() {
+    const data = await tokenApi.getMarket(orderBy, direction, page, search)
+    setMarket(data.rows)
+    setTotal(data.count)
+  }
+
   useEffect(() => {
     async function fetchMarket() {
       setLoading(true)
       const time = +new Date()
 
-      const data = await tokenApi.getMarket(orderBy, direction, page, search)
-      setMarket(data.rows)
-      setTotal(data.count)
+      await updateMarket()
 
       if (first) {
         setTimeout(() => {
@@ -77,6 +81,15 @@ export function MarketTable(props) {
     fetchMarket()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, orderBy, direction, search])
+
+  useEffect(() => {
+    const periodicFetch = setInterval(() => {
+      updateMarket()
+    }, 30000)
+    
+    return () => clearInterval(periodicFetch)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function headerClick(id, sortable) {
     if (!sortable || loading) {
