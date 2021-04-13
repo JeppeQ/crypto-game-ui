@@ -12,6 +12,9 @@ export const mainTheme = createMuiTheme({
   },
   typography: {
     fontSize: 15,
+    body1: {
+      fontSize: '15px'
+    },
     h3: {
       letterSpacing: '1px',
       fontFamily: 'astrospace',

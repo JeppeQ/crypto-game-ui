@@ -99,8 +99,8 @@ export function PortfolioTable() {
                 <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
                   <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
                     {orderBy === cell.id
-                      ? <Typography variant='body' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                      : <Typography variant='body' color='textSecondary'>{cell.label}</Typography>
+                      ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
+                      : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
                     }
                   </Box>
                 </CustomTableCell>
@@ -122,7 +122,7 @@ export function PortfolioTable() {
                   <Box display='flex'>
                     {row.name}
                     <Box ml={1}>
-                      <Typography variant='body' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
+                      <Typography variant='body1' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
                     </Box>
                   </Box>
                 </CustomTableCell>

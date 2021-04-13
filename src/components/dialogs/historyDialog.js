@@ -114,7 +114,7 @@ function PortfolioTable(address) {
               <Box display='flex'>
                 {token.name}
                 <Box ml={1}>
-                  <Typography variant='body' color='textSecondary'>{token.symbol.toUpperCase()}</Typography>
+                  <Typography variant='body1' color='textSecondary'>{token.symbol.toUpperCase()}</Typography>
                 </Box>
               </Box>
             </CustomTableCell>
@@ -157,7 +157,7 @@ function TradeHistoryTable(address) {
         <TableRow>
           {cells.map(cell =>
             <CustomTableCell>
-              <Typography variant='body'>{cell}</Typography>
+              <Typography variant='body1'>{cell}</Typography>
             </CustomTableCell>
           )}
         </TableRow>
@@ -170,7 +170,7 @@ function TradeHistoryTable(address) {
               {DateTime.fromISO(trade.date).toFormat('LLL dd, hh:mm:ss')}
             </CustomTableCell>
             <CustomTableCell>
-              <Typography variant='body' color='textSecondary'>{trade.token.symbol.toUpperCase()}</Typography>
+              <Typography variant='body1' color='textSecondary'>{trade.token.symbol.toUpperCase()}</Typography>
             </CustomTableCell>
             <CustomTableCell style={{ color: trade.side === 'Sell' ? '#e15241' : '#8dc647' }}>
               {trade.side}

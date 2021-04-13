@@ -160,8 +160,8 @@ export function MarketTable(props) {
               <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
                 <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
                   {orderBy === cell.id
-                    ? <Typography variant='body' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                    : <Typography variant='body' color='textSecondary'>{cell.label}</Typography>
+                    ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
+                    : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
                   }
                 </Box>
               </CustomTableCell>
@@ -180,7 +180,7 @@ export function MarketTable(props) {
                       {renderData(row.name)}
                     </Link>
                     <Box ml={1}>
-                      <Typography variant='body' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
+                      <Typography variant='body1' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
                     </Box>
                   </Box>}
               </TableCell>
@@ -199,12 +199,12 @@ export function MarketTable(props) {
           <TableRow>
             <TableCell />
             <TableCell>
-              <Typography variant='body' color='textSecondary'>Powered by CoinGecko</Typography>
+              <Typography variant='body1' color='textSecondary'>Powered by CoinGecko</Typography>
             </TableCell>
             <TableCell />
             <TableCell />
             <TableCell align='right'>
-              <Typography variant='body' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(market.length, 1)}-${page * PAGE_SIZE + market.length} of ${total}`}</Typography>
+              <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(market.length, 1)}-${page * PAGE_SIZE + market.length} of ${total}`}</Typography>
             </TableCell>
             <TableCell align='center'>
               <Box display='flex' justifyContent='space-evenly'>

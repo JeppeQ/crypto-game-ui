@@ -11,7 +11,6 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
 import ArrowBack from '@material-ui/icons/ArrowBackIos'
 import ArrowForward from '@material-ui/icons/ArrowForwardIos'
 
@@ -133,15 +132,15 @@ export function LeaderboardTable() {
         <Typography variant='h3'>Leaderboard</Typography>
         <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search address...'} />
       </Box>
-      <Table component={Paper} className={_classes.table}>
+      <Table className={_classes.table}>
         <TableHead>
           <TableRow>
             {cells.map(cell => (
               <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
                 <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
                   {orderBy === cell.id
-                    ? <Typography variant='body' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                    : <Typography variant='body' color='textSecondary'>{cell.label}</Typography>
+                    ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
+                    : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
                   }
                 </Box>
               </CustomTableCell>
@@ -151,7 +150,7 @@ export function LeaderboardTable() {
         <TableBody>
           {first && loadingRow()}
           {!first && leaderboard.map(row => (
-            <TableRow key={row._id}>
+            <TableRow key={row.address}>
               <TableCell>{row.rank}</TableCell>
               <TableCell>
                 <Button style={{ padding: '0px 5px' }}>
@@ -176,7 +175,7 @@ export function LeaderboardTable() {
             <TableCell />
             <TableCell />
             <TableCell align='right'>
-              <Typography variant='body' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
+              <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
             </TableCell>
             <TableCell align='center'>
               <Box display='flex' justifyContent='space-evenly'>

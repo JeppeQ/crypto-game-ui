@@ -39,13 +39,13 @@ export function SignedUpDialog(props) {
         </DialogTitle>
         <DialogContent>
           <Box mb={1}>
-            <Typography variant='body'>
+            <Typography variant='body1'>
               Thank you for joining the competition.
               Please note that the leaderboard gets updated every 10 minutes.
             </Typography>
           </Box>
           <Box mb={2}>
-            <Typography variant='body'>
+            <Typography variant='body1'>
               Would you like to receive an email notification when the competition starts?
             </Typography>
           </Box>

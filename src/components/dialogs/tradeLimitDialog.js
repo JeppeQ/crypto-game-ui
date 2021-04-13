@@ -22,7 +22,7 @@ export function TradeLimitDialog(props) {
         </DialogTitle>
         <DialogContent>
           <Box>
-            <Typography variant='body'>
+            <Typography variant='body1'>
               You have reached your daily trade limit of 10 trades. You'll be able to trade again in:
             </Typography>
           </Box>
