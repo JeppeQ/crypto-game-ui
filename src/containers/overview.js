@@ -60,12 +60,12 @@ function Overview() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               {!tournament.info.start && <Skeleton variant="rect" animation="wave" width={200} height={70} style={{ borderRadius: '4px' }} />}
               {tournament.info.start &&
-                (DateTime.fromISO(tournament.info.start) > DateTime.now()
+                (DateTime.fromISO(tournament.info.start) > DateTime.utc()
                   ? <React.Fragment>
                     <Typography variant='h6'>game begins in</Typography>
                     <CountDown date={DateTime.fromISO(tournament.info.start)} />
                   </React.Fragment>
-                  : DateTime.fromISO(tournament.info.end) > DateTime.now()
+                  : DateTime.fromISO(tournament.info.end) > DateTime.utc()
                     ? <React.Fragment>
                       <Typography variant='h6'>game ends in</Typography>
                       <CountDown date={DateTime.fromISO(tournament.info.end)} />

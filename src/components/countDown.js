@@ -10,7 +10,7 @@ export function CountDown(props) {
   const [now, setNow] = useState(DateTime.utc())
 
   useEffect(() => {
-    const timer = setTimeout(() => setNow(DateTime.now()), 60000)
+    const timer = setTimeout(() => setNow(DateTime.utc()), 60000)
     return () => clearTimeout(timer)
   }, [now, props.date])
 
