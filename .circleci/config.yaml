@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  gcp-cli: circleci/gcp-cli@2.1.0
+
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - checkout
+      - gcp-cli/initialize
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn build
+      - run:
+          name: copy app.yaml
+          command: cp .gcloud/app.yaml app.yaml
+      - run:
+          name: copy .gcloudignore
+          command: cp .gcloud/.gcloudignore .gcloudignore
+      - run:
+          name: gcloud deploy
+          command: |
+            gcloud app deploy --quiet app.yaml
+          no_output_timeout: 20m
