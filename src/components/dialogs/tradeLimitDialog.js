@@ -13,7 +13,7 @@ import { CountDown } from '../countDown'
 
 export function TradeLimitDialog(props) {
   const _classes = styles()
-
+  console.log(DateTime.utc().endOf('day'))
   return (
     <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
       <Box className={_classes.dialog}>

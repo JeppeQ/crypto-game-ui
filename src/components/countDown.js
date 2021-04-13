@@ -7,13 +7,11 @@ import Typography from '@material-ui/core/Typography'
 
 export function CountDown(props) {
   const classes = useStyles()
-  const [now, setNow] = useState(DateTime.now())
+  const [now, setNow] = useState(DateTime.utc())
 
   useEffect(() => {
-    if (props.date < now) {
-      window.location.reload()
-    }
-    setTimeout(() => setNow(DateTime.now()), 60000)
+    const timer = setTimeout(() => setNow(DateTime.now()), 60000)
+    return () => clearTimeout(timer)
   }, [now, props.date])
 
   const { days, hours, minutes } = props.date.diff(now, ['days', 'hours', 'minutes'])

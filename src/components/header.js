@@ -12,6 +12,7 @@ import EcoIcon from '@material-ui/icons/Eco'
 import { PlayerContext } from '../contexts/player'
 import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
+import metamaskLogo from '../metamask-icon.png'
 import axios from 'axios'
 
 const menuItems = [
@@ -83,7 +84,7 @@ function Header() {
       </Grid>
       <Grid item>
         {player.info.address
-          ? <Button startIcon={<img src="https://homora-v2.alphafinance.io/static/logos/metamask-icon.png" width="21" height="21" alt='metaMaskIcon' />}>
+          ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
             {ellipseAddress(player.info.address, 4, 4)}
           </Button>
           : <Button onClick={web3.connect}>

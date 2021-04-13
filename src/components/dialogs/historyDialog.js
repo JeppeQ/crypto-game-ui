@@ -102,14 +102,14 @@ function PortfolioTable(address) {
       <TableHead>
         <TableRow>
           {cells.map(cell =>
-            <CustomTableCell>{cell}</CustomTableCell>
+            <CustomTableCell key={cell}>{cell}</CustomTableCell>
           )}
         </TableRow>
       </TableHead>
       <TableBody>
         {loading && loadingRow(cells)}
         {!loading && portfolio.map(token =>
-          <TableRow>
+          <TableRow key={token.id}>
             <CustomTableCell>
               <Box display='flex'>
                 {token.name}
@@ -156,7 +156,7 @@ function TradeHistoryTable(address) {
       <TableHead>
         <TableRow>
           {cells.map(cell =>
-            <CustomTableCell>
+            <CustomTableCell key={cell}>
               <Typography variant='body1'>{cell}</Typography>
             </CustomTableCell>
           )}
@@ -165,7 +165,7 @@ function TradeHistoryTable(address) {
       <TableBody>
         {loading && loadingRow(cells)}
         {!loading && tradeHistory.map(trade =>
-          <TableRow>
+          <TableRow key={trade.date}>
             <CustomTableCell>
               {DateTime.fromISO(trade.date).toFormat('LLL dd, hh:mm:ss')}
             </CustomTableCell>

@@ -9,7 +9,6 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -153,7 +152,7 @@ export function MarketTable(props) {
         <Typography variant='h3'>Market</Typography>
         <SearchBar search={value => searchCoin(value)} value={search} placeholder={'Search coin...'} />
       </Box>
-      <Table component={Paper} className={_classes.table}>
+      <Table className={_classes.table}>
         <TableHead>
           <TableRow>
             {cells.map(cell => (

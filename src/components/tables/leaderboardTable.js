@@ -187,7 +187,7 @@ export function LeaderboardTable() {
         </TableBody>
       </Table>
       {viewHistory && <HistoryDialog
-        open={viewHistory}
+        open={viewHistory !== null}
         close={() => setViewHistory(null)}
         address={viewHistory}
       />}

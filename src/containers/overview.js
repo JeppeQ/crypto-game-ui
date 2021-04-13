@@ -95,11 +95,15 @@ function Overview() {
           <Box mt={5} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>How do I trade?</Typography>
           </Box>
+          <Box mb={1}>
+            <Typography className={classes.breadText}>
+              Once the competition begins, you'll be able to buy and sell cryptos from the market.
+              The market can be found under the 'trade' tab. Once you have decided on a crypto,
+              click the green buy button, and choose how much you want to spend. There are currently
+              no spending limit, so you could go all-in on one crypto.
+          </Typography>
+          </Box>
           <Typography className={classes.breadText}>
-            Once the competition begins, you'll be able to buy and sell cryptos from the market.
-            The market can be found under the 'trade' tab. Once you have decided on a crypto,
-            click the green buy button, and choose how much you want to spend. There are currently
-            no spending limit, so you could go all-in on one crypto. <Box mt={1} />
             You can keep track of your investments in your portfolio, also found under the 'trade' tab.
             If you wish to sell one of your investments, click the red sell button next to the asset. Be aware
             that there is a daily limit of 10 trades, so choose your trades carefully.
@@ -107,10 +111,14 @@ function Overview() {
           <Box mt={5} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>Scoring and prizing</Typography>
           </Box>
+          <Box mb={1}>
+            <Typography className={classes.breadText}>
+              The leaderboard keeps track of all players and their current positions.
+              The players' portfolio and trading history can be seen there.
+              Leaderboard is updated every 10 min.
+            </Typography>
+          </Box>
           <Typography className={classes.breadText}>
-            The leaderboard keeps track of all players and their current positions.
-            The players' portfolio and trading history can be seen there.
-            Leaderboard is updated every 10 min. <Box mt={1} />
             To be eligible for a prize, you must have made at least one investment, and have traded for more than $20,000.
             Once the competition ends, the top 10 players on the leaderboard will recieve a prize.
             Prizes will be sent to the players wallets after a short verification process.
