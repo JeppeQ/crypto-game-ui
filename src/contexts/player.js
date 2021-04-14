@@ -13,7 +13,7 @@ export const PlayerProvider = ({ children }) => {
   const [assetValue, setAssetValue] = useState(0)
   const [assetsLoading, loadAssets] = useState(true)
   const [emailDialog, showEmailDialog] = useState(false)
-  const [tradeLimitDialog, showTradeLimitDialog] = useState(true)
+  const [tradeLimitDialog, showTradeLimitDialog] = useState(false)
 
   useEffect(() => {
     update()

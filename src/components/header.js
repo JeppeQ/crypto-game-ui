@@ -74,14 +74,14 @@ function Header() {
           })}
         </Grid>
       </Grid>
-      <Grid item>
+      {process.env.NODE_ENV !== 'production' && <Grid item>
         <Button style={{ marginRight: '10px' }} color='secondary' variant='outlined' onClick={() => {
           axios.post('http://localhost:8080/api/leaderboard/update')
         }}>Update Leaderboard</Button>
         <Button color='secondary' variant='outlined' onClick={() => {
           axios.post('http://localhost:8080/api/token/updateTokens')
         }}>Update Market</Button>
-      </Grid>
+      </Grid>}
       <Grid item>
         {player.info.address
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
