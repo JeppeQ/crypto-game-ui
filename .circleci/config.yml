@@ -10,17 +10,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --immutable
+            - dependencies-{{ checksum "package.json" }}
+      - run: yarn install --immutable
       - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: dependencies-{{ checksum "package.json" }}
           paths:
-            - ~/.cache/yarn
+            - node_modules
 
   build:
     working_directory: ~/repo
@@ -29,9 +25,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - dependencies-{{ checksum "package.json" }}
       - run: yarn build
       - persist_to_workspace:
           root: .
