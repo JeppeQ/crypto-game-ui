@@ -1,3 +1,15 @@
+restore_cache:
+  - &restore_cache:
+  - restore_cache:
+      keys:
+        - dependencies-{{ checksum "package.json" }}
+        - dependencies
+  - run: yarn install --production=false
+  - save_cache:
+      key: dependencies-{{ checksum "package.json" }}
+      paths:
+        - node_modules
+
 version: 2.1
 orbs:
   gcp-cli: circleci/gcp-cli@2.1.0
@@ -9,14 +21,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-      - run: yarn install --immutable
-      - save_cache:
-          key: dependencies-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - *restore_cache
 
   build:
     working_directory: ~/repo
@@ -24,9 +29,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
+      - *restore_cache
       - run: yarn build
       - persist_to_workspace:
           root: .
