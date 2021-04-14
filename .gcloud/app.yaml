@@ -4,12 +4,12 @@ runtime: nodejs12
 
 handlers:
   - url: /
-    static_files: build/index.html
-    upload: build/index.html
+    static_files: dist/index.html
+    upload: dist/index.html
     secure: always
 
-  - url: /static
-    static_dir: build/static
+  - url: /
+    static_dir: dist
 
 env_variables:
   NODE_ENV: 'production'

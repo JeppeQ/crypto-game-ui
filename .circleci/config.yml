@@ -3,14 +3,50 @@ orbs:
   gcp-cli: circleci/gcp-cli@2.1.0
 
 jobs:
+  install_dependencies:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
   build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+              - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn test
+      - run: yarn build
+      - persist_to_workspace:
+          root: .
+          paths: dist
+
+  deploy:
     working_directory: ~/repo
     docker:
       - image: google/cloud-sdk:latest
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - gcp-cli/initialize
-      - run: yarn build
       - run:
           name: copy app.yaml
           command: cp .gcloud/app.yaml app.yaml
