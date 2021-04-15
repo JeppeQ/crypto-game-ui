@@ -8,8 +8,8 @@ handlers:
     upload: build/index.html
     secure: always
 
-  - url: /
-    static_dir: /static
+  - url: /static
+    static_dir: build/static
 
 env_variables:
   NODE_ENV: 'production'
