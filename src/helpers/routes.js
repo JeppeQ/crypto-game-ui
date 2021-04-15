@@ -1,6 +1,6 @@
-import Overview from "./containers/overview";
-import Leaderboard from "./containers/leaderboard";
-import Trade from "./containers/trade";
+import Overview from "../containers/overview";
+import Leaderboard from "../containers/leaderboard";
+import Trade from "../containers/trade";
 
 export const routes = [
   {

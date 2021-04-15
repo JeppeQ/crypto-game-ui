@@ -12,7 +12,7 @@ import EcoIcon from '@material-ui/icons/Eco'
 import { PlayerContext } from '../contexts/player'
 import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
-import metamaskLogo from '../metamask-icon.png'
+import metamaskLogo from '../assets/images/metamask-icon.png'
 import axios from 'axios'
 
 const menuItems = [
