@@ -13,7 +13,7 @@ export function MetaMaskDialog(props) {
   const _classes = styles()
 
   return (
-    <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
+    <Dialog open={props.open} onClose={() => window.location.reload()} maxWidth='sm'>
       <Box className={_classes.dialog} style={{ width: '500px' }}>
         <DialogTitle>
           <Typography className={_classes.title}>MetaMask required</Typography>
