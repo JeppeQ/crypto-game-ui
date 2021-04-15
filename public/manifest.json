@@ -1,6 +1,13 @@
 {
-  "short_name": "crypto.gg",
-  "name": "Crypto investing game",
+  "short_name": "cryptoseasons",
+  "name": "crypto seasons",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml"
+    }
+  ],
   "start_url": ".",
   "display": "standalone"
 }
