@@ -1,5 +1,3 @@
-service: client
-
 runtime: nodejs12
 
 handlers:

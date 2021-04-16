@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -10,11 +10,14 @@ import TextField from '@material-ui/core/TextField'
 
 import { styles, CustomButton } from './styles'
 import * as playerApi from '../../api/player'
+import { TournamentContext } from '../../contexts/tournament'
 
 export function SignedUpDialog(props) {
   const _classes = styles()
   const [email, setEmail] = useState('')
   const [error, setError] = useState(false)
+
+  const tournament = useContext(TournamentContext)
 
   const registerEmail = () => {
     if (!email) {
@@ -45,9 +48,14 @@ export function SignedUpDialog(props) {
             </Typography>
           </Box>
           <Box mb={2}>
-            <Typography variant='body1'>
-              Would you like to receive an email notification when the competition starts?
+            {tournament && tournament.active
+              ? <Typography variant='body1'>
+                Would you like to receive updates about the competition?
             </Typography>
+              : <Typography variant='body1'>
+                Would you like to receive an email notification when the competition starts?
+            </Typography>
+            }
           </Box>
           <Box mb={2}>
             <TextField label="Email" variant="outlined" fullWidth value={email} onChange={handleChange} error={error} />

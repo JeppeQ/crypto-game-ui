@@ -10,7 +10,7 @@ let API_ENDPOINT = ''
 if (hostname.indexOf('localhost') > -1) {
   API_ENDPOINT = 'http://localhost:8080/api'
 } else {
-  API_ENDPOINT = 'https://crypto-investment-game.ew.r.appspot.com/api'
+  API_ENDPOINT = 'https://backend-dot-crypto-investment-game.ew.r.appspot.com//api'
 }
 
 export {
