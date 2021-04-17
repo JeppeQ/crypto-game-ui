@@ -4,6 +4,7 @@ import Web3 from 'web3'
 import { PlayerContext } from './player'
 import { MetaMaskDialog } from '../components/dialogs/metamaskDialog' 
 import * as playerApi from '../api/player'
+import { URL } from '../api'
 
 function initWeb3() {
   const web3 = new Web3(window.ethereum);
@@ -47,11 +48,11 @@ export const Web3Provider = ({ children }) => {
       domain: {
         chainId,
         name: 'Sign up',
-        verifyingContract: 'http://localhost',
+        verifyingContract: URL,
         version: '1',
       },
       message: {
-        1: "Hi, sign this message to verify your identity!"
+        1: "Hello, please sign this message to verify your ownership of the wallet."
       },
       primaryType: 'EIP712Domain',
       types: {
@@ -63,17 +64,17 @@ export const Web3Provider = ({ children }) => {
         ]
       }
     });
-
+    
     web3.currentProvider.send({
       method: 'eth_signTypedData_v4',
       params: [address, data],
       from: address,
     }, async (err, result) => {
       if (err) return;
-    
+      
       const jwt = await playerApi.authenticate(result.result, data)
       if (jwt) {
-        if (signup) {
+        if (signup === true) {
           player.signup(jwt)
         } else {
           player.getPlayerInfo(jwt)
@@ -81,7 +82,7 @@ export const Web3Provider = ({ children }) => {
       }
     })
   }
-
+  
   return (
     <Web3Context.Provider
       value={{

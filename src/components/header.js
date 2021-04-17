@@ -87,7 +87,7 @@ function Header() {
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
             {ellipseAddress(player.info.address, 4, 4)}
           </Button>
-          : <Button onClick={web3.connect}>
+          : <Button onClick={() => web3.connect()}>
             connect wallet
           </Button>}
       </Grid>

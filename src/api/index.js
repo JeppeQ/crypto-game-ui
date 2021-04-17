@@ -7,12 +7,16 @@ export function buildApiHeaders(token = localStorage.getItem('jwtToken')) {
 const hostname = window && window.location && window.location.hostname
 
 let API_ENDPOINT = ''
+let URL = ''
 if (hostname.indexOf('localhost') > -1) {
+  URL = 'http://localhost'
   API_ENDPOINT = 'http://localhost:8080/api'
 } else {
-  API_ENDPOINT = 'https://backend-dot-crypto-investment-game.ew.r.appspot.com//api'
+  URL = 'https://cryptoseasons.app'
+  API_ENDPOINT = 'https://backend-dot-crypto-investment-game.ew.r.appspot.com/api'
 }
 
 export {
-  API_ENDPOINT
+  API_ENDPOINT,
+  URL
 }
