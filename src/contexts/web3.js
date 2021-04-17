@@ -52,7 +52,7 @@ export const Web3Provider = ({ children }) => {
         version: '1',
       },
       message: {
-        1: "Hello, please sign this message to verify your ownership of the wallet."
+        1: "Hello, please sign this message to confirm your ownership of the wallet."
       },
       primaryType: 'EIP712Domain',
       types: {

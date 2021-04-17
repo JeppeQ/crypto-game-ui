@@ -12,6 +12,7 @@ import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
+import TwitterIcon from '@material-ui/icons/Twitter'
 
 import { Web3Context } from '../contexts/web3'
 import { PlayerContext } from '../contexts/player'
@@ -140,6 +141,17 @@ function Overview() {
               <Box>4-10th place:</Box>
               <Box>$50</Box>
             </Box>
+          </Box>
+          <Box mt={5} mb={1}>
+            <Typography className={classes.headlineText} variant='h5'>Contact</Typography>
+          </Box>
+          <Box display='flex'>
+            <Typography className={classes.breadText} style={{ width: 'fit-content', marginRight: '20px' }}>
+              cryptoseasonsapp@gmail.com
+            </Typography>
+            <Link target="_blank" href="https://twitter.com/JeppeQin" color='textPrimary'>
+              <TwitterIcon />
+            </Link>
           </Box>
         </motion.div>
       </Grid >
