@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from "react-router-dom"
 import { motion } from 'framer-motion'
 import clsx from 'clsx'
+import ReactGA from 'react-ga'
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -48,6 +49,8 @@ function Header() {
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path) || menuItems[0])
+    ReactGA.pageview(location.pathname)
+    ReactGA.set({ page: location.pathname })
   }, [location])
 
   return (

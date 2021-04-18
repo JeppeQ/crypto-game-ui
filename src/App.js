@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import ReactGA from 'react-ga'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -15,6 +16,8 @@ import { routes } from './helpers/routes'
 import { Web3Provider } from './contexts/web3'
 import { PlayerProvider } from './contexts/player'
 import { TournamentProvider } from './contexts/tournament'
+
+ReactGA.initialize("G-CWTBMBCJ3K")
 
 function App() {
   return (

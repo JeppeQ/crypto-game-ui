@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react"
+import ReactGA from 'react-ga'
 
 import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
 import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
@@ -39,6 +40,7 @@ export const PlayerProvider = ({ children }) => {
     const player = await playerApi.me(jwt)
     if (player) {
       setInfo({ ...info, ...player })
+      ReactGA.set({ userId: player.address })
     }
   }
 
@@ -56,6 +58,11 @@ export const PlayerProvider = ({ children }) => {
     if (player) {
       setInfo(player)
       showEmailDialog(true)
+
+      ReactGA.event({
+        category: 'User',
+        action: 'Signed up'
+      })
     }
   }
 

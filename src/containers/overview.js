@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon"
 import clsx from 'clsx'
+import ReactGA from 'react-ga'
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -31,6 +32,11 @@ function Overview() {
     } else {
       web3.connect(true)
     }
+
+    ReactGA.event({
+      category: 'User',
+      action: 'clicked sign up button'
+    })
   }
 
   return (

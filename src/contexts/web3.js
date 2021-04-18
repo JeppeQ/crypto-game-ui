@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from "react"
 import Web3 from 'web3'
+import ReactGA from 'react-ga'
 
 import { PlayerContext } from './player'
 import { MetaMaskDialog } from '../components/dialogs/metamaskDialog' 
@@ -33,6 +34,12 @@ export const Web3Provider = ({ children }) => {
   const connect = async (signup = false) => {
     if (!window.ethereum) {
       setMetaMaskDialog(true)
+    
+      ReactGA.event({
+        category: 'User',
+        action: 'Missing metamask'
+      })
+
       return
     }
 
