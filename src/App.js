@@ -17,7 +17,11 @@ import { Web3Provider } from './contexts/web3'
 import { PlayerProvider } from './contexts/player'
 import { TournamentProvider } from './contexts/tournament'
 
-ReactGA.initialize("G-CWTBMBCJ3K")
+if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize("UA-194864148-1")
+} else {
+  ReactGA.initialize("ga-disabled-UA-194864148-1")
+}
 
 function App() {
   return (
