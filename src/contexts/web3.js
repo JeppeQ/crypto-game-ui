@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react"
-import Web3 from 'web3'
 import ReactGA from 'react-ga'
 
 import { PlayerContext } from './player'
@@ -7,23 +6,7 @@ import { MetaMaskDialog } from '../components/dialogs/metamaskDialog'
 import * as playerApi from '../api/player'
 import { URL } from '../api'
 
-function initWeb3() {
-  const web3 = new Web3(window.ethereum);
-
-  window.ethereum.enable()
-
-  web3.eth.extend({
-    methods: [
-      {
-        name: "chainId",
-        call: "eth_chainId",
-        outputFormatter: web3.utils.hexToNumber
-      }
-    ]
-  });
-
-  return web3
-}
+const ethereum = window.ethereum
 
 export const Web3Context = createContext()
 
@@ -32,7 +15,7 @@ export const Web3Provider = ({ children }) => {
   const [metaMaskDialog, setMetaMaskDialog] = useState(false)
 
   const connect = async (signup = false) => {
-    if (!window.ethereum) {
+    if (!ethereum) {
       setMetaMaskDialog(true)
     
       ReactGA.event({
@@ -43,14 +26,17 @@ export const Web3Provider = ({ children }) => {
       return
     }
 
-    const web3 = initWeb3()
-    const accounts = await web3.eth.getAccounts()
-    const chainId = await web3.eth.chainId()
+    const requestAccounts = await ethereum.send('eth_requestAccounts')
+    if (!requestAccounts || !requestAccounts.result || requestAccounts.result.length < 1) {
+      return
+    }
+    const account = requestAccounts.result[0]
+    const chainId = await ethereum.request({ method: 'eth_chainId' })
 
-    signMessage({ web3, address: accounts[0], chainId }, signup)
+    signMessage({ address: account, chainId }, signup)
   }
 
-  const signMessage = ({ web3, address, chainId }, signup) => {
+  const signMessage = ({ address, chainId }, signup) => {
     const data = JSON.stringify({
       domain: {
         chainId,
@@ -72,7 +58,7 @@ export const Web3Provider = ({ children }) => {
       }
     });
     
-    web3.currentProvider.send({
+    ethereum.sendAsync({
       method: 'eth_signTypedData_v4',
       params: [address, data],
       from: address,
