@@ -16,7 +16,8 @@ export const styles = makeStyles({
     borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.2)',
     paddingTop: '5px',
-    paddingBottom: '10px'
+    paddingBottom: '10px',
+    maxWidth: 'calc(100vw - 20px)',
   },
   input: {
     marginBottom: '10px'

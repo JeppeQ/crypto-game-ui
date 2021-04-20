@@ -7,12 +7,19 @@ import ReactGA from 'react-ga'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import EcoIcon from '@material-ui/icons/Eco'
+import MenuIcon from '@material-ui/icons/Menu'
+import EqualizerIcon from '@material-ui/icons/Equalizer'
+import LocalAtmIcon from '@material-ui/icons/LocalAtm'
+import InfoIcon from '@material-ui/icons/Info'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import { PlayerContext } from '../contexts/player'
 import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
+import Menu from './mobile/menu'
 import metamaskLogo from '../assets/images/metamask-icon.png'
 import axios from 'axios'
 
@@ -22,28 +29,33 @@ const menuItems = [
     path: '/overview',
     left: '90px',
     width: '180px',
-    activeWidth: '178px'
+    activeWidth: '178px',
+    icon: <InfoIcon />
   },
   {
     name: 'TRADE',
     path: '/trade',
     left: '270px',
     width: '180px',
-    activeWidth: '178px'
+    activeWidth: '178px',
+    icon: <LocalAtmIcon />
   },
   {
     name: 'LEADERBOARD',
     path: '/leaderboard',
     left: '450px',
     width: '220px',
-    activeWidth: '218px'
+    activeWidth: '218px',
+    icon: <EqualizerIcon />
   }
 ]
 
 function Header() {
   const classes = useStyles()
   const location = useLocation()
+  const mobile = useMediaQuery('(max-width: 850px)')
   const [active, setActive] = useState({})
+  const [menu, openMenu] = useState(false)
   const player = useContext(PlayerContext)
   const web3 = useContext(Web3Context)
 
@@ -52,6 +64,23 @@ function Header() {
     ReactGA.pageview(location.pathname)
     ReactGA.set({ page: location.pathname })
   }, [location])
+
+  if (mobile) {
+    return (
+      <React.Fragment>
+        <Grid container className={classes.header} style={{ height: '60px', padding: '0' }} alignItems='center' justify='space-between'>
+          <IconButton onClick={() => openMenu(true)}>
+            <MenuIcon fontSize='large' />
+          </IconButton>
+          <Box style={{ letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>
+            {active.name}
+          </Box>
+          <Box width={'60px'} />
+        </Grid>
+        <Menu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
+      </React.Fragment>
+    )
+  }
 
   return (
     <Grid container className={classes.header} justify='space-between' alignItems='center'>

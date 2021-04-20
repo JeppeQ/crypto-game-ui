@@ -29,7 +29,7 @@ function Leaderboard() {
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
-          <Box mb={'45px'} width='1050px' display='flex' justifyContent='space-between'>
+          <Box className={classes.infoBoxContainer}>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
               <Typography color='textPrimary' variant='h4'>
@@ -65,7 +65,8 @@ const useStyles = makeStyles({
   mainContainer: {
     width: '100%',
     marginTop: '100px',
-    marginBottom: '50px'
+    marginBottom: '50px',
+    padding: '0 10px',
   },
   infoBox: {
     width: '330px',
@@ -74,7 +75,8 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '20px'
+    padding: '20px',
+    marginBottom: '15px'
   },
   assetsContainer: {
     width: '740px',
@@ -91,4 +93,15 @@ const useStyles = makeStyles({
   tableContainer: {
     width: '1050px',
   },
+  infoBoxContainer: {
+    width: '1050px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '30px',
+    '@media (max-width: 1050px)': {
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    }
+  }
 });

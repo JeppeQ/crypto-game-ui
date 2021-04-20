@@ -50,11 +50,11 @@ function Overview() {
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
-          <Box mb={3} width='1050px' display='flex' flexDirection='column'>
+          <Box mb={3} className={classes.headlineContainer}>
             <Typography className={classes.headlineText} variant='h5'>CRYPTO</Typography>
             <Typography style={{ fontSize: '45px', letterSpacing: '2px' }} className={classes.headlineText} variant='h2'>INVESTMENT GAME</Typography>
           </Box>
-          <Box mb={'45px'} width='1050px' display='flex'>
+          <Box className={classes.infoBoxContainer}>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>prize pool</Typography>
               <Typography color='textPrimary' variant='h3'>
@@ -89,7 +89,7 @@ function Overview() {
               <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
             </Box>}
           </Box>
-          <Box mt={10} mb={1}>
+          <Box mt={8} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>How does it work?</Typography>
           </Box>
           <Typography className={classes.breadText}>
@@ -172,7 +172,15 @@ const useStyles = makeStyles({
   mainContainer: {
     width: '100%',
     marginTop: '150px',
-    marginBottom: '50px'
+    marginBottom: '50px',
+    padding: '0 10px',
+    '@media (max-width: 1050px)': {
+      marginTop: '100px'
+    }
+  },
+  headlineContainer: {
+    display: 'flex',
+    flexDirection: 'column'
   },
   headlineText: {
     textShadow: '1px 1px 3px rgba(0, 255, 243, 0.9)',
@@ -182,28 +190,22 @@ const useStyles = makeStyles({
   breadText: {
     textShadow: '1px 1px 3px rgba(0, 255, 243, 0.0)',
     color: '#fafafa',
-    width: '800px',
+    width: '100%',
+    maxWidth: '800px',
     fontFamily: 'system-ui',
     fontStyle: 'normal',
     fontWeight: '500',
     fontSize: '18px'
   },
   infoBox: {
-    width: '350px',
+    width: '330px',
     height: '120px',
     display: 'flex',
     justifyContent: 'space-evenly',
     flexDirection: 'column',
     alignItems: 'center',
     padding: '20px',
-    marginRight: '20px'
-  },
-  infoBoxHeadline: {
-    height: '30px'
-  },
-  assetsContainer: {
-    width: '740px',
-    height: '270px'
+    marginBottom: '15px'
   },
   customBox: {
     backgroundColor: '#1E2530',
@@ -212,5 +214,15 @@ const useStyles = makeStyles({
     borderTop: '2px solid rgba(255, 255, 255, 0.3)',
     borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.2)'
+  },
+  infoBoxContainer: {
+    width: '1050px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media (max-width: 1050px)': {
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    }
   }
 });

@@ -5,7 +5,6 @@ import NumberFormat from 'react-number-format'
 import clsx from 'clsx'
 
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -21,16 +20,16 @@ function Trade() {
     <Scrollbars
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
-      <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
+      <Box className={classes.mainContainer}>
         <motion.div
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
-          <Box mb={1} width='1050px' display='flex'>
+          <Box mb={1}>
             <Typography variant='h3'>Portfolio</Typography>
           </Box>
-          <Box display='flex' direction='row' justifyContent='space-between' className={classes.portfolioContainer}>
+          <Box className={classes.portfolioContainer}>
             <Box display='flex' flexDirection='column' justifyContent='space-between'>
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Total Assets</Typography>
@@ -51,7 +50,7 @@ function Trade() {
           </Box>
           <MarketTable />
         </motion.div>
-      </Grid >
+      </Box>
     </Scrollbars >
   )
 }
@@ -61,13 +60,27 @@ export default Trade
 const useStyles = makeStyles({
   mainContainer: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: '100px',
-    marginBottom: '50px'
+    marginBottom: '50px',
+    padding: '0 10px',
+    '@media (max-width: 1050px)': {
+      alignItems: 'initial',
+    }
   },
   portfolioContainer: {
     width: '1050px',
     height: '270px',
-    marginBottom: '40px'
+    marginBottom: '40px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media (max-width: 1050px)': {
+      width: '100%',
+      flexDirection: 'column',
+      height: 'auto'
+    }
   },
   infoBox: {
     width: '280px',
@@ -75,11 +88,21 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: '20px'
+    padding: '20px',
+    '@media (max-width: 1050px)': {
+      marginBottom: '10px',
+      height: '100px'
+    }
   },
   assetsContainer: {
     width: '760px',
-    height: '270px'
+    height: '270px',
+    '@media (max-width: 1050px)': {
+      height: '200px',
+      width: '100%',
+      marginTop: '5px',
+      overflowX: 'auto'
+    }
   },
   customBox: {
     backgroundColor: '#1E2530',
@@ -88,8 +111,5 @@ const useStyles = makeStyles({
     borderTop: '2px solid rgba(255, 255, 255, 0.3)',
     borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.2)'
-  },
-  tableContainer: {
-    width: '1050px',
-  },
+  }
 });

@@ -85,7 +85,7 @@ export function MarketTable(props) {
     const periodicFetch = setInterval(() => {
       updateMarket()
     }, 30000)
-    
+
     return () => clearInterval(periodicFetch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -148,72 +148,74 @@ export function MarketTable(props) {
 
   return (
     <React.Fragment>
-      <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
+      <Box mb={1} className={_classes.searchHeader}>
         <Typography variant='h3'>Market</Typography>
         <SearchBar search={value => searchCoin(value)} value={search} placeholder={'Search coin...'} />
       </Box>
-      <Table className={_classes.table}>
-        <TableHead>
-          <TableRow>
-            {cells.map(cell => (
-              <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
-                <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
-                  {orderBy === cell.id
-                    ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                    : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
-                  }
-                </Box>
-              </CustomTableCell>
+      <Box className={_classes.tableContainer}>
+        <Table className={_classes.table}>
+          <TableHead>
+            <TableRow>
+              {cells.map(cell => (
+                <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
+                  <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
+                    {orderBy === cell.id
+                      ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
+                      : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
+                    }
+                  </Box>
+                </CustomTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {first && loadingRow()}
+            {!first && market.map(row => (
+              <TableRow key={row.id} >
+                <TableCell>{renderData(row.rank)}</TableCell>
+                <TableCell>
+                  {loading ? <Skeleton variant="text" animation="wave" /> :
+                    <Box display='flex'>
+                      <Link href={`https://www.coingecko.com/en/coins/${row.id}`} target='_blank' color='textPrimary'>
+                        {renderData(row.name)}
+                      </Link>
+                      <Box ml={1}>
+                        <Typography variant='body1' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
+                      </Box>
+                    </Box>}
+                </TableCell>
+                <TableCell align='right'>{renderData(<NumberFormat value={row.price} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}</TableCell>
+                <TableCell align='right' style={{ color: row.priceChangeDay < 0 ? '#e15241' : '#8dc647' }}>
+                  {renderData(<NumberFormat value={row.priceChangeDay} displayType={'text'} suffix={'%'} />)}
+                </TableCell>
+                <TableCell align='right'>
+                  {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}
+                </TableCell>
+                <TableCell align='center'>
+                  <Button variant='contained' disabled={!tournament.active} className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
+                </TableCell>
+              </TableRow>
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {first && loadingRow()}
-          {!first && market.map(row => (
-            <TableRow key={row.id} >
-              <TableCell>{renderData(row.rank)}</TableCell>
+            <TableRow>
+              <TableCell />
               <TableCell>
-                {loading ? <Skeleton variant="text" animation="wave" /> :
-                  <Box display='flex'>
-                    <Link href={`https://www.coingecko.com/en/coins/${row.id}`} target='_blank' color='textPrimary'>
-                      {renderData(row.name)}
-                    </Link>
-                    <Box ml={1}>
-                      <Typography variant='body1' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
-                    </Box>
-                  </Box>}
+                <Typography variant='body1' color='textSecondary'>Powered by CoinGecko</Typography>
               </TableCell>
-              <TableCell align='right'>{renderData(<NumberFormat value={row.price} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}</TableCell>
-              <TableCell align='right' style={{ color: row.priceChangeDay < 0 ? '#e15241' : '#8dc647' }}>
-                {renderData(<NumberFormat value={row.priceChangeDay} displayType={'text'} suffix={'%'} />)}
-              </TableCell>
+              <TableCell />
+              <TableCell />
               <TableCell align='right'>
-                {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}
+                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(market.length, 1)}-${page * PAGE_SIZE + market.length} of ${total}`}</Typography>
               </TableCell>
               <TableCell align='center'>
-                <Button variant='contained' disabled={!tournament.active} className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
+                <Box display='flex' justifyContent='space-evenly'>
+                  <ArrowBack className={_classes.pageArrow} onClick={() => previousPage()} />
+                  <ArrowForward className={_classes.pageArrow} onClick={() => nextPage()} />
+                </Box>
               </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell />
-            <TableCell>
-              <Typography variant='body1' color='textSecondary'>Powered by CoinGecko</Typography>
-            </TableCell>
-            <TableCell />
-            <TableCell />
-            <TableCell align='right'>
-              <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(market.length, 1)}-${page * PAGE_SIZE + market.length} of ${total}`}</Typography>
-            </TableCell>
-            <TableCell align='center'>
-              <Box display='flex' justifyContent='space-evenly'>
-                <ArrowBack className={_classes.pageArrow} onClick={() => previousPage()} />
-                <ArrowForward className={_classes.pageArrow} onClick={() => nextPage()} />
-              </Box>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </Box>
       {
         buy && <BuyDialog
           open={buy}

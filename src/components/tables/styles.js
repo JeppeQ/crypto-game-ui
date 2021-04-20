@@ -1,6 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const styles = makeStyles({
+  searchHeader: {
+    width: '1050px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media (max-width: 1050px)': {
+      width: '100%',
+      flexDirection: 'column'
+    }
+  },
+  tableContainer: {
+    width: '1050px',
+    '@media (max-width: 1050px)': {
+      width: '100%',
+      overflowX: 'auto',
+      maxWidth: '100vw',
+    }
+  },
   table: {
     width: '100%',
     backgroundColor: '#1E2530',

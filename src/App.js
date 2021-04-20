@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { isBrowser } from "react-device-detect"
 import ReactGA from 'react-ga'
 
 import { ThemeProvider } from '@material-ui/core/styles'
@@ -27,7 +28,7 @@ function App() {
   return (
     <Router>
       <Box className='background'>
-        {backgroundEffect()}
+        {isBrowser && BackgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
           <TournamentProvider>
@@ -50,7 +51,7 @@ function App() {
   )
 }
 
-function backgroundEffect() {
+function BackgroundEffect() {
   return (
     <Box className='backgroundEffects'>
       <Box className='stars' />

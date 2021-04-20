@@ -128,64 +128,66 @@ export function LeaderboardTable() {
 
   return (
     <React.Fragment>
-      <Box mb={1} width='1050px' display='flex' justifyContent='space-between'>
+      <Box mb={1} className={_classes.searchHeader}>
         <Typography variant='h3'>Leaderboard</Typography>
         <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search address...'} />
       </Box>
-      <Table className={_classes.table}>
-        <TableHead>
-          <TableRow>
-            {cells.map(cell => (
-              <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
-                <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
-                  {orderBy === cell.id
-                    ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                    : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
-                  }
-                </Box>
-              </CustomTableCell>
+      <Box className={_classes.tableContainer}>
+        <Table className={_classes.table}>
+          <TableHead>
+            <TableRow>
+              {cells.map(cell => (
+                <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
+                  <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
+                    {orderBy === cell.id
+                      ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
+                      : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
+                    }
+                  </Box>
+                </CustomTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {first && loadingRow()}
+            {!first && leaderboard.map(row => (
+              <TableRow key={row.address}>
+                <TableCell>{row.rank}</TableCell>
+                <TableCell>
+                  <Button style={{ padding: '0px 5px' }}>
+                    {ellipseAddress(row.address, 8, 4)}
+                  </Button>
+                </TableCell>
+                <TableCell>{row.mainAsset}</TableCell>
+                <TableCell align='right'>
+                  {row.rankChange}
+                </TableCell>
+                <TableCell align='right'>
+                  <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
+                </TableCell>
+                <TableCell align='center'>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.address)}>VIEW</Box>
+                </TableCell>
+              </TableRow>
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {first && loadingRow()}
-          {!first && leaderboard.map(row => (
-            <TableRow key={row.address}>
-              <TableCell>{row.rank}</TableCell>
-              <TableCell>
-                <Button style={{ padding: '0px 5px' }}>
-                  {ellipseAddress(row.address, 8, 4)}
-                </Button>
-              </TableCell>
-              <TableCell>{row.mainAsset}</TableCell>
+            <TableRow>
+              <TableCell />
+              <TableCell />
+              <TableCell />
+              <TableCell />
               <TableCell align='right'>
-                {row.rankChange}
-              </TableCell>
-              <TableCell align='right'>
-                <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
+                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
               </TableCell>
               <TableCell align='center'>
-                <Box className={classes.viewLink} onClick={() => setViewHistory(row.address)}>VIEW</Box>
+                <Box display='flex' justifyContent='space-evenly'>
+                  <ArrowBack className={_classes.pageArrow} onClick={() => previousPage()} />
+                  <ArrowForward className={_classes.pageArrow} onClick={() => nextPage()} />
+                </Box>
               </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell />
-            <TableCell />
-            <TableCell />
-            <TableCell />
-            <TableCell align='right'>
-              <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
-            </TableCell>
-            <TableCell align='center'>
-              <Box display='flex' justifyContent='space-evenly'>
-                <ArrowBack className={_classes.pageArrow} onClick={() => previousPage()} />
-                <ArrowForward className={_classes.pageArrow} onClick={() => nextPage()} />
-              </Box>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </Box>
       {viewHistory && <HistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}

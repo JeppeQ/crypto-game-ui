@@ -55,6 +55,11 @@ export const mainTheme = createMuiTheme({
         borderRadius: '0',
         border: ''
       }
+    },
+    MuiDialog: {
+      paper: {
+        margin: '10px'
+      }
     }
   },
 })
