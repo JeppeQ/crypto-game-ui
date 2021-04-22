@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react"
 import ReactGA from 'react-ga'
 
+import { SignUpDialog } from '../components/dialogs/signUpDialog'
 import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
 import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
 import * as playerApi from '../api/player'
@@ -80,6 +81,7 @@ export const PlayerProvider = ({ children }) => {
       }}
     >
       {children}
+      <SignUpDialog open={false} />
       <SignedUpDialog open={emailDialog} close={() => showEmailDialog(false)} />
       <TradeLimitDialog open={tradeLimitDialog} close={() => showTradeLimitDialog(false)} />
     </PlayerContext.Provider>
