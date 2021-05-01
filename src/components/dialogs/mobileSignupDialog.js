@@ -21,7 +21,7 @@ export function MobileSignupDialog(props) {
         <DialogContent>
           <Box mb={1}>
             <Typography variant='body1'>
-              Mobile signup is not supported as of now. Please use a pc or try again in a few days.
+              Mobile signup is not supported as of now. Please use a pc or wait until the next competition.
             </Typography>
           </Box>
           <DialogActions style={{ paddingRight: '0' }}>

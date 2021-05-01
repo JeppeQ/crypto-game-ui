@@ -33,7 +33,7 @@ const cells = [
   { id: 'rank', label: '#', sortable: true },
   { id: 'address', label: 'Player', sortable: true },
   { id: 'mainAsset', label: 'Main Asset', sortable: true },
-  { id: 'rankChange', label: '24h', align: 'right', sortable: true },
+  { id: 'rankChange', label: <Typography>&#x2191;&#x2193;</Typography>, align: 'right', sortable: true },
   { id: 'networth', label: 'Networth', align: 'right', sortable: true },
   { id: 'portfolio', label: 'Portfolio', align: 'center' },
 ]
@@ -159,8 +159,8 @@ export function LeaderboardTable() {
                   </Button>
                 </TableCell>
                 <TableCell>{row.mainAsset}</TableCell>
-                <TableCell align='right'>
-                  {row.rankChange}
+                <TableCell align='right' style={{ color: row.rankChange < 0 ? '#e15241' : '#8dc647' }}>
+                  {row.rankChange > 0 ? `+${row.rankChange}` : row.rankChange}
                 </TableCell>
                 <TableCell align='right'>
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
