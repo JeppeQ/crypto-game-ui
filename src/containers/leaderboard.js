@@ -29,6 +29,11 @@ function Leaderboard() {
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
+          <Box className={clsx(classes.customBox, classes.warningBox)}>
+            <Typography variant='h6' style={{ lineHeight: 1.3, fontSize: '14px' }}>
+              !Currently working on a fix for coingeckos price feed. Do not buy and sell price spikes or your trades might get reset. Sorry for the inconvenience.
+            </Typography>
+          </Box>
           <Box className={classes.infoBoxContainer}>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
@@ -103,5 +108,14 @@ const useStyles = makeStyles({
       flexDirection: 'column',
       alignItems: 'flex-start'
     }
+  },
+  warningBox: {
+    width: '100%',
+    height: '50px',
+    marginBottom: '20px',
+    maxWidth: '1050px',
+    padding: '0 5px',
+    display: 'flex',
+    alignItems: 'center'
   }
 });
