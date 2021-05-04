@@ -30,8 +30,8 @@ function Leaderboard() {
           transition={{ ease: "linear", duration: 0.5 }}
         >
           <Box className={clsx(classes.customBox, classes.warningBox)}>
-            <Typography variant='h6' style={{ lineHeight: 1.3, fontSize: '14px' }}>
-              !Currently working on a fix for coingeckos price feed. Do not buy and sell price spikes or your trades might get reset. Sorry for the inconvenience.
+            <Typography style={{ lineHeight: 1.3, fontSize: '15px', textTransform: 'none', color: 'rgba(255, 255, 255, 0.7)' }}>
+              Some trades involving SYS and SPARTA have been reset due to incorrect pricing. The pricing issue has been resolved. Email cryptoseasonsapp@gmail.com if you have any inquiries.
             </Typography>
           </Box>
           <Box className={classes.infoBoxContainer}>
