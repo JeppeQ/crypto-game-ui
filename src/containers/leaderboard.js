@@ -111,10 +111,9 @@ const useStyles = makeStyles({
   },
   warningBox: {
     width: '100%',
-    height: '50px',
     marginBottom: '20px',
     maxWidth: '1050px',
-    padding: '0 5px',
+    padding: '5px',
     display: 'flex',
     alignItems: 'center'
   }
