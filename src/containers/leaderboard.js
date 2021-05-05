@@ -29,11 +29,11 @@ function Leaderboard() {
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
-          <Box className={clsx(classes.customBox, classes.warningBox)}>
+          {/* <Box className={clsx(classes.customBox, classes.warningBox)}>
             <Typography style={{ lineHeight: 1.3, fontSize: '15px', textTransform: 'none', color: 'rgba(255, 255, 255, 0.7)' }}>
               Some trades involving SYS and SPARTA have been reset due to incorrect pricing. The pricing issue has been resolved. Email cryptoseasonsapp@gmail.com if you have any inquiries.
             </Typography>
-          </Box>
+          </Box> */}
           <Box className={classes.infoBoxContainer}>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
