@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
 import clsx from 'clsx'
 
 import Box from '@material-ui/core/Box'

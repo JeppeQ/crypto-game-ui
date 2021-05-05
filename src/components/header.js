@@ -112,8 +112,7 @@ function Header() {
               </Box>}
             </Box>
           </Link>
-          {menuItems.map(item => {
-            if (item.hideMenu) return;
+          {menuItems.filter(item => !item.hideMenu).map(item => {
             return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
               <Box className={classes.content} style={{ textShadow: item.name === active.name ? '0 0 5px white' : 'none' }}>
                 {item.name}
