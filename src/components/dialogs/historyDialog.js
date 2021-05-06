@@ -167,7 +167,7 @@ function TradeHistoryTable(address) {
         {!loading && tradeHistory.map(trade =>
           <TableRow key={trade.date}>
             <CustomTableCell>
-              {DateTime.fromISO(trade.date).toFormat('LLL dd, hh:mm:ss')}
+              {DateTime.fromISO(trade.date).toFormat('LLL dd, HH:mm:ss')}
             </CustomTableCell>
             <CustomTableCell>
               <Typography variant='body1' color='textSecondary'>{trade.token.symbol.toUpperCase()}</Typography>

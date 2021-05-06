@@ -10,7 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear'
 
 export function SearchBar(props) {
   const classes = useStyles()
-  const [_value, setValue] = useState()
+  const [_value, setValue] = useState('')
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
