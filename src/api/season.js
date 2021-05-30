@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { API_ENDPOINT } from './'
+import { API_ENDPOINT } from '.'
 
-const API_ROUTE = `${API_ENDPOINT}/tournament`
+const API_ROUTE = `${API_ENDPOINT}/season`
 
-export async function getTournamentInfo() {
+export async function getSeasonInfo() {
   const url = `${API_ROUTE}`
   const response = await axios.get(url).catch(err => console.log(err))
 

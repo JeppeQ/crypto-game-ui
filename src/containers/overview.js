@@ -15,22 +15,20 @@ import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 import TwitterIcon from '@material-ui/icons/Twitter'
 
-import { Web3Context } from '../contexts/web3'
 import { PlayerContext } from '../contexts/player'
-import { TournamentContext } from '../contexts/tournament'
+import { SeasonContext } from '../contexts/season'
 import { CountDown } from '../components/countDown'
 
 function Overview() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
-  const web3 = useContext(Web3Context)
-  const tournament = useContext(TournamentContext)
+  const season = useContext(SeasonContext)
 
   const joinContest = () => {
-    if (player.info.address) {
+    if (player.info.id) {
       player.signup()
     } else {
-      web3.connect(true)
+      player.setConnectDialog({ show: true, signup: true })
     }
 
     ReactGA.event({
@@ -58,33 +56,33 @@ function Overview() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>prize pool</Typography>
               <Typography color='textPrimary' variant='h3'>
-                {tournament.info.price
-                  ? <NumberFormat value={tournament.info.price} displayType={'text'} prefix={'$'} />
+                {season.info.price
+                  ? <NumberFormat value={season.info.price} displayType={'text'} prefix={'$'} />
                   : <Skeleton variant="rect" animation="wave" width={150} height={32} style={{ borderRadius: '4px' }} />
                 }
               </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
-              {!tournament.info.start && <Skeleton variant="rect" animation="wave" width={200} height={70} style={{ borderRadius: '4px' }} />}
-              {tournament.info.start &&
-                (DateTime.fromISO(tournament.info.start) > DateTime.utc()
+              {!season.info.start && <Skeleton variant="rect" animation="wave" width={200} height={70} style={{ borderRadius: '4px' }} />}
+              {season.info.start &&
+                (DateTime.fromISO(season.info.start) > DateTime.utc()
                   ? <React.Fragment>
                     <Typography variant='h6'>game begins in</Typography>
-                    <CountDown date={DateTime.fromISO(tournament.info.start)} />
+                    <CountDown date={DateTime.fromISO(season.info.start)} />
                   </React.Fragment>
-                  : DateTime.fromISO(tournament.info.end) > DateTime.utc()
+                  : DateTime.fromISO(season.info.end) > DateTime.utc()
                     ? <React.Fragment>
                       <Typography variant='h6'>game ends in</Typography>
-                      <CountDown date={DateTime.fromISO(tournament.info.end)} />
+                      <CountDown date={DateTime.fromISO(season.info.end)} />
                     </React.Fragment>
                     : <Typography variant='h6'>game has ended</Typography>)
               }
             </Box>
-            {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+            {player.info.seasonId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>You are signed up</Typography>
               <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>GOOD LUCK!</Typography>
             </Box>}
-            {!player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+            {!player.info.seasonId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Free entry</Typography>
               <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
             </Box>}

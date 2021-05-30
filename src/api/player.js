@@ -12,19 +12,6 @@ export async function me(token) {
   }
 }
 
-export async function authenticate(signature, msgParams) {
-  const url = `${API_ROUTE}/authenticate`
-  const response = await axios.post(url, {
-    signature,
-    msgParams
-  }).catch(err => console.log(err))
-
-  if (response && response.data) {
-    localStorage.setItem('jwtToken', response.data)
-    return response.data
-  }
-}
-
 export async function signup(token) {
   const url = `${API_ROUTE}/signup`
   const response = await axios.post(url, {}, {

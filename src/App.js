@@ -16,7 +16,7 @@ import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
 import { Web3Provider } from './contexts/web3'
 import { PlayerProvider } from './contexts/player'
-import { TournamentProvider } from './contexts/tournament'
+import { SeasonProvider } from './contexts/season'
 
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize("UA-194864148-1")
@@ -31,9 +31,9 @@ function App() {
         {isBrowser && BackgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <TournamentProvider>
-            <PlayerProvider>
-              <Web3Provider>
+          <Web3Provider>
+            <SeasonProvider>
+              <PlayerProvider>
                 <Box className='main'>
                   <Header />
                   <Switch>
@@ -42,9 +42,9 @@ function App() {
                     })}
                   </Switch>
                 </Box>
-              </Web3Provider>
-            </PlayerProvider>
-          </TournamentProvider>
+              </PlayerProvider>
+            </SeasonProvider>
+          </Web3Provider>
         </ThemeProvider>
       </Box>
     </Router>

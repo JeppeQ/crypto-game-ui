@@ -17,7 +17,6 @@ import InfoIcon from '@material-ui/icons/Info'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import { PlayerContext } from '../contexts/player'
-import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
 import Menu from './mobile/menu'
 import metamaskLogo from '../assets/images/metamask-icon.png'
@@ -57,7 +56,6 @@ function Header() {
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
   const player = useContext(PlayerContext)
-  const web3 = useContext(Web3Context)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path) || menuItems[0])
@@ -115,12 +113,12 @@ function Header() {
         }}>Update Market</Button>
       </Grid>}
       <Grid item>
-        {player.info.address
+        {player.info.id
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
-            {ellipseAddress(player.info.address, 4, 4)}
+            {ellipseAddress(player.info.id, 4, 4)}
           </Button>
-          : <Button onClick={() => web3.connect()}>
-            connect wallet
+          : <Button onClick={() => player.setConnectDialog({ show: true, signup: false })}>
+            connect
           </Button>}
       </Grid>
     </Grid>

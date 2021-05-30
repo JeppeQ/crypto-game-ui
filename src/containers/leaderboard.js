@@ -12,12 +12,12 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
 import { PlayerContext } from '../contexts/player'
-import { TournamentContext } from '../contexts/tournament'
+import { SeasonContext } from '../contexts/season'
 
 function Leaderboard() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
-  const tournament = useContext(TournamentContext)
+  const season = useContext(SeasonContext)
 
   return (
     <Scrollbars
@@ -45,8 +45,8 @@ function Leaderboard() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
               <Typography color='textPrimary' variant='h4'>
-                {tournament.players
-                  ? <NumberFormat value={tournament.players} displayType={'text'} thousandSeparator />
+                {season.players
+                  ? <NumberFormat value={season.players} displayType={'text'} thousandSeparator />
                   : <Skeleton variant="text" animation="wave" width={125} />
                 }
               </Typography>

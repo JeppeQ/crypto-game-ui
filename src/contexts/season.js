@@ -1,28 +1,28 @@
 import React, { createContext, useState, useEffect } from "react"
 import { DateTime } from "luxon"
 
-import * as tournamentApi from "../api/tournament"
+import * as seasonApi from "../api/season"
 
-export const TournamentContext = createContext()
+export const SeasonContext = createContext()
 
-export const TournamentProvider = ({ children }) => {
+export const SeasonProvider = ({ children }) => {
   const [info, setInfo] = useState({})
   const [players, setPlayers] = useState()
   const [active, setActive] = useState(false)
 
   useEffect(() => {
-    const getTournamentInfo = async () => {
-      const tourney = await tournamentApi.getTournamentInfo()
+    const getSeasonInfo = async () => {
+      const tourney = await seasonApi.getSeasonInfo()
       if (tourney) {
         setInfo(tourney)
-        setTournamentActive(tourney)
+        setSeasonActive(tourney)
       }
     }
   
-    getTournamentInfo()
+    getSeasonInfo()
   }, [])
 
-  const setTournamentActive = (tourney) => {
+  const setSeasonActive = (tourney) => {
     const now = DateTime.utc()
     const start = DateTime.fromISO(tourney.start)
     const end = DateTime.fromISO(tourney.end)
@@ -32,7 +32,7 @@ export const TournamentProvider = ({ children }) => {
   }
 
   return (
-    <TournamentContext.Provider
+    <SeasonContext.Provider
       value={{
         info,
         players,
@@ -41,6 +41,6 @@ export const TournamentProvider = ({ children }) => {
       }}
     >
       {children}
-    </TournamentContext.Provider>
+    </SeasonContext.Provider>
   );
 };
