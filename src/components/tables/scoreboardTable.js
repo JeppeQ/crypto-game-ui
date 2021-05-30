@@ -17,7 +17,8 @@ import ArrowForward from '@material-ui/icons/ArrowForwardIos'
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { HistoryDialog } from '../dialogs/historyDialog'
-import * as leaderboardApi from '../../api/leaderboard'
+import * as seasonApi from '../../api/season'
+
 import { TournamentContext } from '../../contexts/tournament'
 import { ellipseAddress } from '../../helpers/utilities'
 
@@ -37,7 +38,7 @@ const cells = [
   { id: 'prize', label: 'Prize', align: 'center' },
 ]
 
-export function ScoreBoard() {
+export function ScoreBoard(props) {
   const _classes = styles()
   const classes = useStyles()
 
@@ -51,19 +52,17 @@ export function ScoreBoard() {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
-  const tournament = useContext(TournamentContext)
-
   useEffect(() => {
-    async function fetchLeaderboard() {
+    async function fetchScoreboard() {
       setLoading(true)
       const time = +new Date()
 
-      const data = await leaderboardApi.getLeaderboard(orderBy, direction, page, search)
+      const data = await seasonApi.getSeason(props.season, orderBy, direction, page, search)
       setleaderboard(data.rows)
       setTotal(data.count)
-      tournament.setPlayers(data.count)
-
+      
       if (first) {
+        props.setPlayerCount(data.count)
         setTimeout(() => {
           setLoading(false)
           setFirst(false)
@@ -73,9 +72,10 @@ export function ScoreBoard() {
         setLoading(false)
       }
     }
-    fetchLeaderboard()
+  
+    fetchScoreboard()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, orderBy, direction, search])
+  }, [props.season, page, orderBy, direction, search])
 
   function headerClick(id, sortable) {
     if (!sortable || loading) {

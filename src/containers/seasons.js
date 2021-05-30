@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -12,11 +12,26 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import { ScoreBoard } from '../components/tables/scoreboardTable'
 import { PlayerContext } from '../contexts/player'
 import { TournamentContext } from '../contexts/tournament'
+import * as seasonApi from '../api/season'
 
 function Seasons() {
   const classes = useStyles()
-  const player = useContext(PlayerContext)
   const tournament = useContext(TournamentContext)
+
+  const [season, setSeason] = useState(1)
+  const [player, setPlayer] = useState({})
+  const [playerCount, setPlayerCount] = useState()
+
+  useEffect(() => {
+    async function getPlayer() {
+      const me = await seasonApi.me(season)
+      if (me) {
+        setPlayer(me)
+      }
+    }
+
+    getPlayer()
+  }, [season])
 
   return (
     <Scrollbars
@@ -41,26 +56,29 @@ function Seasons() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Period</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <Typography>May 1st - May 31st</Typography>
+                <Typography variant='h4' style={{ fontSize: '22px' }}>May 1st - May 31st</Typography>
               </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Your Placement</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={player.info.rank} displayType={'text'} prefix={'#'} thousandSeparator />
+                {player.rank
+                  ? <NumberFormat value={player.rank} displayType={'text'} prefix={'#'} thousandSeparator />
+                  : <Skeleton variant="text" animation="wave" width={125} />
+                }
               </Typography>
             </Box>
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
               <Typography color='textPrimary' variant='h4'>
-                {tournament.players
-                  ? <NumberFormat value={tournament.players} displayType={'text'} thousandSeparator />
+                {playerCount
+                  ? <NumberFormat value={playerCount} displayType={'text'} thousandSeparator />
                   : <Skeleton variant="text" animation="wave" width={125} />
                 }
               </Typography>
             </Box>
           </Box>
-          <ScoreBoard />
+          <ScoreBoard season={season} setPlayerCount={setPlayerCount} />
         </motion.div>
       </Box>
     </Scrollbars >
@@ -86,7 +104,7 @@ const useStyles = makeStyles({
     height: '110px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     padding: '20px',
     marginBottom: '15px'
