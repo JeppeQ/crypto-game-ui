@@ -24,24 +24,23 @@ function News() {
           <Box className={clsx(classes.newsContainer, classes.customBox)}>
             <Typography variant='h3'>updates</Typography>
             <Box className={classes.section}>
-              <Typography variant='h6'>04-05-2021</Typography>
-              <Typography className={classes.breadText}>An issue with coingeckos price feed were identified by myself and multiple participants.</Typography>
-              <Box mt={0.75} />
-              <Typography className={classes.breadText}>On some coins such as SYS and SPARTA, coingecko switches between including data from upbit (which prices some coins significantly higher than other exchanges because of regulations in South Korea) and not including those data, making the price regularly swing 10% or more.</Typography>
+              <Typography variant='h6'>31-05-2021</Typography>
+              <Typography className={classes.breadText}>The first season is coming to an end. Prizes will be paid out in USDC and will be sent to the winners within 24 hours.</Typography>
               <Box mt={0.75} />
               <Typography className={classes.breadText}>
-                Some players profited off this issue by repeatedly buying when upbit was not included, and selling when it was.
-                This way they were able to double their networth in a day without any significant risk. Other small coins such as ORBS, POWR and META had the same issue.
+                What's next?
+              </Typography>
+              <Typography className={classes.breadText}>
+                I'll be rolling out some updates to the platform in the coming days, and sign up to the next season will begin shortly after. More info about Season 2 soon.
               </Typography>
               <Box mt={0.75} />
               <Typography className={classes.breadText}>
-                In order for the competition to make sense, I felt it was necessary to cancel all trades that had benefited from this problem. With this being the very first
-                season, unforseen problems are bound to happen. The end goal is to make a fun and fair game for all.
+                I hope you had fun playing and that you will participate in the upcoming season. If you have any thoughts on the game or ideas for next season, I would love to hear it.
+                <br />cryptoseasonsapp@gmail.com
               </Typography>
               <Box mt={0.75} />
               <Typography className={classes.breadText}>
-                The price feed is still from coingecko, but a temporary solution for coins like SYS and SPARTA has been implemented.
-                There might still be smaller coins which have the same issue. Buying and selling off these price swings are not allowed, and your trades will be canceled. A more robust price feed will be used in future seasons.
+                Thanks for playing.
               </Typography>
             </Box>
           </Box>

@@ -77,17 +77,23 @@ function Overview() {
                       <Typography variant='h6'>game ends in</Typography>
                       <CountDown date={DateTime.fromISO(tournament.info.end)} />
                     </React.Fragment>
-                    : <Typography variant='h6'>game has ended</Typography>)
+                    : <React.Fragment>
+                        <Typography variant='h6'>season one has ended</Typography>
+                        <Typography variant='h6' style={{fontSize: '14px'}}>season two soon</Typography>
+                      </React.Fragment>)
               }
             </Box>
-            {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+            {/* {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>You are signed up</Typography>
               <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>GOOD LUCK!</Typography>
             </Box>}
             {!player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Free entry</Typography>
               <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
-            </Box>}
+            </Box>} */}
+            <Box className={clsx(classes.infoBox, classes.customBox)}>
+              <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>Thanks for playing!</Typography>
+            </Box>
           </Box>
           <Box mt={8} mb={1}>
             <Typography className={classes.headlineText} variant='h5'>How does it work?</Typography>

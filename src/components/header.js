@@ -104,10 +104,10 @@ function Header() {
           >
             <Box className={classes.activeGlow} />
           </motion.div>
-          <Link to={'/news'} onClick={() => localStorage.setItem('news', true)}>
+          <Link to={'/news'} onClick={() => localStorage.setItem('news_one', true)}>
             <Box className={clsx(classes.logo, classes.item)}>
               <EcoIcon className={classes.content} />
-              {!localStorage.getItem('news') && <Box>
+              {!localStorage.getItem('news_one') && <Box>
                 <ExposurePlus1Icon className={classes.newUpdate} />
               </Box>}
             </Box>
