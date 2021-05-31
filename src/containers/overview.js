@@ -4,40 +4,36 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon"
 import clsx from 'clsx'
-import ReactGA from 'react-ga'
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 import TwitterIcon from '@material-ui/icons/Twitter'
 
-import { Web3Context } from '../contexts/web3'
-import { PlayerContext } from '../contexts/player'
 import { TournamentContext } from '../contexts/tournament'
 import { CountDown } from '../components/countDown'
 
 function Overview() {
   const classes = useStyles()
-  const player = useContext(PlayerContext)
-  const web3 = useContext(Web3Context)
+  // const player = useContext(PlayerContext)
+  // const web3 = useContext(Web3Context)
   const tournament = useContext(TournamentContext)
 
-  const joinContest = () => {
-    if (player.info.address) {
-      player.signup()
-    } else {
-      web3.connect(true)
-    }
+  // const joinContest = () => {
+  //   if (player.info.address) {
+  //     player.signup()
+  //   } else {
+  //     web3.connect(true)
+  //   }
 
-    ReactGA.event({
-      category: 'User',
-      action: 'clicked sign up button'
-    })
-  }
+  //   ReactGA.event({
+  //     category: 'User',
+  //     action: 'clicked sign up button'
+  //   })
+  // }
 
   return (
     <Scrollbars
