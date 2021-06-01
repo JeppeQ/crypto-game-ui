@@ -88,7 +88,7 @@ export function MarketTable(props) {
 
     return () => clearInterval(periodicFetch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [orderBy, direction, page, search])
 
   function headerClick(id, sortable) {
     if (!sortable || loading) {

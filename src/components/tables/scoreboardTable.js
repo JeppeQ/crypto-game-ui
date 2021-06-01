@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -16,9 +16,9 @@ import ArrowForward from '@material-ui/icons/ArrowForwardIos'
 
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
-import { HistoryDialog } from '../dialogs/historyDialog'
-import * as leaderboardApi from '../../api/leaderboard'
-import { SeasonContext } from '../../contexts/season'
+import { SeasonTradeHistoryDialog } from '../dialogs/seasonTradeHistoryDialog'
+import * as seasonApi from '../../api/season'
+
 import { ellipseAddress } from '../../helpers/utilities'
 
 const PAGE_SIZE = 50
@@ -31,19 +31,18 @@ const CustomTableCell = withStyles(() => ({
 
 const cells = [
   { id: 'rank', label: '#', sortable: true },
-  { id: 'id', label: 'Player', sortable: true },
-  { id: 'mainAsset', label: 'Main Asset', sortable: true },
-  { id: 'rankChange', label: <Typography>&#x2191;&#x2193;</Typography>, align: 'right', sortable: true },
+  { id: 'address', label: 'Player', sortable: true },
   { id: 'networth', label: 'Networth', align: 'right', sortable: true },
-  { id: 'portfolio', label: 'Portfolio', align: 'center' },
+  { id: 'portfolio', label: 'Trades', align: 'center' },
+  { id: 'prize', label: 'Prize', align: 'center' },
 ]
 
-export function LeaderboardTable() {
+export function ScoreBoard(props) {
   const _classes = styles()
   const classes = useStyles()
 
   const [viewHistory, setViewHistory] = useState(null)
-  const [leaderboard, setleaderboard] = useState([])
+  const [scoreboard, setScoreboard] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(0)
   const [orderBy, setOrderBy] = useState()
@@ -52,19 +51,17 @@ export function LeaderboardTable() {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
-  const season = useContext(SeasonContext)
-
   useEffect(() => {
-    async function fetchLeaderboard() {
+    async function fetchScoreboard() {
       setLoading(true)
       const time = +new Date()
 
-      const data = await leaderboardApi.getLeaderboard(orderBy, direction, page, search)
-      setleaderboard(data.rows)
+      const data = await seasonApi.getSeason(props.season, orderBy, direction, page, search)
+      setScoreboard(data.rows)
       setTotal(data.count)
-      season.setPlayers(data.count)
-
+      
       if (first) {
+        props.setPlayerCount(data.count)
         setTimeout(() => {
           setLoading(false)
           setFirst(false)
@@ -74,9 +71,10 @@ export function LeaderboardTable() {
         setLoading(false)
       }
     }
-    fetchLeaderboard()
+  
+    fetchScoreboard()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, orderBy, direction, search])
+  }, [props.season, page, orderBy, direction, search])
 
   function headerClick(id, sortable) {
     if (!sortable || loading) {
@@ -129,7 +127,7 @@ export function LeaderboardTable() {
   return (
     <React.Fragment>
       <Box mb={1} className={_classes.searchHeader}>
-        <Typography variant='h3'>Leaderboard</Typography>
+        <Typography variant='h3'>Scoreboard</Typography>
         <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search address...'} />
       </Box>
       <Box className={_classes.tableContainer}>
@@ -150,23 +148,26 @@ export function LeaderboardTable() {
           </TableHead>
           <TableBody>
             {first && loadingRow()}
-            {!first && leaderboard.map(row => (
-              <TableRow key={row.id}>
+            {!first && scoreboard.map(row => (
+              <TableRow key={row.playerId}>
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
                   <Button style={{ padding: '0px 5px' }}>
-                    {ellipseAddress(row.id, 8, 4)}
+                    {row['social.twitter'] ||
+                      row['social.wallet'] 
+                        ? ellipseAddress(row['social.wallet'], 8, 4) 
+                        : ellipseAddress(row.playerId, 8, 4)
+                    }
                   </Button>
-                </TableCell>
-                <TableCell>{row.mainAsset}</TableCell>
-                <TableCell align='right' style={{ color: row.rankChange < 0 ? '#e15241' : '#8dc647' }}>
-                  {row.rankChange > 0 ? `+${row.rankChange}` : row.rankChange}
                 </TableCell>
                 <TableCell align='right'>
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
                 </TableCell>
                 <TableCell align='center'>
-                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.id)}>VIEW</Box>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.playerId)}>VIEW</Box>
+                </TableCell>
+                <TableCell align='center'>
+                  <Typography>{row.prize}</Typography>
                 </TableCell>
               </TableRow>
             ))}
@@ -174,9 +175,8 @@ export function LeaderboardTable() {
               <TableCell />
               <TableCell />
               <TableCell />
-              <TableCell />
               <TableCell align='right'>
-                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
+                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(scoreboard.length, 1)}-${page * PAGE_SIZE + scoreboard.length} of ${total}`}</Typography>
               </TableCell>
               <TableCell align='center'>
                 <Box display='flex' justifyContent='space-evenly'>
@@ -188,10 +188,11 @@ export function LeaderboardTable() {
           </TableBody>
         </Table>
       </Box>
-      {viewHistory && <HistoryDialog
+      {viewHistory && <SeasonTradeHistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
-        address={viewHistory}
+        playerId={viewHistory}
+        seasonId={props.season}
       />}
     </React.Fragment>
   )

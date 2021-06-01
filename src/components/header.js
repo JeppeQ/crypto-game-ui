@@ -14,13 +14,14 @@ import MenuIcon from '@material-ui/icons/Menu'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
 import LocalAtmIcon from '@material-ui/icons/LocalAtm'
 import InfoIcon from '@material-ui/icons/Info'
+import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import AnnouncementIcon from '@material-ui/icons/Announcement'
 
 import { PlayerContext } from '../contexts/player'
 import { ellipseAddress } from '../helpers/utilities'
 import Menu from './mobile/menu'
 import metamaskLogo from '../assets/images/metamask-icon.png'
-import axios from 'axios'
 
 const menuItems = [
   {
@@ -46,6 +47,22 @@ const menuItems = [
     width: '220px',
     activeWidth: '218px',
     icon: <EqualizerIcon />
+  },
+  {
+    name: 'SEASONS',
+    path: '/seasons',
+    left: '670px',
+    width: '200px',
+    activeWidth: '198px',
+    icon: <EqualizerIcon />
+  },
+  {
+    name: 'NEWS',
+    path: '/news',
+    left: '-32px',
+    activeWidth: '120px',
+    icon: <AnnouncementIcon />,
+    hideMenu: true
   }
 ]
 
@@ -92,10 +109,15 @@ function Header() {
           >
             <Box className={classes.activeGlow} />
           </motion.div>
-          <Box className={clsx(classes.logo, classes.item)}>
-            <EcoIcon className={classes.content} />
-          </Box>
-          {menuItems.map(item => {
+          <Link to={'/news'} onClick={() => localStorage.setItem('news_one', true)}>
+            <Box className={clsx(classes.logo, classes.item)}>
+              <EcoIcon className={classes.content} />
+              {!localStorage.getItem('news_one') && <Box>
+                <ExposurePlus1Icon className={classes.newUpdate} />
+              </Box>}
+            </Box>
+          </Link>
+          {menuItems.filter(item => !item.hideMenu).map(item => {
             return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
               <Box className={classes.content} style={{ textShadow: item.name === active.name ? '0 0 5px white' : 'none' }}>
                 {item.name}
@@ -104,14 +126,6 @@ function Header() {
           })}
         </Grid>
       </Grid>
-      {process.env.NODE_ENV !== 'production' && <Grid item>
-        <Button style={{ marginRight: '10px' }} color='secondary' variant='outlined' onClick={() => {
-          axios.post('http://localhost:8080/api/leaderboard/update')
-        }}>Update Leaderboard</Button>
-        <Button color='secondary' variant='outlined' onClick={() => {
-          axios.post('http://localhost:8080/api/token/updateTokens')
-        }}>Update Market</Button>
-      </Grid>}
       <Grid item>
         {player.info.id
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
@@ -149,7 +163,8 @@ const useStyles = makeStyles({
   },
   logo: {
     width: '100px',
-    marginLeft: '-10px'
+    marginLeft: '-10px',
+    cursor: 'pointer'
   },
   content: {
     transform: 'skew(35deg)',
@@ -181,5 +196,16 @@ const useStyles = makeStyles({
     border: '1px solid white',
     color: 'white',
     width: '25px'
+  },
+  newUpdate: {
+    position: 'absolute',
+    transform: 'skew(35deg)',
+    textDecoration: 'none',
+    color: 'white',
+    fontSize: '18px',
+    borderRadius: '50%',
+    padding: '1px',
+    backgroundColor: 'rgba(0, 255, 243, 0.1)',
+    boxShadow: '0px 0px 1px 1px rgba(0, 255, 243, 0.3)',
   }
 });

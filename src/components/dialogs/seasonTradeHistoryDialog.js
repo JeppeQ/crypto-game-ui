@@ -16,8 +16,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import { styles } from './styles'
-import * as tradeApi from '../../api/trade'
-import * as holdingApi from '../../api/holding'
+import * as seasonApi from '../../api/season'
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -31,7 +30,7 @@ const CustomTableCell = withStyles(() => ({
   }
 }))(TableCell)
 
-export function HistoryDialog(props) {
+export function SeasonTradeHistoryDialog(props) {
   const _classes = styles()
   const classes = useStyles()
 
@@ -40,13 +39,8 @@ export function HistoryDialog(props) {
       <Box className={clsx(_classes.dialog, classes.container)}>
         <Scrollbars autoHeight={true} autoHeightMax={580}>
           <Box p={2.5}>
-            <Box display='flex' alignItems='baseline' justifyContent='space-between'>
-              <Typography className={classes.headline}>Portfolio</Typography>
-              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.id}</Typography>
-            </Box>
-            {PortfolioTable(props.id)}
             <Typography className={classes.headline}>Trade history</Typography>
-            {TradeHistoryTable(props.id)}
+            {TradeHistoryTable(props.seasonId, props.playerId)}
           </Box>
         </Scrollbars>
       </Box>
@@ -79,61 +73,7 @@ function emptyTable(name, cells) {
   )
 }
 
-function PortfolioTable(playerId) {
-  const classes = useStyles()
-  const [portfolio, setPortfolio] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const cells = ['Asset', 'Amount', 'Value']
-  useEffect(() => {
-    async function getPortfolio() {
-      setLoading(true)
-
-      const holdings = await holdingApi.getHoldings(playerId)
-      setPortfolio(holdings.sort((a, b) => b['value'] - a['value']))
-
-      setLoading(false)
-    }
-    getPortfolio()
-  }, [playerId])
-
-  return (
-    <Table className={classes.table} style={{ marginBottom: '30px' }}>
-      <TableHead>
-        <TableRow>
-          {cells.map(cell =>
-            <CustomTableCell key={cell}>{cell}</CustomTableCell>
-          )}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {loading && loadingRow(cells)}
-        {!loading && portfolio.map(token =>
-          <TableRow key={token.id}>
-            <CustomTableCell>
-              <Box display='flex'>
-                {token.name}
-                <Box ml={1}>
-                  <Typography variant='body1' color='textSecondary'>{token.symbol.toUpperCase()}</Typography>
-                </Box>
-              </Box>
-            </CustomTableCell>
-            <CustomTableCell>
-              <NumberFormat value={token.amount} displayType={'text'} thousandSeparator decimalScale={5} />
-            </CustomTableCell>
-            <CustomTableCell>
-              <NumberFormat value={token.value} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} />
-            </CustomTableCell>
-          </TableRow>
-        )}
-        {!loading && portfolio.length === 0 && emptyTable('assets', cells)}
-      </TableBody>
-    </Table>
-  )
-}
-
-
-function TradeHistoryTable(playerId) {
+function TradeHistoryTable(seasonId, playerId) {
   const classes = useStyles()
   const [tradeHistory, setTradeHistory] = useState([])
   const [loading, setLoading] = useState(false)
@@ -143,13 +83,13 @@ function TradeHistoryTable(playerId) {
     async function getTradeHistory() {
       setLoading(true)
 
-      const trades = await tradeApi.getTradeHistory(playerId)
+      const trades = await seasonApi.getTradeHistory(seasonId, playerId)
       setTradeHistory(trades)
 
       setLoading(false)
     }
     getTradeHistory()
-  }, [playerId])
+  }, [seasonId, playerId])
 
   return (
     <Table className={classes.table}>
