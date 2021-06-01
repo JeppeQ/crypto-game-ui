@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -16,10 +16,9 @@ import ArrowForward from '@material-ui/icons/ArrowForwardIos'
 
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
-import { HistoryDialog } from '../dialogs/historyDialog'
+import { SeasonTradeHistoryDialog } from '../dialogs/seasonTradeHistoryDialog'
 import * as seasonApi from '../../api/season'
 
-import { TournamentContext } from '../../contexts/tournament'
 import { ellipseAddress } from '../../helpers/utilities'
 
 const PAGE_SIZE = 50
@@ -43,7 +42,7 @@ export function ScoreBoard(props) {
   const classes = useStyles()
 
   const [viewHistory, setViewHistory] = useState(null)
-  const [leaderboard, setleaderboard] = useState([])
+  const [scoreboard, setScoreboard] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(0)
   const [orderBy, setOrderBy] = useState()
@@ -58,7 +57,7 @@ export function ScoreBoard(props) {
       const time = +new Date()
 
       const data = await seasonApi.getSeason(props.season, orderBy, direction, page, search)
-      setleaderboard(data.rows)
+      setScoreboard(data.rows)
       setTotal(data.count)
       
       if (first) {
@@ -149,19 +148,23 @@ export function ScoreBoard(props) {
           </TableHead>
           <TableBody>
             {first && loadingRow()}
-            {!first && leaderboard.map(row => (
-              <TableRow key={row.address}>
+            {!first && scoreboard.map(row => (
+              <TableRow key={row.playerId}>
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
                   <Button style={{ padding: '0px 5px' }}>
-                    {ellipseAddress(row.address, 8, 4)}
+                    {row['social.twitter'] ||
+                      row['social.wallet'] 
+                        ? ellipseAddress(row['social.wallet'], 8, 4) 
+                        : ellipseAddress(row.playerId, 8, 4)
+                    }
                   </Button>
                 </TableCell>
                 <TableCell align='right'>
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
                 </TableCell>
                 <TableCell align='center'>
-                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.address)}>VIEW</Box>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.playerId)}>VIEW</Box>
                 </TableCell>
                 <TableCell align='center'>
                   <Typography>$1000</Typography>
@@ -173,7 +176,7 @@ export function ScoreBoard(props) {
               <TableCell />
               <TableCell />
               <TableCell align='right'>
-                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(leaderboard.length, 1)}-${page * PAGE_SIZE + leaderboard.length} of ${total}`}</Typography>
+                <Typography variant='body1' color='textSecondary'>{`${page * PAGE_SIZE + Math.min(scoreboard.length, 1)}-${page * PAGE_SIZE + scoreboard.length} of ${total}`}</Typography>
               </TableCell>
               <TableCell align='center'>
                 <Box display='flex' justifyContent='space-evenly'>
@@ -185,10 +188,11 @@ export function ScoreBoard(props) {
           </TableBody>
         </Table>
       </Box>
-      {viewHistory && <HistoryDialog
+      {viewHistory && <SeasonTradeHistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
-        address={viewHistory}
+        playerId={viewHistory}
+        seasonId={props.season}
       />}
     </React.Fragment>
   )

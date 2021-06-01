@@ -15,11 +15,15 @@ export async function me(seasonId) {
   return response ? response.data : null
 }
 
-export async function getSeason(seasonId) {
+export async function getSeason(seasonId, orderBy, direction, page, search) {
   const url = `${API_ROUTE}/previous`
   const response = await axios.get(url, {
     params: {
-      seasonId
+      seasonId,
+      orderBy,
+      direction,
+      page,
+      search
     }
   }).catch(err => console.log(err))
 

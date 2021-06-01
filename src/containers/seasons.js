@@ -1,24 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import { ScoreBoard } from '../components/tables/scoreboardTable'
-import { PlayerContext } from '../contexts/player'
-import { TournamentContext } from '../contexts/tournament'
 import * as seasonApi from '../api/season'
 
 function Seasons() {
   const classes = useStyles()
-  const tournament = useContext(TournamentContext)
 
-  const [season, setSeason] = useState(1)
+  const [season] = useState(1)
   const [player, setPlayer] = useState({})
   const [playerCount, setPlayerCount] = useState()
 
@@ -38,7 +36,7 @@ function Seasons() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#1E2530', borderRadius: '5px', opacity: '0.8' }} />}
       autoHide
     >
-      <Box className={classes.mainContainer}>
+      <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
         <motion.div
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
@@ -80,7 +78,7 @@ function Seasons() {
           </Box>
           <ScoreBoard season={season} setPlayerCount={setPlayerCount} />
         </motion.div>
-      </Box>
+      </Grid>
     </Scrollbars >
   )
 }
@@ -89,15 +87,10 @@ export default Seasons
 
 const useStyles = makeStyles({
   mainContainer: {
-    display: 'flex',
-    justifyContent: 'center',
     width: '100%',
     marginTop: '100px',
     marginBottom: '50px',
-    padding: '0 10px',
-    '@media (max-width: 1050px)': {
-      marginTop: '100px'
-    }
+    padding: '0 10px'
   },
   infoBox: {
     width: '330px',
