@@ -3,6 +3,13 @@ import { API_ENDPOINT, buildApiHeaders } from './'
 
 const API_ROUTE = `${API_ENDPOINT}/season`
 
+export async function getCurrentSeason() {
+  const url = `${API_ROUTE}`
+  const response = await axios.get(url).catch(err => console.log(err))
+
+  return response ? response.data : null
+}
+
 export async function me(seasonId) {
   const url = `${API_ROUTE}/me`
   const response = await axios.get(url, {

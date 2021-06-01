@@ -42,11 +42,11 @@ export function HistoryDialog(props) {
           <Box p={2.5}>
             <Box display='flex' alignItems='baseline' justifyContent='space-between'>
               <Typography className={classes.headline}>Portfolio</Typography>
-              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.address}</Typography>
+              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.id}</Typography>
             </Box>
-            {PortfolioTable(props.address)}
+            {PortfolioTable(props.id)}
             <Typography className={classes.headline}>Trade history</Typography>
-            {TradeHistoryTable(props.address)}
+            {TradeHistoryTable(props.id)}
           </Box>
         </Scrollbars>
       </Box>
@@ -79,7 +79,7 @@ function emptyTable(name, cells) {
   )
 }
 
-function PortfolioTable(address) {
+function PortfolioTable(playerId) {
   const classes = useStyles()
   const [portfolio, setPortfolio] = useState([])
   const [loading, setLoading] = useState(false)
@@ -89,13 +89,13 @@ function PortfolioTable(address) {
     async function getPortfolio() {
       setLoading(true)
 
-      const holdings = await holdingApi.getHoldings(address)
+      const holdings = await holdingApi.getHoldings(playerId)
       setPortfolio(holdings.sort((a, b) => b['value'] - a['value']))
 
       setLoading(false)
     }
     getPortfolio()
-  }, [address])
+  }, [playerId])
 
   return (
     <Table className={classes.table} style={{ marginBottom: '30px' }}>
@@ -133,7 +133,7 @@ function PortfolioTable(address) {
 }
 
 
-function TradeHistoryTable(address) {
+function TradeHistoryTable(playerId) {
   const classes = useStyles()
   const [tradeHistory, setTradeHistory] = useState([])
   const [loading, setLoading] = useState(false)
@@ -143,13 +143,13 @@ function TradeHistoryTable(address) {
     async function getTradeHistory() {
       setLoading(true)
 
-      const trades = await tradeApi.getTradeHistory(address)
+      const trades = await tradeApi.getTradeHistory(playerId)
       setTradeHistory(trades)
 
       setLoading(false)
     }
     getTradeHistory()
-  }, [address])
+  }, [playerId])
 
   return (
     <Table className={classes.table}>

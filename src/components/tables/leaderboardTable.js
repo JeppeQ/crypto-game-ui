@@ -18,7 +18,7 @@ import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { HistoryDialog } from '../dialogs/historyDialog'
 import * as leaderboardApi from '../../api/leaderboard'
-import { TournamentContext } from '../../contexts/tournament'
+import { SeasonContext } from '../../contexts/season'
 import { ellipseAddress } from '../../helpers/utilities'
 
 const PAGE_SIZE = 50
@@ -31,7 +31,7 @@ const CustomTableCell = withStyles(() => ({
 
 const cells = [
   { id: 'rank', label: '#', sortable: true },
-  { id: 'address', label: 'Player', sortable: true },
+  { id: 'id', label: 'Player', sortable: true },
   { id: 'mainAsset', label: 'Main Asset', sortable: true },
   { id: 'rankChange', label: <Typography>&#x2191;&#x2193;</Typography>, align: 'right', sortable: true },
   { id: 'networth', label: 'Networth', align: 'right', sortable: true },
@@ -52,7 +52,7 @@ export function LeaderboardTable() {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
-  const tournament = useContext(TournamentContext)
+  const season = useContext(SeasonContext)
 
   useEffect(() => {
     async function fetchLeaderboard() {
@@ -62,7 +62,7 @@ export function LeaderboardTable() {
       const data = await leaderboardApi.getLeaderboard(orderBy, direction, page, search)
       setleaderboard(data.rows)
       setTotal(data.count)
-      tournament.setPlayers(data.count)
+      season.setPlayers(data.count)
 
       if (first) {
         setTimeout(() => {
@@ -151,11 +151,11 @@ export function LeaderboardTable() {
           <TableBody>
             {first && loadingRow()}
             {!first && leaderboard.map(row => (
-              <TableRow key={row.address}>
+              <TableRow key={row.id}>
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
                   <Button style={{ padding: '0px 5px' }}>
-                    {ellipseAddress(row.address, 8, 4)}
+                    {ellipseAddress(row.id, 8, 4)}
                   </Button>
                 </TableCell>
                 <TableCell>{row.mainAsset}</TableCell>
@@ -166,7 +166,7 @@ export function LeaderboardTable() {
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
                 </TableCell>
                 <TableCell align='center'>
-                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.address)}>VIEW</Box>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.id)}>VIEW</Box>
                 </TableCell>
               </TableRow>
             ))}

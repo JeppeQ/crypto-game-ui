@@ -10,14 +10,14 @@ import TextField from '@material-ui/core/TextField'
 
 import { styles, CustomButton } from './styles'
 import * as playerApi from '../../api/player'
-import { TournamentContext } from '../../contexts/tournament'
+import { SeasonContext } from '../../contexts/season'
 
 export function SignedUpDialog(props) {
   const _classes = styles()
   const [email, setEmail] = useState('')
   const [error, setError] = useState(false)
 
-  const tournament = useContext(TournamentContext)
+  const season = useContext(SeasonContext)
 
   const registerEmail = () => {
     if (!email) {
@@ -48,7 +48,7 @@ export function SignedUpDialog(props) {
             </Typography>
           </Box>
           <Box mb={2}>
-            {tournament && tournament.active
+            {season && season.active
               ? <Typography variant='body1'>
                 Would you like to receive updates about the competition?
             </Typography>

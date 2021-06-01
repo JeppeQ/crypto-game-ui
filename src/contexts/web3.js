@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState } from "react"
 import ReactGA from 'react-ga'
-import { isMobile } from "react-device-detect"
 
 import { PlayerContext } from './player'
 import { MetaMaskDialog } from '../components/dialogs/metamaskDialog'
-import { MobileSignupDialog } from '../components/dialogs/mobileSignupDialog'
-import * as playerApi from '../api/player'
+import * as authApi from '../api/auth'
 import { URL } from '../api'
 
 const ethereum = window.ethereum
@@ -15,15 +13,9 @@ export const Web3Context = createContext()
 export const Web3Provider = ({ children }) => {
   const player = useContext(PlayerContext)
   const [metaMaskDialog, setMetaMaskDialog] = useState(false)
-  const [mobileSignupDialog, setMobileSignupDialog] = useState(false)
 
   const connect = async (signup = false) => {
     if (!ethereum) {
-      if (isMobile) {
-        setMobileSignupDialog(true)
-        return
-      }
-
       setMetaMaskDialog(true)
     
       ReactGA.event({
@@ -73,7 +65,7 @@ export const Web3Provider = ({ children }) => {
     }, async (err, result) => {
       if (err) return;
       
-      const jwt = await playerApi.authenticate(result.result, data)
+      const jwt = await authApi.walletAuth(result.result, data)
       if (jwt) {
         if (signup === true) {
           player.signup(jwt)
@@ -92,7 +84,6 @@ export const Web3Provider = ({ children }) => {
     >
       {children}
       <MetaMaskDialog open={metaMaskDialog} close={() => setMetaMaskDialog(false)} />
-      <MobileSignupDialog open={mobileSignupDialog} close={() => setMobileSignupDialog(false)} />
     </Web3Context.Provider>
   );
 };

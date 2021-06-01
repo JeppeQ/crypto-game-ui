@@ -12,11 +12,11 @@ export async function me() {
   return response ? response.data : []
 }
 
-export async function getHoldings(address) {
+export async function getHoldings(playerId) {
   const url = `${API_ROUTE}/list`
   const response = await axios.get(url, {
     params: {
-      address
+      playerId
     }
   }).catch(err => console.log(err))
 

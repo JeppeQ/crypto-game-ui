@@ -19,11 +19,11 @@ export async function sellToken(tokenId, amount) {
   return response ? response.status : null
 }
 
-export async function getTradeHistory(address) {
+export async function getTradeHistory(playerId) {
   const url = `${API_ROUTE}/history`
   const response = await axios.get(url, {
     params: {
-      address
+      playerId
     }
   }).catch(err => console.log(err))
 

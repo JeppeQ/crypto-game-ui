@@ -19,7 +19,7 @@ import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { BuyDialog } from '../dialogs/buyDialog'
 import * as tokenApi from '../../api/token'
-import { TournamentContext } from '../../contexts/tournament'
+import { SeasonContext } from '../../contexts/season'
 
 const PAGE_SIZE = 50
 
@@ -52,7 +52,7 @@ export function MarketTable(props) {
   const [loading, setLoading] = useState(false)
   const [first, setFirst] = useState(true)
 
-  const tournament = useContext(TournamentContext)
+  const season = useContext(SeasonContext)
 
   async function updateMarket() {
     const data = await tokenApi.getMarket(orderBy, direction, page, search)
@@ -192,7 +192,7 @@ export function MarketTable(props) {
                   {renderData(<NumberFormat value={row.marketCap} displayType={'text'} thousandSeparator={true} prefix={'$'} />)}
                 </TableCell>
                 <TableCell align='center'>
-                  <Button variant='contained' disabled={!tournament.active} className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
+                  <Button variant='contained' disabled={!season.active} className={classes.buyButton} onClick={() => setBuy(row)}>Buy</Button>
                 </TableCell>
               </TableRow>
             ))}

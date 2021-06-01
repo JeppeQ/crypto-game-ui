@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react"
 import ReactGA from 'react-ga'
 
+import { ConnectDialog } from '../components/dialogs/connectDialog'
 import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
 import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
 import * as playerApi from '../api/player'
@@ -13,8 +14,10 @@ export const PlayerProvider = ({ children }) => {
   const [holdings, setHoldings] = useState([])
   const [assetValue, setAssetValue] = useState(0)
   const [assetsLoading, loadAssets] = useState(true)
+
   const [emailDialog, showEmailDialog] = useState(false)
   const [tradeLimitDialog, showTradeLimitDialog] = useState(false)
+  const [connectDialog, setConnectDialog] = useState({ show: false, signup: false })
 
   useEffect(() => {
     update()
@@ -40,7 +43,7 @@ export const PlayerProvider = ({ children }) => {
     const player = await playerApi.me(jwt)
     if (player) {
       setInfo({ ...info, ...player })
-      ReactGA.set({ userId: player.address })
+      ReactGA.set({ userId: player.id })
     }
   }
 
@@ -76,10 +79,12 @@ export const PlayerProvider = ({ children }) => {
         update,
         getPlayerInfo,
         assetsLoading,
-        showTradeLimitDialog
+        showTradeLimitDialog,
+        setConnectDialog,
       }}
     >
       {children}
+      <ConnectDialog open={connectDialog.show} signup={connectDialog.signup} close={() => setConnectDialog({ show: false, signup: false })} />
       <SignedUpDialog open={emailDialog} close={() => showEmailDialog(false)} />
       <TradeLimitDialog open={tradeLimitDialog} close={() => showTradeLimitDialog(false)} />
     </PlayerContext.Provider>
