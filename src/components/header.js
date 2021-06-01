@@ -23,7 +23,6 @@ import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
 import Menu from './mobile/menu'
 import metamaskLogo from '../assets/images/metamask-icon.png'
-import axios from 'axios'
 
 const menuItems = [
   {
@@ -48,6 +47,14 @@ const menuItems = [
     left: '450px',
     width: '220px',
     activeWidth: '218px',
+    icon: <EqualizerIcon />
+  },
+  {
+    name: 'SEASONS',
+    path: '/seasons',
+    left: '670px',
+    width: '200px',
+    activeWidth: '198px',
     icon: <EqualizerIcon />
   },
   {
@@ -121,14 +128,6 @@ function Header() {
           })}
         </Grid>
       </Grid>
-      {process.env.NODE_ENV !== 'production' && <Grid item>
-        <Button style={{ marginRight: '10px' }} color='secondary' variant='outlined' onClick={() => {
-          axios.post('http://localhost:8080/api/leaderboard/update')
-        }}>Update Leaderboard</Button>
-        <Button color='secondary' variant='outlined' onClick={() => {
-          axios.post('http://localhost:8080/api/token/updateTokens')
-        }}>Update Market</Button>
-      </Grid>}
       <Grid item>
         {player.info.address
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
