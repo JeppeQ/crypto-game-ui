@@ -13,13 +13,13 @@ import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 import TwitterIcon from '@material-ui/icons/Twitter'
 
-import { PlayerContext } from '../contexts/player'
+// import { PlayerContext } from '../contexts/player'
 import { SeasonContext } from '../contexts/season'
 import { CountDown } from '../components/countDown'
 
 function Overview() {
   const classes = useStyles()
-  const player = useContext(PlayerContext)
+  // const player = useContext(PlayerContext)
   const season = useContext(SeasonContext)
 
   // const joinContest = () => {

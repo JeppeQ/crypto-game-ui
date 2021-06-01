@@ -12,7 +12,7 @@ export const SeasonProvider = ({ children }) => {
 
   useEffect(() => {
     const getSeasonInfo = async () => {
-      const tourney = await seasonApi.getSeasonInfo()
+      const tourney = await seasonApi.getCurrentSeason()
       if (tourney) {
         setInfo(tourney)
         setSeasonActive(tourney)
