@@ -31,9 +31,9 @@ function App() {
         {isBrowser && BackgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <Web3Provider>
-            <SeasonProvider>
-              <PlayerProvider>
+          <SeasonProvider>
+            <PlayerProvider>
+              <Web3Provider>
                 <Box className='main'>
                   <Header />
                   <Switch>
@@ -42,9 +42,9 @@ function App() {
                     })}
                   </Switch>
                 </Box>
-              </PlayerProvider>
-            </SeasonProvider>
-          </Web3Provider>
+              </Web3Provider>
+            </PlayerProvider>
+          </SeasonProvider>
         </ThemeProvider>
       </Box>
     </Router>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_ENDPOINT } from './'
+import { API_ENDPOINT, buildApiHeaders } from './'
 
 const API_ROUTE = `${API_ENDPOINT}/auth`
 
@@ -19,6 +19,17 @@ export async function walletAuth(signature, msgParams) {
     signature,
     msgParams
   }).catch(err => console.log(err))
+
+  if (response && response.data) {
+    localStorage.setItem('jwtToken', response.data)
+    return response.data
+  }
+}
+
+export async function refreshToken() {
+  const url = `${API_ROUTE}/refreshToken`
+
+  const response = await axios.get(url, { headers: buildApiHeaders() }).catch(err => console.log(err))
 
   if (response && response.data) {
     localStorage.setItem('jwtToken', response.data)

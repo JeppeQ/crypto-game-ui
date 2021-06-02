@@ -6,6 +6,7 @@ import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
 import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
 import * as playerApi from '../api/player'
 import * as holdingApi from '../api/holding'
+import * as authApi from '../api/auth'
 
 export const PlayerContext = createContext()
 
@@ -18,6 +19,17 @@ export const PlayerProvider = ({ children }) => {
   const [emailDialog, showEmailDialog] = useState(false)
   const [tradeLimitDialog, showTradeLimitDialog] = useState(false)
   const [connectDialog, setConnectDialog] = useState({ show: false, signup: false })
+
+  useEffect(() => {
+    async function refreshToken() {
+      const refreshToken = await authApi.refreshToken()
+      if (refreshToken) {
+        window.location.reload()
+      }
+    }
+
+    refreshToken()
+  }, [])
 
   useEffect(() => {
     update()
