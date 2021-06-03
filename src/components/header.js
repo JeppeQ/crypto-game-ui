@@ -19,6 +19,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
 
 import { PlayerContext } from '../contexts/player'
+import { ConnectorContext } from '../contexts/connector'
 import { ellipseAddress } from '../helpers/utilities'
 import Menu from './mobile/menu'
 import metamaskLogo from '../assets/images/metamask-icon.png'
@@ -73,6 +74,7 @@ function Header() {
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
   const player = useContext(PlayerContext)
+  const connector = useContext(ConnectorContext)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path) || menuItems[0])
@@ -131,7 +133,7 @@ function Header() {
           ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
             {ellipseAddress(player.info.id, 4, 4)}
           </Button>
-          : <Button onClick={() => player.setConnectDialog({ show: true, signup: false })}>
+          : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
             connect
           </Button>}
       </Grid>

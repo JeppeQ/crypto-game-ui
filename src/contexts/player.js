@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react"
 import ReactGA from 'react-ga'
 
-import { ConnectDialog } from '../components/dialogs/connectDialog'
 import { SignedUpDialog } from '../components/dialogs/signedUpDialog'
 import { TradeLimitDialog } from '../components/dialogs/tradeLimitDialog'
 import * as playerApi from '../api/player'
@@ -18,7 +17,6 @@ export const PlayerProvider = ({ children }) => {
 
   const [emailDialog, showEmailDialog] = useState(false)
   const [tradeLimitDialog, showTradeLimitDialog] = useState(false)
-  const [connectDialog, setConnectDialog] = useState({ show: false, signup: false })
 
   useEffect(() => {
     async function refreshToken() {
@@ -72,7 +70,10 @@ export const PlayerProvider = ({ children }) => {
     const player = await playerApi.signup(jwt)
     if (player) {
       setInfo(player)
-      showEmailDialog(true)
+      
+      if (!player.email) {
+        showEmailDialog(true)
+      }
 
       ReactGA.event({
         category: 'User',
@@ -92,11 +93,9 @@ export const PlayerProvider = ({ children }) => {
         getPlayerInfo,
         assetsLoading,
         showTradeLimitDialog,
-        setConnectDialog,
       }}
     >
       {children}
-      <ConnectDialog open={connectDialog.show} signup={connectDialog.signup} close={() => setConnectDialog({ show: false, signup: false })} />
       <SignedUpDialog open={emailDialog} close={() => showEmailDialog(false)} />
       <TradeLimitDialog open={tradeLimitDialog} close={() => showTradeLimitDialog(false)} />
     </PlayerContext.Provider>

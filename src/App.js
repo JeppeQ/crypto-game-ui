@@ -14,7 +14,7 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
-import { Web3Provider } from './contexts/web3'
+import { ConnectorProvider } from './contexts/connector'
 import { PlayerProvider } from './contexts/player'
 import { SeasonProvider } from './contexts/season'
 
@@ -33,7 +33,7 @@ function App() {
           <CssBaseline />
           <SeasonProvider>
             <PlayerProvider>
-              <Web3Provider>
+              <ConnectorProvider>
                 <Box className='main'>
                   <Header />
                   <Switch>
@@ -42,7 +42,7 @@ function App() {
                     })}
                   </Switch>
                 </Box>
-              </Web3Provider>
+              </ConnectorProvider>
             </PlayerProvider>
           </SeasonProvider>
         </ThemeProvider>

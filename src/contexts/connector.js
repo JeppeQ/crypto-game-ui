@@ -3,18 +3,20 @@ import ReactGA from 'react-ga'
 
 import { PlayerContext } from './player'
 import { MetaMaskDialog } from '../components/dialogs/metamaskDialog'
+import { ConnectDialog } from '../components/dialogs/connectDialog'
 import * as authApi from '../api/auth'
 import { URL } from '../api'
 
 const ethereum = window.ethereum
 
-export const Web3Context = createContext()
+export const ConnectorContext = createContext()
 
-export const Web3Provider = ({ children }) => {
+export const ConnectorProvider = ({ children }) => {
   const player = useContext(PlayerContext)
   const [metaMaskDialog, setMetaMaskDialog] = useState(false)
+  const [connectDialog, setConnectDialog] = useState({ show: false, signup: false })
 
-  const connect = async (signup = false) => {
+  const connectWallet = async (signup = false) => {
     if (!ethereum) {
       setMetaMaskDialog(true)
     
@@ -77,13 +79,15 @@ export const Web3Provider = ({ children }) => {
   }
   
   return (
-    <Web3Context.Provider
+    <ConnectorContext.Provider
       value={{
-        connect,
+        connectWallet,
+        setConnectDialog,
       }}
     >
       {children}
       <MetaMaskDialog open={metaMaskDialog} close={() => setMetaMaskDialog(false)} />
-    </Web3Context.Provider>
+      <ConnectDialog open={connectDialog.show} signup={connectDialog.signup} close={() => setConnectDialog({ show: false, signup: false })} />
+    </ConnectorContext.Provider>
   );
 };

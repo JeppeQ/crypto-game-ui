@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
 import { styles } from './styles'
-import { Web3Context } from '../../contexts/web3'
+import { ConnectorContext } from '../../contexts/connector'
 import { PlayerContext } from '../../contexts/player'
 import Google from '../../assets/images/google-icon.svg'
 import metamaskLogo from '../../assets/images/metamask-icon.png'
@@ -30,7 +30,7 @@ const ConnectButton = withStyles(() => ({
 
 export function ConnectDialog(props) {
   const _classes = styles()
-  const web3 = useContext(Web3Context)
+  const connector = useContext(ConnectorContext)
   const player = useContext(PlayerContext)
 
   const googleConnect = async (response) => {
@@ -48,7 +48,7 @@ export function ConnectDialog(props) {
   }
 
   const walletConnect = () => {
-    web3.connect(props.signup)
+    connector.connectWallet(props.signup)
     props.close()
   }
 

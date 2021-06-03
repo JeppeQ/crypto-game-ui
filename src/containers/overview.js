@@ -4,8 +4,10 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon"
 import clsx from 'clsx'
+import ReactGA from 'react-ga'
 
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
@@ -13,28 +15,30 @@ import Typography from '@material-ui/core/Typography'
 import Skeleton from '@material-ui/lab/Skeleton'
 import TwitterIcon from '@material-ui/icons/Twitter'
 
-// import { PlayerContext } from '../contexts/player'
+import { PlayerContext } from '../contexts/player'
 import { SeasonContext } from '../contexts/season'
+import { ConnectorContext } from '../contexts/connector'
 import { CountDown } from '../components/countDown'
 
 function Overview() {
   const classes = useStyles()
-  // const player = useContext(PlayerContext)
+  const player = useContext(PlayerContext)
+  const connector = useContext(ConnectorContext)
   const season = useContext(SeasonContext)
 
-  // const joinContest = () => {
-  //   if (player.info.id) {
-  //     player.signup()
-  //   } else {
-  //     player.setConnectDialog({ show: true, signup: true })
-  //   }
-  //
+  const joinContest = () => {
+    if (player.info.id) {
+      player.signup()
+    } else {
+      connector.setConnectDialog({ show: true, signup: true })
+    }
 
-  //   ReactGA.event({
-  //     category: 'User',
-  //     action: 'clicked sign up button'
-  //   })
-  // }
+
+    ReactGA.event({
+      category: 'User',
+      action: 'clicked sign up button'
+    })
+  }
 
   return (
     <Scrollbars
@@ -66,102 +70,95 @@ function Overview() {
               {season.info.start &&
                 (DateTime.fromISO(season.info.start) > DateTime.utc()
                   ? <React.Fragment>
-                    <Typography variant='h6'>game begins in</Typography>
+                    <Typography variant='h6'>season 2 begins in</Typography>
                     <CountDown date={DateTime.fromISO(season.info.start)} />
                   </React.Fragment>
                   : DateTime.fromISO(season.info.end) > DateTime.utc()
                     ? <React.Fragment>
-                      <Typography variant='h6'>game ends in</Typography>
+                      <Typography variant='h6'>season 2 ends in</Typography>
                       <CountDown date={DateTime.fromISO(season.info.end)} />
                     </React.Fragment>
                     : <React.Fragment>
-                      <Typography variant='h6'>season one has ended</Typography>
-                      <Typography variant='h6' style={{ fontSize: '14px' }}>season two soon</Typography>
+                      <Typography variant='h6'>season 2 has ended</Typography>
+                      <Typography variant='h6' style={{ fontSize: '14px' }}>season 3 soon</Typography>
                     </React.Fragment>)
               }
             </Box>
-            {/* {player.info.tournamentId && <Box className={clsx(classes.infoBox, classes.customBox)}>
+            {player.info.seasonId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>You are signed up</Typography>
               <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>GOOD LUCK!</Typography>
             </Box>}
             {!player.info.seasonId && <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Free entry</Typography>
               <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
-            </Box>} */}
-            <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>Thanks for playing!</Typography>
-            </Box>
+            </Box>}
           </Box>
-            <Box mt={8} mb={1}>
-              <Typography className={classes.headlineText} variant='h5'>How does it work?</Typography>
-            </Box>
-            <Typography className={classes.breadText}>
-              - To join the contest, you need to have <Link target="_blank" href='https://metamask.io/download.html'>MetaMask</Link> installed for your browser. <br />
-            - The competition starts on May 1st and lasts until May 31st. <br />
+          <Box mt={8} mb={1}>
+            <Typography className={classes.headlineText} variant='h5'>How does it work?</Typography>
+          </Box>
+          <Typography className={classes.breadText}>
+            - Season two starts on June 12th and lasts 30 days. <br />
             - Each player starts with $50,000 play money, which can be used to trade cryptocurrencies. <br />
             - When the competition ends, the player with the highest networth (cash+assets) wins. <br />
             - Only one entry per person is allowed.
           </Typography>
-            <Box mt={5} mb={1}>
-              <Typography className={classes.headlineText} variant='h5'>How do I trade?</Typography>
-            </Box>
-            <Box mb={1}>
-              <Typography className={classes.breadText}>
-                Once the competition begins, you'll be able to buy and sell cryptos from the market.
-                The market can be found under the 'trade' tab. Once you have decided on a crypto,
-                click the green buy button and choose how much you want to spend. There are currently
-                no spending limit, so you could go all-in on one crypto.
-          </Typography>
-            </Box>
+          <Box mt={5} mb={1}>
+            <Typography className={classes.headlineText} variant='h5'>How do I trade?</Typography>
+          </Box>
+          <Box mb={1}>
             <Typography className={classes.breadText}>
-              You can keep track of your investments in your portfolio, also found under the 'trade' tab.
-              If you wish to sell one of your investments, click the red sell button next to the asset. Be aware
-              that there is a daily limit of 10 trades, so choose your trades carefully.
+              Once the competition begins, you'll be able to buy and sell cryptos from the market.
+              The market can be found under the 'trade' tab. Once you have decided on a crypto,
+              click the green buy button and choose how much you want to spend. There are currently
+              no spending limit, so you could go all-in on one crypto.
           </Typography>
-            <Box mt={5} mb={1}>
-              <Typography className={classes.headlineText} variant='h5'>Scoring and prizing</Typography>
-            </Box>
-            <Box mb={1}>
-              <Typography className={classes.breadText}>
-                The leaderboard keeps track of all players and their current positions.
-                The players' portfolio and trading history can be seen there.
-                Leaderboard is updated every 10 min.
-            </Typography>
-            </Box>
+          </Box>
+          <Typography className={classes.breadText}>
+            You can keep track of your investments in your portfolio, also found under the 'trade' tab.
+            If you wish to sell one of your investments, click the red sell button next to the asset. Be aware
+            that your crypto will be locked for 24 hours after buying, meaning you can't sell it before this period ends.
+          </Typography>
+          <Box mt={5} mb={1}>
+            <Typography className={classes.headlineText} variant='h5'>Scoring and prizing</Typography>
+          </Box>
+          <Box mb={1}>
             <Typography className={classes.breadText}>
-              To be eligible for a prize, you must have made at least one investment, and have traded for more than $20,000.
-              Once the competition ends, the top 10 players on the leaderboard will recieve a prize.
-              Prizes will be sent to the players wallets after a short verification process.
-          </Typography>
-            <Box ml={0} mt={1} className={classes.breadText}>
-              <Box display='flex' width='155px' justifyContent='space-between'>
-                <Box>1st place:</Box>
-                <Box>$1000</Box>
-              </Box>
-              <Box display='flex' width='155px' justifyContent='space-between'>
-                <Box>2nd place:</Box>
-                <Box>$450</Box>
-              </Box>
-              <Box display='flex' width='155px' justifyContent='space-between'>
-                <Box>3rd place:</Box>
-                <Box>$200</Box>
-              </Box>
-              <Box display='flex' width='155px' justifyContent='space-between'>
-                <Box>4-10th place:</Box>
-                <Box>$50</Box>
-              </Box>
-            </Box>
-            <Box mt={5} mb={1}>
-              <Typography className={classes.headlineText} variant='h5'>Contact</Typography>
-            </Box>
-            <Box display='flex'>
-              <Typography className={classes.breadText} style={{ width: 'fit-content', marginRight: '20px' }}>
-                cryptoseasonsapp@gmail.com
+              The leaderboard keeps track of all players and their current positions.
+              The players' portfolio and trading history can be seen there.
+              Leaderboard is updated every 10 min.
             </Typography>
-              <Link target="_blank" href="https://twitter.com/JeppeQin" color='textPrimary'>
-                <TwitterIcon />
-              </Link>
+          </Box>
+          <Typography className={classes.breadText}>
+            To be eligible for a prize, you must have made at least one investment.
+            Once the competition ends, the top 3 players on the leaderboard will recieve a prize.
+            Prizes will be paid out in DAI and will be sent to the players wallets within 24 hours.
+            If you've signed up with google, you must add a wallet to be able to recieve a prize.
+          </Typography>
+          <Box ml={0} mt={1} className={classes.breadText}>
+            <Box display='flex' width='155px' justifyContent='space-between'>
+              <Box>1st place:</Box>
+              <Box>$600</Box>
             </Box>
+            <Box display='flex' width='155px' justifyContent='space-between'>
+              <Box>2nd place:</Box>
+              <Box>$300</Box>
+            </Box>
+            <Box display='flex' width='155px' justifyContent='space-between'>
+              <Box>3rd place:</Box>
+              <Box>$100</Box>
+            </Box>
+          </Box>
+          <Box mt={5} mb={1}>
+            <Typography className={classes.headlineText} variant='h5'>Contact</Typography>
+          </Box>
+          <Box display='flex'>
+            <Typography className={classes.breadText} style={{ width: 'fit-content', marginRight: '20px' }}>
+              cryptoseasonsapp@gmail.com
+            </Typography>
+            <Link target="_blank" href="https://twitter.com/JeppeQin" color='textPrimary'>
+              <TwitterIcon />
+            </Link>
+          </Box>
         </motion.div>
       </Grid >
     </Scrollbars >

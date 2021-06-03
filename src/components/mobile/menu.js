@@ -11,6 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { PlayerContext } from '../../contexts/player'
+import { ConnectorContext } from '../../contexts/connector'
 import { ellipseAddress } from '../../helpers/utilities'
 import metamaskLogo from '../../assets/images/metamask-icon.png'
 
@@ -18,6 +19,7 @@ export default function Menu(props) {
   const classes = useStyles()
   const history = useHistory()
   const player = useContext(PlayerContext)
+  const connector = useContext(ConnectorContext)
 
   return (
     <SwipeableDrawer
@@ -38,7 +40,7 @@ export default function Menu(props) {
               ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
                 {ellipseAddress(player.info.id, 4, 4)}
               </Button>
-              : <Button onClick={() => player.setConnectDialog({ show: true, signup: false })} variant='outlined'>
+              : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })} variant='outlined'>
                 connect
               </Button>}
           </ListItem>

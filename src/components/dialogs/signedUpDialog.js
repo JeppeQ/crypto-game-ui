@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 
 import { styles, CustomButton } from './styles'
-import * as playerApi from '../../api/player'
+import * as socialApi from '../../api/social'
 import { SeasonContext } from '../../contexts/season'
 
 export function SignedUpDialog(props) {
@@ -25,7 +25,7 @@ export function SignedUpDialog(props) {
       return
     }
 
-    playerApi.addEmail(email)
+    socialApi.addEmail(email)
     props.close()
   }
 
