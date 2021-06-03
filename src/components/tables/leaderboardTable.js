@@ -151,11 +151,11 @@ export function LeaderboardTable() {
           <TableBody>
             {first && loadingRow()}
             {!first && leaderboard.map(row => (
-              <TableRow key={row.id}>
+              <TableRow key={row.playerId}>
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
                   <Button style={{ padding: '0px 5px' }}>
-                    {ellipseAddress(row.id, 8, 4)}
+                    {ellipseAddress(row.playerId, 8, 4)}
                   </Button>
                 </TableCell>
                 <TableCell>{row.mainAsset}</TableCell>
@@ -166,7 +166,7 @@ export function LeaderboardTable() {
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
                 </TableCell>
                 <TableCell align='center'>
-                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.id)}>VIEW</Box>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.playerId)}>VIEW</Box>
                 </TableCell>
               </TableRow>
             ))}
