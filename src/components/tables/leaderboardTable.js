@@ -126,6 +126,18 @@ export function LeaderboardTable() {
     }
   }
 
+  function renderName(player) {
+    if (player['social.twitter']) {
+      return <Box style={{ textTransform: 'none' }}>{player['social.twitter']}</Box>
+    }
+
+    if (player['social.wallet']) {
+      return ellipseAddress(player['social.wallet'], 8, 4)
+    }
+
+    return ellipseAddress(player.playerId, 8, 4)
+  }
+
   return (
     <React.Fragment>
       <Box mb={1} className={_classes.searchHeader}>
@@ -155,7 +167,7 @@ export function LeaderboardTable() {
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
                   <Button style={{ padding: '0px 5px' }}>
-                    {ellipseAddress(row.playerId, 8, 4)}
+                    {renderName(row)}
                   </Button>
                 </TableCell>
                 <TableCell>{row.mainAsset}</TableCell>

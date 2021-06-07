@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,17 +9,21 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import SettingsIcon from '@material-ui/icons/Settings'
 
 import { PlayerContext } from '../../contexts/player'
 import { ConnectorContext } from '../../contexts/connector'
 import { ellipseAddress } from '../../helpers/utilities'
-import metamaskLogo from '../../assets/images/metamask-icon.png'
+import { Settings } from '../settings'
 
-export default function Menu(props) {
+export default function MobileMenu(props) {
   const classes = useStyles()
   const history = useHistory()
   const player = useContext(PlayerContext)
   const connector = useContext(ConnectorContext)
+  const anchorRef = React.useRef(null);
+
+  const [settings, openSettings] = useState(false);
 
   return (
     <SwipeableDrawer
@@ -37,15 +41,16 @@ export default function Menu(props) {
           ))}
           <ListItem style={{ marginTop: '10px' }}>
             {player.info.id
-              ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
+              ? <Button endIcon={<SettingsIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
                 {ellipseAddress(player.info.id, 4, 4)}
               </Button>
-              : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })} variant='outlined'>
+              : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
                 connect
-              </Button>}
+                </Button>}
           </ListItem>
         </List>
       </Box>
+      <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} marginTop={'60px'} />
     </SwipeableDrawer>
   );
 }

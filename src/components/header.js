@@ -4,11 +4,11 @@ import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import ReactGA from 'react-ga'
 
+import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
-import { makeStyles } from '@material-ui/core/styles'
 import EcoIcon from '@material-ui/icons/Eco'
 import MenuIcon from '@material-ui/icons/Menu'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
@@ -17,12 +17,13 @@ import InfoIcon from '@material-ui/icons/Info'
 import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
+import SettingsIcon from '@material-ui/icons/Settings'
 
 import { PlayerContext } from '../contexts/player'
 import { ConnectorContext } from '../contexts/connector'
 import { ellipseAddress } from '../helpers/utilities'
-import Menu from './mobile/menu'
-import metamaskLogo from '../assets/images/metamask-icon.png'
+import MobileMenu from './mobile/menu'
+import { Settings } from './settings'
 
 const menuItems = [
   {
@@ -55,7 +56,7 @@ const menuItems = [
     left: '670px',
     width: '200px',
     activeWidth: '198px',
-    icon: <EqualizerIcon />
+    icon: <EcoIcon />
   },
   {
     name: 'NEWS',
@@ -71,8 +72,12 @@ function Header() {
   const classes = useStyles()
   const location = useLocation()
   const mobile = useMediaQuery('(max-width: 850px)')
+
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
+  const [settings, openSettings] = useState(false);
+  const anchorRef = React.useRef(null);
+
   const player = useContext(PlayerContext)
   const connector = useContext(ConnectorContext)
 
@@ -81,6 +86,7 @@ function Header() {
     ReactGA.pageview(location.pathname)
     ReactGA.set({ page: location.pathname })
   }, [location])
+
 
   if (mobile) {
     return (
@@ -94,7 +100,7 @@ function Header() {
           </Box>
           <Box width={'60px'} />
         </Grid>
-        <Menu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
+        <MobileMenu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
       </React.Fragment>
     )
   }
@@ -128,15 +134,17 @@ function Header() {
           })}
         </Grid>
       </Grid>
+
       <Grid item>
         {player.info.id
-          ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
+          ? <Button endIcon={<SettingsIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
             {ellipseAddress(player.info.id, 4, 4)}
           </Button>
           : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
             connect
           </Button>}
       </Grid>
+      <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} />
     </Grid>
   )
 }

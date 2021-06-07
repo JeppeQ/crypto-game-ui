@@ -8,3 +8,15 @@ export async function addEmail(email) {
   axios.post(url, { email }, { headers: buildApiHeaders() })
     .catch(err => console.log(err))
 }
+
+export async function addWallet(wallet) {
+  const url = `${API_ROUTE}/wallet`
+  await axios.post(url, { wallet }, { headers: buildApiHeaders() })
+    .catch(err => console.log(err))
+}
+
+export async function addTwitter(twitter) {
+  const url = `${API_ROUTE}/twitter`
+  await axios.post(url, { twitter }, { headers: buildApiHeaders() })
+    .catch(err => console.log(err))
+}

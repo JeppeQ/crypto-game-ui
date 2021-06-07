@@ -23,6 +23,11 @@ export const mainTheme = createMuiTheme({
     h4: {
       fontSize: 35,
     },
+    h5: {
+      fontSize: 14,
+      color: 'rgba(255, 255, 255, 1)',
+      fontFamily: 'astrospace',
+    },
     h6: {
       fontSize: 15,
       color: 'rgba(255, 255, 255, 0.7)',
@@ -59,6 +64,12 @@ export const mainTheme = createMuiTheme({
     MuiDialog: {
       paper: {
         margin: '10px'
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        paddingTop: '12px',
+        paddingBottom: '12px'
       }
     }
   },
