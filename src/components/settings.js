@@ -33,19 +33,19 @@ export function Settings(props) {
           <ListItemIcon>
             <WalletIcon />
           </ListItemIcon>
-          <Typography variant='h5'>Add wallet</Typography>
+          <Typography variant='subtitle1'>Add wallet</Typography>
         </MenuItem>
         <MenuItem onClick={() => { openAddTwitter(true); props.close() }}>
           <ListItemIcon>
             <TwitterIcon />
           </ListItemIcon>
-          <Typography variant='h5'>Add twitter</Typography>
+          <Typography variant='subtitle1'>Add twitter</Typography>
         </MenuItem>
         <MenuItem onClick={disconnect}>
           <ListItemIcon>
             <DisconnectIcon />
           </ListItemIcon>
-          <Typography variant='h5'>disconnect</Typography>
+          <Typography variant='subtitle1'>disconnect</Typography>
         </MenuItem>
       </Menu>
       { addWallet && <AddWalletDialog open={addWallet} close={() => openAddWallet(false)} />}

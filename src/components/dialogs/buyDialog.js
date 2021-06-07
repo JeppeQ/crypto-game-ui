@@ -35,11 +35,13 @@ export function BuyDialog(props) {
     } 
 
     const status = await tradeApi.buyToken(props.token.id, amount)
-
+    
     if (status === 200) {
       player.update()
     } else if (status === 201) {
       player.showTradeLimitDialog(true)
+    } else if (!status) {
+      return
     }
 
     props.close()

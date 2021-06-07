@@ -23,16 +23,16 @@ export const mainTheme = createMuiTheme({
     h4: {
       fontSize: 35,
     },
-    h5: {
-      fontSize: 14,
-      color: 'rgba(255, 255, 255, 1)',
-      fontFamily: 'astrospace',
-    },
     h6: {
       fontSize: 15,
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'astrospace',
       letterSpacing: '1px'
+    },
+    subtitle1: {
+      fontSize: 14,
+      color: 'rgba(255, 255, 255, 1)',
+      fontFamily: 'astrospace',
     },
     subtitle2: {
       fontStyle: 'italic'
@@ -70,6 +70,11 @@ export const mainTheme = createMuiTheme({
       root: {
         paddingTop: '12px',
         paddingBottom: '12px'
+      }
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: '#464545'
       }
     }
   },

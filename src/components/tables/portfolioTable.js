@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
+import { DateTime } from "luxon"
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -13,11 +14,15 @@ import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
+import LockIcon from '@material-ui/icons/Lock'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import { styles } from './styles'
 import { SellDialog } from '../dialogs/sellDialog'
+import { TimeRemaining } from '../tooltips/timeRemaining'
 import { PlayerContext } from '../../contexts/player'
 import { SeasonContext } from '../../contexts/season'
+
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -43,7 +48,7 @@ export function PortfolioTable() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
   const season = useContext(SeasonContext)
-  
+
   const [sell, setSell] = useState()
   const [orderBy, setOrderBy] = useState()
   const [direction, setDirection] = useState()
@@ -110,7 +115,7 @@ export function PortfolioTable() {
           <TableBody>
             {player.assetsLoading && loadingRow()}
 
-            {!player.assetsLoading && player.holdings.length === 0 && 
+            {!player.assetsLoading && player.holdings.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
@@ -136,7 +141,11 @@ export function PortfolioTable() {
                   {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='center'>
-                  <Button variant='contained' disabled={!season.active} className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>
+                  {DateTime.fromISO(row.bought).plus({ hours: 24 }) > DateTime.utc()
+                    ? <Tooltip title={<TimeRemaining date={DateTime.fromISO(row.bought).plus({ hours: 24 })} />}>
+                      <Button variant='contained' className={classes.lockedButton}><LockIcon style={{ fontSize: '18px' }} /></Button>
+                    </Tooltip>
+                    : <Button variant='contained' disabled={!season.active} className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>}
                 </CustomTableCell>
               </TableRow>
             ))}
@@ -167,4 +176,11 @@ const useStyles = makeStyles({
       backgroundColor: '#e60808'
     }
   },
+  lockedButton: {
+    padding: '3px 0',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    "&:hover": {
+      backgroundColor: 'rgba(255, 255, 255, 0.12)'
+    }
+  }
 })
