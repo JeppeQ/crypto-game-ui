@@ -136,9 +136,9 @@ function Header() {
       </Grid>
 
       <Grid item>
-        {player.info.id
+        {player.info.playerId
           ? <Button endIcon={<SettingsIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
-            {ellipseAddress(player.info.id, 4, 4)}
+            {ellipseAddress(player.info.playerId, 4, 4)}
           </Button>
           : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
             connect

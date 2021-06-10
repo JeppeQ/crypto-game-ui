@@ -42,11 +42,11 @@ export function HistoryDialog(props) {
           <Box p={2.5}>
             <Box display='flex' alignItems='baseline' justifyContent='space-between'>
               <Typography className={classes.headline}>Portfolio</Typography>
-              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.id}</Typography>
+              <Typography variant='h6' color='textSecondary' style={{fontSize: '12px'}}>@{props.playerId}</Typography>
             </Box>
-            {PortfolioTable(props.id)}
+            {PortfolioTable(props.playerId)}
             <Typography className={classes.headline}>Trade history</Typography>
-            {TradeHistoryTable(props.id)}
+            {TradeHistoryTable(props.playerId)}
           </Box>
         </Scrollbars>
       </Box>

@@ -53,7 +53,7 @@ export const PlayerProvider = ({ children }) => {
     const player = await playerApi.me(jwt)
     if (player) {
       setInfo({ ...info, ...player })
-      ReactGA.set({ userId: player.id })
+      ReactGA.set({ userId: player.playerId })
     }
   }
 

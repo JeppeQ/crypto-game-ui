@@ -27,7 +27,7 @@ function Overview() {
   const season = useContext(SeasonContext)
 
   const joinContest = () => {
-    if (player.info.id) {
+    if (player.info.playerId) {
       player.signup()
     } else {
       connector.setConnectDialog({ show: true, signup: true })

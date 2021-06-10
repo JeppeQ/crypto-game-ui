@@ -40,9 +40,9 @@ export default function MobileMenu(props) {
             </ListItem>
           ))}
           <ListItem style={{ marginTop: '10px' }}>
-            {player.info.id
+            {player.info.playerId
               ? <Button endIcon={<SettingsIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
-                {ellipseAddress(player.info.id, 4, 4)}
+                {ellipseAddress(player.info.playerId, 4, 4)}
               </Button>
               : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
                 connect

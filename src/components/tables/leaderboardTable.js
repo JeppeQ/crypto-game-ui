@@ -33,7 +33,7 @@ const cells = [
   { id: 'rank', label: '#', sortable: true },
   { id: 'id', label: 'Player', sortable: true },
   { id: 'mainAsset', label: 'Main Asset', sortable: true },
-  { id: 'rankChange', label: <Typography>&#x2191;&#x2193;</Typography>, align: 'right', sortable: true },
+  { id: 'rankChange', label: <React.Fragment>&#x2191;&#x2193;</React.Fragment>, align: 'right', sortable: true },
   { id: 'networth', label: 'Networth', align: 'right', sortable: true },
   { id: 'portfolio', label: 'Portfolio', align: 'center' },
 ]
