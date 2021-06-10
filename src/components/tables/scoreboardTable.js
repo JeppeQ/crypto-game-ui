@@ -167,7 +167,7 @@ export function ScoreBoard(props) {
                   <Box className={classes.viewLink} onClick={() => setViewHistory(row.playerId)}>VIEW</Box>
                 </TableCell>
                 <TableCell align='center'>
-                  <Typography>{row.prize}</Typography>
+                  <NumberFormat value={row.prize} displayType={'text'} prefix={'$'} />
                 </TableCell>
               </TableRow>
             ))}

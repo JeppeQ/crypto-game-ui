@@ -110,7 +110,7 @@ function TradeHistoryTable(seasonId, playerId) {
               {DateTime.fromISO(trade.date).toFormat('LLL dd, HH:mm:ss')}
             </CustomTableCell>
             <CustomTableCell>
-              <Typography variant='body1' color='textSecondary'>{trade.token.symbol.toUpperCase()}</Typography>
+              <Typography variant='body1' color='textSecondary'>{trade.token.toUpperCase()}</Typography>
             </CustomTableCell>
             <CustomTableCell style={{ color: trade.side === 'Sell' ? '#e15241' : '#8dc647' }}>
               {trade.side}
