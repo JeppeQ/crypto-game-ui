@@ -203,7 +203,7 @@ export function LeaderboardTable() {
       {viewHistory && <HistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
-        address={viewHistory}
+        playerId={viewHistory}
       />}
     </React.Fragment>
   )
