@@ -24,23 +24,18 @@ function News() {
           <Box className={clsx(classes.newsContainer, classes.customBox)}>
             <Typography variant='h3'>updates</Typography>
             <Box className={classes.section}>
-              <Typography variant='h6'>31-05-2021</Typography>
-              <Typography className={classes.breadText}>The first season is coming to an end. Prizes will be paid out in USDC and will be sent to the winners within 24 hours.</Typography>
+              <Typography variant='h6'>12-06-2021</Typography>
+              <Typography className={classes.breadText}>I hope you are ready because Season 2 is about to begin! Prizes will be paid out in USDC.</Typography>
               <Box mt={0.75} />
               <Typography className={classes.breadText}>
-                What's next?
+                Please be aware that if you signed up with google, you must add a wallet in order to recieve a prize. You can do this under settings in the top right corner.
               </Typography>
               <Typography className={classes.breadText}>
-                I'll be rolling out some updates to the platform in the coming days, and sign up to the next season will begin shortly after. More info about Season 2 soon.
-              </Typography>
-              <Box mt={0.75} />
-              <Typography className={classes.breadText}>
-                I hope you had fun playing and that you will participate in the upcoming season. If you have any thoughts on the game or ideas for next season, I would love to hear it.
-                <br />cryptoseasonsapp@gmail.com
+                If you like, you can also add a twitter account that will show up on the leaderboard.
               </Typography>
               <Box mt={0.75} />
               <Typography className={classes.breadText}>
-                Thanks for playing.
+                Good luck and have fun.
               </Typography>
             </Box>
           </Box>

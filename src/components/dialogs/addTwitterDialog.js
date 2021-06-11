@@ -16,7 +16,7 @@ export function AddTwitterDialog(props) {
   const player = useContext(PlayerContext)
 
   const _classes = styles()
-  const [twitter, setTwitter] = useState(player.info.twitter)
+  const [twitter, setTwitter] = useState(player.info.twitter || '')
   const [error, setError] = useState(false)
 
   const addTwitter = async () => {

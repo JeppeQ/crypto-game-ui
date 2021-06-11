@@ -17,7 +17,7 @@ export function AddWalletDialog(props) {
   const player = useContext(PlayerContext)
 
   const _classes = styles()
-  const [wallet, setWallet] = useState(player.info.wallet)
+  const [wallet, setWallet] = useState(player.info.wallet || '')
   const [error, setError] = useState(false)
 
   const addWallet = async () => {

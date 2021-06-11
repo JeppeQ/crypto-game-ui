@@ -131,7 +131,7 @@ function Overview() {
           <Typography className={classes.breadText}>
             To be eligible for a prize, you must have made at least one investment.
             Once the competition ends, the top 3 players on the leaderboard will recieve a prize.
-            Prizes will be paid out in DAI and will be sent to the players wallets within 24 hours.
+            Prizes will be paid out in USDC and will be sent to the players wallets within 24 hours.
             If you've signed up with google, you must add a wallet to be able to recieve a prize.
           </Typography>
           <Box ml={0} mt={1} className={classes.breadText}>
