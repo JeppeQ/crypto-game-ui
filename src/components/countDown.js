@@ -14,7 +14,7 @@ export function CountDown(props) {
     return () => clearTimeout(timer)
   }, [now, props.date])
 
-  const { days, hours, minutes } = props.date.diff(now, ['days', 'hours', 'minutes'])
+  const { days, hours, minutes } = props.date.diff(now, props.hideDays ? ['hours', 'minutes'] : ['days', 'hours', 'minutes'])
 
   return (
     <Box display='flex' justifyContent='center'>
