@@ -60,27 +60,35 @@ export function ConnectDialog(props) {
         </DialogTitle>
         <DialogContent>
 
+          {props.signup && isMobile &&
+            <Box mb={2}>
+              <Typography variant='h6'>Sign up disabled on mobile</Typography>
+            </Box>
+          }
+
           {!isMobile &&
             <Box mb={2}>
               <ConnectButton onClick={walletConnect} variant='outlined' startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
                 connect wallet
-            </ConnectButton>
+              </ConnectButton>
             </Box>
           }
 
-          <Box mb={1}>
-            <GoogleLogin
-              clientId="617834778827-4mkgnrm65p2r63ti2dfp6o6a7i0rm8im.apps.googleusercontent.com"
-              render={renderProps => (
-                <ConnectButton onClick={renderProps.onClick} disabled={renderProps.disabled} variant='outlined' startIcon={<img src={Google} width="21" height="21" alt='googleIcon' />}>
-                  connect with google
-                </ConnectButton>
-              )}
-              onSuccess={googleConnect}
-              onFailure={() => { }}
-              cookiePolicy={'single_host_origin'}
-            />
-          </Box>
+          {!props.signup &&
+            <Box mb={1}>
+              <GoogleLogin
+                clientId="617834778827-4mkgnrm65p2r63ti2dfp6o6a7i0rm8im.apps.googleusercontent.com"
+                render={renderProps => (
+                  <ConnectButton onClick={renderProps.onClick} disabled={renderProps.disabled} variant='outlined' startIcon={<img src={Google} width="21" height="21" alt='googleIcon' />}>
+                    connect with google
+                  </ConnectButton>
+                )}
+                onSuccess={googleConnect}
+                onFailure={() => { }}
+                cookiePolicy={'single_host_origin'}
+              />
+            </Box>
+          }
 
         </DialogContent>
       </Box>
