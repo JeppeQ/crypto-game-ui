@@ -4,10 +4,9 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon"
 import clsx from 'clsx'
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,28 +16,28 @@ import TwitterIcon from '@material-ui/icons/Twitter'
 
 import { PlayerContext } from '../contexts/player'
 import { SeasonContext } from '../contexts/season'
-import { ConnectorContext } from '../contexts/connector'
+// import { ConnectorContext } from '../contexts/connector'
 import { CountDown } from '../components/countDown'
 
 function Overview() {
   const classes = useStyles()
   const player = useContext(PlayerContext)
-  const connector = useContext(ConnectorContext)
+  // const connector = useContext(ConnectorContext)
   const season = useContext(SeasonContext)
 
-  const joinContest = () => {
-    if (player.info.playerId) {
-      player.signup()
-    } else {
-      connector.setConnectDialog({ show: true, signup: true })
-    }
+  // const joinContest = () => {
+  //   if (player.info.playerId) {
+  //     player.signup()
+  //   } else {
+  //     connector.setConnectDialog({ show: true, signup: true })
+  //   }
 
 
-    ReactGA.event({
-      category: 'User',
-      action: 'clicked sign up button'
-    })
-  }
+  //   ReactGA.event({
+  //     category: 'User',
+  //     action: 'clicked sign up button'
+  //   })
+  // }
 
   return (
     <Scrollbars
