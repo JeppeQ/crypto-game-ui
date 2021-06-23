@@ -89,8 +89,8 @@ function Overview() {
               <Typography color='textPrimary' variant='h6' style={{ fontSize: '20px' }}>GOOD LUCK!</Typography>
             </Box>}
             {!player.info.seasonId && <Box className={clsx(classes.infoBox, classes.customBox)}>
-              <Typography variant='h6'>Free entry</Typography>
-              <Button variant='contained' color='primary' onClick={joinContest}>sign up now</Button>
+              <Typography variant='h6'>Sign up has ended</Typography>
+              <Typography variant='h6'>Check back later</Typography>
             </Box>}
           </Box>
           <Box mt={8} mb={1}>
