@@ -24,6 +24,11 @@ function News() {
           <Box className={clsx(classes.newsContainer, classes.customBox)}>
             <Typography variant='h3'>updates</Typography>
             <Box className={classes.section}>
+              <Typography variant='h6'>26-06-2021</Typography>
+              <Typography className={classes.breadText}>Players are now hidden on the leaderboard until they make their first trade.</Typography>
+              <Box mt={0.75} />
+            </Box>
+            <Box className={classes.section}>
               <Typography variant='h6'>12-06-2021</Typography>
               <Typography className={classes.breadText}>I hope you are ready because Season 2 is about to begin! Prizes will be paid out in USDC.</Typography>
               <Box mt={0.75} />
