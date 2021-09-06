@@ -22,27 +22,14 @@ function News() {
           transition={{ ease: "linear", duration: 0.5 }}
         >
           <Box className={clsx(classes.newsContainer, classes.customBox)}>
-            <Typography variant='h3'>updates</Typography>
+            <Typography variant='h3'>news</Typography>
+
             <Box className={classes.section}>
-              <Typography variant='h6'>26-06-2021</Typography>
-              <Typography className={classes.breadText}>Players are now hidden on the leaderboard until they make their first trade.</Typography>
+              <Typography variant='h6'>01-10-2021</Typography>
+              <Typography className={classes.breadText}>Season 1 begins.</Typography>
               <Box mt={0.75} />
             </Box>
-            <Box className={classes.section}>
-              <Typography variant='h6'>12-06-2021</Typography>
-              <Typography className={classes.breadText}>I hope you are ready because Season 2 is about to begin! Prizes will be paid out in USDC.</Typography>
-              <Box mt={0.75} />
-              <Typography className={classes.breadText}>
-                Please be aware that if you signed up with google, you must add a wallet in order to recieve a prize. You can do this under settings in the top right corner.
-              </Typography>
-              <Typography className={classes.breadText}>
-                If you like, you can also add a twitter account that will show up on the leaderboard.
-              </Typography>
-              <Box mt={0.75} />
-              <Typography className={classes.breadText}>
-                Good luck and have fun.
-              </Typography>
-            </Box>
+
           </Box>
         </motion.div>
       </Box>

@@ -4,7 +4,6 @@ import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -19,7 +18,6 @@ import { SearchBar } from '../searchBar'
 import { HistoryDialog } from '../dialogs/historyDialog'
 import * as leaderboardApi from '../../api/leaderboard'
 import { SeasonContext } from '../../contexts/season'
-import { ellipseAddress } from '../../helpers/utilities'
 
 const PAGE_SIZE = 50
 
@@ -126,23 +124,11 @@ export function LeaderboardTable() {
     }
   }
 
-  function renderName(player) {
-    if (player['social.twitter']) {
-      return <Box style={{ textTransform: 'none' }}>{player['social.twitter']}</Box>
-    }
-
-    if (player['social.wallet']) {
-      return ellipseAddress(player['social.wallet'], 8, 4)
-    }
-
-    return ellipseAddress(player.playerId, 8, 4)
-  }
-
   return (
     <React.Fragment>
       <Box mb={1} className={_classes.searchHeader}>
         <Typography variant='h3'>Leaderboard</Typography>
-        <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search address...'} />
+        <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search name...'} />
       </Box>
       <Box className={_classes.tableContainer}>
         <Table className={_classes.table}>
@@ -163,12 +149,10 @@ export function LeaderboardTable() {
           <TableBody>
             {first && loadingRow()}
             {!first && leaderboard.map(row => (
-              <TableRow key={row.playerId}>
+              <TableRow key={row.id}>
                 <TableCell>{row.rank}</TableCell>
                 <TableCell>
-                  <Button style={{ padding: '0px 5px' }}>
-                    {renderName(row)}
-                  </Button>
+                  {row['user.name']}
                 </TableCell>
                 <TableCell>{row.mainAsset}</TableCell>
                 <TableCell align='right' style={{ color: row.rankChange < 0 ? '#e15241' : '#8dc647' }}>
@@ -178,7 +162,7 @@ export function LeaderboardTable() {
                   <NumberFormat value={row.netWorth} displayType={'text'} thousandSeparator prefix={'$'} />
                 </TableCell>
                 <TableCell align='center'>
-                  <Box className={classes.viewLink} onClick={() => setViewHistory(row.playerId)}>VIEW</Box>
+                  <Box className={classes.viewLink} onClick={() => setViewHistory(row)}>VIEW</Box>
                 </TableCell>
               </TableRow>
             ))}
@@ -203,7 +187,7 @@ export function LeaderboardTable() {
       {viewHistory && <HistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
-        playerId={viewHistory}
+        player={viewHistory}
       />}
     </React.Fragment>
   )

@@ -15,11 +15,11 @@ import WalletIcon from '@material-ui/icons/AccountBalanceWallet'
 
 import { styles, CustomButton } from './styles'
 import * as tradeApi from '../../api/trade'
-import { PlayerContext } from '../../contexts/player'
+import { SeasonContext } from '../../contexts/season'
 
 export function SellDialog(props) {
   const _classes = styles()
-  const player = useContext(PlayerContext)
+  const season = useContext(SeasonContext)
 
   const [amount, setAmount] = useState(0)
   const [error, setError] = useState()
@@ -44,9 +44,7 @@ export function SellDialog(props) {
     const status = await tradeApi.sellToken(props.token.id, amount)
 
     if (status === 200) {
-      player.update()
-    } else if (status === 201) {
-      player.showTradeLimitDialog(true)
+      season.updatePlayer()
     }
 
     props.close()
@@ -56,10 +54,12 @@ export function SellDialog(props) {
   return (
     <Dialog open={props.open} onClose={props.close}>
       <Box className={_classes.dialog}>
+
         <DialogTitle>
           <Typography className={_classes.title}>Sell {name}</Typography>
           <Typography variant='h6'>~{<NumberFormat value={price} displayType={'text'} thousandSeparator prefix={'$'} />}</Typography>
         </DialogTitle>
+
         <DialogContent>
           <Box fullWidth display='flex' alignItems='center' justifyContent='space-between' px={'2px'} mt={'5px'}>
             <Typography variant='h6'>amount</Typography>
@@ -68,6 +68,7 @@ export function SellDialog(props) {
               <Typography variant='h6' style={{ paddingTop: '2px' }}>{props.token.amount} {symbol}</Typography>
             </Box>
           </Box>
+
           <TextField
             className={_classes.input}
             placeholder={0}
@@ -84,6 +85,7 @@ export function SellDialog(props) {
             }}
             error={error}
           />
+
           <Box fullWidth px={'5px'}>
             <Slider
               defaultValue={0}
@@ -94,10 +96,17 @@ export function SellDialog(props) {
               onChangeCommitted={(e, v) => { setAmount(currency(props.token.amount / 100 * v).value) }}
             />
           </Box>
-          <Box display='flex' justifyContent='space-between' my={1}>
-            <Typography variant='h6'>~total</Typography>
-            <Typography variant='h6'><NumberFormat value={amount * price} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} /></Typography>
+
+          <Box display='flex' justifyContent='space-between' mt={1}>
+            <Typography variant='h6'>~2% fee</Typography>
+            <Typography variant='h6'><NumberFormat value={amount * price * 0.02} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} /></Typography>
           </Box>
+
+          <Box display='flex' justifyContent='space-between' mb={1}>
+            <Typography variant='h6'>~total</Typography>
+            <Typography variant='h6'><NumberFormat value={amount * price * 0.98} displayType={'text'} thousandSeparator prefix={'$'} decimalScale={2} /></Typography>
+          </Box>
+
           <DialogActions style={{ paddingRight: '0' }}>
             <CustomButton style={{ padding: '8px 15px' }} onClick={props.close} variant='outlined'>Cancel</CustomButton>
             <CustomButton variant='contained' color='secondary' onClick={sellToken}>Sell</CustomButton>

@@ -14,8 +14,7 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
-import { ConnectorProvider } from './contexts/connector'
-import { PlayerProvider } from './contexts/player'
+import { UserProvider } from './contexts/user'
 import { SeasonProvider } from './contexts/season'
 
 if (process.env.NODE_ENV === 'production') {
@@ -31,20 +30,18 @@ function App() {
         {isBrowser && BackgroundEffect()}
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <SeasonProvider>
-            <PlayerProvider>
-              <ConnectorProvider>
-                <Box className='main'>
-                  <Header />
-                  <Switch>
-                    {routes.map((route, index) => {
-                      return <Route key={index} path={route.path} component={route.content} />
-                    })}
-                  </Switch>
-                </Box>
-              </ConnectorProvider>
-            </PlayerProvider>
-          </SeasonProvider>
+          <UserProvider>
+            <SeasonProvider>
+              <Box className='main'>
+                <Header />
+                <Switch>
+                  {routes.map((route, index) => {
+                    return <Route key={index} path={route.path} component={route.content} />
+                  })}
+                </Switch>
+              </Box>
+            </SeasonProvider>
+          </UserProvider>
         </ThemeProvider>
       </Box>
     </Router>

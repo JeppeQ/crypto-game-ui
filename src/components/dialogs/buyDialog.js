@@ -15,13 +15,13 @@ import WalletIcon from '@material-ui/icons/AccountBalanceWallet'
 
 import { styles, CustomButton } from './styles'
 import * as tradeApi from '../../api/trade'
-import { PlayerContext } from '../../contexts/player'
+import { SeasonContext } from '../../contexts/season'
 
 export function BuyDialog(props) {
   const _classes = styles()
   const [amount, setAmount] = useState()
   const [error, setError] = useState()
-  const player = useContext(PlayerContext)
+  const season = useContext(SeasonContext)
 
   const handleChange = (event) => {
     setError(false)
@@ -32,14 +32,12 @@ export function BuyDialog(props) {
     if (!amount || amount < 10) {
       setError(true)
       return
-    } 
+    }
 
     const status = await tradeApi.buyToken(props.token.id, amount)
-    
+
     if (status === 200) {
-      player.update()
-    } else if (status === 201) {
-      player.showTradeLimitDialog(true)
+      season.updatePlayer()
     } else if (!status) {
       return
     }
@@ -51,6 +49,7 @@ export function BuyDialog(props) {
   return (
     <Dialog open={props.open} onClose={props.close}>
       <Box className={_classes.dialog}>
+
         <DialogTitle>
           <Box display='flex' alignItems='baseline'>
             <Typography className={_classes.title}>Buy {name}</Typography>
@@ -58,14 +57,16 @@ export function BuyDialog(props) {
           </Box>
           <Typography variant='h6'>~{<NumberFormat value={price} displayType={'text'} thousandSeparator prefix={'$'} />} USD</Typography>
         </DialogTitle>
+
         <DialogContent>
           <Box fullWidth display='flex' alignItems='center' justifyContent='space-between' px={'2px'} mt={'5px'}>
             <Typography variant='h6'>spend</Typography>
             <Box display='flex' alignItems='center'>
               <WalletIcon style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: 16, marginRight: '3px' }} />
-              <Typography variant='h6' style={{ paddingTop: '2px' }}>{<NumberFormat value={player.info.cash} displayType={'text'} thousandSeparator prefix={'$'} />}</Typography>
+              <Typography variant='h6' style={{ paddingTop: '2px' }}>{<NumberFormat value={season.playerInfo.cash} displayType={'text'} thousandSeparator prefix={'$'} />}</Typography>
             </Box>
           </Box>
+
           <TextField
             className={_classes.input}
             placeholder={0}
@@ -75,11 +76,12 @@ export function BuyDialog(props) {
             fullWidth
             InputProps={{
               startAdornment: (<InputAdornment position="start">$</InputAdornment>),
-              endAdornment: (<Box className={_classes.maxButton} onClick={() => setAmount(player.info.cash)}>max</Box>)
+              endAdornment: (<Box className={_classes.maxButton} onClick={() => setAmount(season.playerInfo.cash)}>max</Box>)
             }}
             helperText={error ? <Typography variant='subtitle2'>Minimum spend $10</Typography> : ''}
             error={error}
           />
+
           <Box fullWidth px={'5px'}>
             <Slider
               defaultValue={0}
@@ -87,13 +89,15 @@ export function BuyDialog(props) {
               marks
               valueLabelDisplay="auto"
               valueLabelFormat={(x) => `${x}%`}
-              onChangeCommitted={(e, v) => { setAmount(currency(player.info.cash / 100 * v).value) }}
+              onChangeCommitted={(e, v) => { setAmount(currency(season.playerInfo.cash / 100 * v).value) }}
             />
           </Box>
+
           <DialogActions style={{ paddingRight: '0' }}>
             <CustomButton style={{ padding: '8px 15px' }} onClick={props.close} variant='outlined'>Cancel</CustomButton>
             <CustomButton variant='contained' color='primary' onClick={buyToken}>Buy</CustomButton>
           </DialogActions>
+
         </DialogContent>
       </Box>
     </Dialog>

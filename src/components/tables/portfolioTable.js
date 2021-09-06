@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
-import { DateTime } from "luxon"
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -14,13 +13,9 @@ import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
-import LockIcon from '@material-ui/icons/Lock'
-import Tooltip from '@material-ui/core/Tooltip'
 
 import { styles } from './styles'
 import { SellDialog } from '../dialogs/sellDialog'
-import { TimeRemaining } from '../tooltips/timeRemaining'
-import { PlayerContext } from '../../contexts/player'
 import { SeasonContext } from '../../contexts/season'
 
 
@@ -46,7 +41,6 @@ const cells = [
 export function PortfolioTable() {
   const _classes = styles()
   const classes = useStyles()
-  const player = useContext(PlayerContext)
   const season = useContext(SeasonContext)
 
   const [sell, setSell] = useState()
@@ -72,14 +66,14 @@ export function PortfolioTable() {
 
   function sortPortfolio() {
     if (!orderBy) {
-      return player.holdings.sort((a, b) => b['value'] - a['value'])
+      return season.playerHoldings.sort((a, b) => b['value'] - a['value'])
     }
 
     if (direction === 'DESC') {
-      return player.holdings.sort((a, b) => a[orderBy] < b[orderBy] ? -1 : 1)
+      return season.playerHoldings.sort((a, b) => a[orderBy] < b[orderBy] ? -1 : 1)
     }
 
-    return player.holdings.sort((a, b) => a[orderBy] > b[orderBy] ? -1 : 1)
+    return season.playerHoldings.sort((a, b) => a[orderBy] > b[orderBy] ? -1 : 1)
   }
 
   function loadingRow() {
@@ -113,19 +107,19 @@ export function PortfolioTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {player.assetsLoading && loadingRow()}
+            {season.playerAssetsLoading && loadingRow()}
 
-            {!player.assetsLoading && player.holdings.length === 0 &&
+            {!season.playerAssetsLoading && season.playerHoldings.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {!player.assetsLoading && sortPortfolio().map(row => (
+            {!season.playerAssetsLoading && sortPortfolio().map(row => (
               <TableRow key={row.id}>
                 <CustomTableCell>
                   <Box display='flex'>
-                    {row.name}
+                    <Typography variant='body1'>{row.name}</Typography>
                     <Box ml={1}>
                       <Typography variant='body1' color='textSecondary'>{row.symbol.toUpperCase()}</Typography>
                     </Box>
@@ -141,11 +135,7 @@ export function PortfolioTable() {
                   {<NumberFormat value={row.returns} displayType={'text'} prefix={'$'} decimalScale={0} thousandSeparator />}
                 </CustomTableCell>
                 <CustomTableCell align='center'>
-                  {DateTime.fromISO(row.bought).plus({ hours: 24 }) > DateTime.utc()
-                    ? <Tooltip title={<TimeRemaining date={DateTime.fromISO(row.bought).plus({ hours: 24 })} />}>
-                      <Button variant='contained' className={classes.lockedButton}><LockIcon style={{ fontSize: '18px' }} /></Button>
-                    </Tooltip>
-                    : <Button variant='contained' disabled={!season.active} className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>}
+                  <Button variant='contained' disabled={!season.active} className={classes.sellButton} onClick={() => setSell(row)}>Sell</Button>
                 </CustomTableCell>
               </TableRow>
             ))}

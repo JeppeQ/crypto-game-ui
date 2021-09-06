@@ -12,19 +12,15 @@ export async function me(token) {
   }
 }
 
-export async function signup(token) {
-  const url = `${API_ROUTE}/signup`
-  const response = await axios.post(url, {}, {
-    headers: buildApiHeaders(token)
+export async function getPlayer(playerId) {
+  const url = `${API_ROUTE}`
+  const response = await axios.get(url, {
+    params: {
+      playerId
+    }
   }).catch(err => console.log(err))
 
   if (response && response.data) {
     return response.data
   }
-}
-
-export async function addEmail(email) {
-  const url = `${API_ROUTE}/email`
-  axios.post(url, { email }, { headers: buildApiHeaders() })
-    .catch(err => console.log(err))
 }

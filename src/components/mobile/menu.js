@@ -11,19 +11,19 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SettingsIcon from '@material-ui/icons/Settings'
 
-import { PlayerContext } from '../../contexts/player'
-import { ConnectorContext } from '../../contexts/connector'
+import { SeasonContext } from '../../contexts/season'
 import { ellipseAddress } from '../../helpers/utilities'
 import { Settings } from '../settings'
+import { SignupDialog } from '../dialogs/signupDialog'
 
 export default function MobileMenu(props) {
   const classes = useStyles()
   const history = useHistory()
-  const player = useContext(PlayerContext)
-  const connector = useContext(ConnectorContext)
+  const season = useContext(SeasonContext)
   const anchorRef = React.useRef(null);
 
   const [settings, openSettings] = useState(false);
+  const [signupDialog, showSignupDialog] = useState(false)
 
   return (
     <SwipeableDrawer
@@ -33,24 +33,32 @@ export default function MobileMenu(props) {
     >
       <Box className={classes.list} onClick={props.close}>
         <List>
+
           {props.items.map(item => (
             <ListItem button key={item.name} onClick={() => history.push(item.path)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={<Box style={{ letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>{item.name}</Box>} />
             </ListItem>
           ))}
+
           <ListItem style={{ marginTop: '10px' }}>
-            {player.info.playerId
+            {season.playerInfo.playerId
               ? <Button endIcon={<SettingsIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
-                {ellipseAddress(player.info.playerId, 4, 4)}
+                {season.playerInfo.name}
               </Button>
-              : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
-                connect
-                </Button>}
+
+              : <Button onClick={() => showSignupDialog(true)}>
+                signup / login
+              </Button>}
           </ListItem>
+
         </List>
       </Box>
+
       <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} marginTop={'60px'} />
+
+      <SignupDialog open={signupDialog} close={() => showSignupDialog(false)} />
+
     </SwipeableDrawer>
   );
 }

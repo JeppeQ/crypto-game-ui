@@ -10,11 +10,11 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { MarketTable } from '../components/tables/marketTable'
 import { PortfolioTable } from '../components/tables/portfolioTable'
-import { PlayerContext } from '../contexts/player'
+import { SeasonContext } from '../contexts/season'
 
 function Trade() {
   const classes = useStyles()
-  const player = useContext(PlayerContext)
+  const season = useContext(SeasonContext)
 
   return (
     <Scrollbars
@@ -26,27 +26,34 @@ function Trade() {
           animate={{ opacity: 1 }}
           transition={{ ease: "linear", duration: 0.5 }}
         >
+
           <Box mb={1}>
             <Typography variant='h3'>Portfolio</Typography>
           </Box>
+
           <Box className={classes.portfolioContainer}>
             <Box display='flex' flexDirection='column' justifyContent='space-between'>
+
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Total Assets</Typography>
                 <Typography color='textPrimary' variant='h4'>
-                  {<NumberFormat value={player.assetValue} thousandSeparator decimalScale={2} displayType={'text'} prefix={'$'} />}
+                  {<NumberFormat value={season.playerAssetValue} thousandSeparator decimalScale={2} displayType={'text'} prefix={'$'} />}
                 </Typography>
               </Box>
+
               <Box className={clsx(classes.infoBox, classes.customBox)}>
                 <Typography variant='h6'>Available Cash</Typography>
                 <Typography color='textPrimary' variant='h4'>
-                  {<NumberFormat value={player.info.cash} thousandSeparator displayType={'text'} prefix={'$'} />}
+                  {<NumberFormat value={season.playerInfo.cash} thousandSeparator displayType={'text'} prefix={'$'} />}
                 </Typography>
               </Box>
+
             </Box>
+
             <Box className={clsx(classes.assetsContainer, classes.customBox)}>
               <PortfolioTable />
             </Box>
+            
           </Box>
           <MarketTable />
         </motion.div>

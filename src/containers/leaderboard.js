@@ -11,12 +11,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
-import { PlayerContext } from '../contexts/player'
 import { SeasonContext } from '../contexts/season'
 
 function Leaderboard() {
   const classes = useStyles()
-  const player = useContext(PlayerContext)
   const season = useContext(SeasonContext)
 
   return (
@@ -33,15 +31,17 @@ function Leaderboard() {
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Net worth</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={player.info.cash + player.assetValue} decimalScale={2} displayType={'text'} thousandSeparator prefix={'$'} />
+                <NumberFormat value={season.playerInfo.cash + season.playerAssetValue} decimalScale={2} displayType={'text'} thousandSeparator prefix={'$'} />
               </Typography>
             </Box>
+
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Position</Typography>
               <Typography color='textPrimary' variant='h4'>
-                <NumberFormat value={player.info.rank} displayType={'text'} prefix={'#'} thousandSeparator />
+                <NumberFormat value={season.playerInfo.rank} displayType={'text'} prefix={'#'} thousandSeparator />
               </Typography>
             </Box>
+
             <Box className={clsx(classes.infoBox, classes.customBox)}>
               <Typography variant='h6'>Players</Typography>
               <Typography color='textPrimary' variant='h4'>
@@ -52,7 +52,9 @@ function Leaderboard() {
               </Typography>
             </Box>
           </Box>
+
           <LeaderboardTable />
+
         </motion.div>
       </Grid >
     </Scrollbars>

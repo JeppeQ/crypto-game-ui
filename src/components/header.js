@@ -19,11 +19,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
 import SettingsIcon from '@material-ui/icons/Settings'
 
-import { PlayerContext } from '../contexts/player'
-import { ConnectorContext } from '../contexts/connector'
-import { ellipseAddress } from '../helpers/utilities'
 import MobileMenu from './mobile/menu'
 import { Settings } from './settings'
+import { UserContext } from '../contexts/user'
 
 const menuItems = [
   {
@@ -51,14 +49,6 @@ const menuItems = [
     icon: <EqualizerIcon />
   },
   {
-    name: 'SEASONS',
-    path: '/seasons',
-    left: '670px',
-    width: '200px',
-    activeWidth: '198px',
-    icon: <EcoIcon />
-  },
-  {
     name: 'NEWS',
     path: '/news',
     left: '-32px',
@@ -75,11 +65,10 @@ function Header() {
 
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
-  const [settings, openSettings] = useState(false);
+  const [settings, openSettings] = useState(false)
   const anchorRef = React.useRef(null);
 
-  const player = useContext(PlayerContext)
-  const connector = useContext(ConnectorContext)
+  const user = useContext(UserContext)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path) || menuItems[0])
@@ -109,6 +98,7 @@ function Header() {
     <Grid container className={classes.header} justify='space-between' alignItems='center'>
       <Grid item>
         <Grid container>
+
           <motion.div
             className={classes.activeContent}
             style={{ left: active.left, width: active.activeWidth }}
@@ -117,6 +107,7 @@ function Header() {
           >
             <Box className={classes.activeGlow} />
           </motion.div>
+
           <Link to={'/news'} onClick={() => localStorage.setItem('news_one', true)}>
             <Box className={clsx(classes.logo, classes.item)}>
               <EcoIcon className={classes.content} />
@@ -125,6 +116,7 @@ function Header() {
               </Box>}
             </Box>
           </Link>
+
           {menuItems.filter(item => !item.hideMenu).map(item => {
             return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
               <Box className={classes.content} style={{ textShadow: item.name === active.name ? '0 0 5px white' : 'none' }}>
@@ -132,19 +124,22 @@ function Header() {
               </Box>
             </Link>
           })}
+
         </Grid>
       </Grid>
 
       <Grid item>
-        {player.info.playerId
+        {user.info.id
           ? <Button endIcon={<SettingsIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
-            {ellipseAddress(player.info.playerId, 4, 4)}
+            {user.info.name}
           </Button>
-          : <Button onClick={() => connector.setConnectDialog({ show: true, signup: false })}>
-            connect
+          : <Button onClick={() => user.showSignupDialog(true)}>
+            signup / login
           </Button>}
       </Grid>
+
       <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} />
+
     </Grid>
   )
 }
