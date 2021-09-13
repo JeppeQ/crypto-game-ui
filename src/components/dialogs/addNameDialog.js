@@ -67,7 +67,7 @@ export function AddNameDialog(props) {
               fullWidth
               value={name}
               onChange={handleChange}
-              error={error}
+              error={Boolean(error)}
               inputProps={{ maxLength: 30 }}
             />
           </Box>
