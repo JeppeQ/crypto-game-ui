@@ -83,8 +83,7 @@ export function SignupDialog(props) {
       return
     }
 
-    user.getUserInfo()
-    props.close()
+    success(data.token)
   }
 
   const login = async () => {
@@ -104,16 +103,33 @@ export function SignupDialog(props) {
       return
     }
 
-    user.getUserInfo()
-    props.close()
+    success(data.token)
   }
 
   const googleSignup = async (response) => {
-    const jwt = await userApi.createGoogle(response)
+    const data = await userApi.createGoogle(response)
 
-    if (jwt) {
-
+    if (!data.token) {
+      return
     }
+
+    success(data.token)
+  }
+
+  const googleLogin = async (response) => {
+    const data = await userApi.loginGoogle(response)
+
+    if (!data.token) {
+      return
+    }
+
+    success(data.token)
+  }
+
+  const success = (token) => {
+    localStorage.setItem('jwtToken', token)
+
+    user.getUserInfo()
 
     props.close()
   }
@@ -145,7 +161,7 @@ export function SignupDialog(props) {
                 {signup ? 'sign up with google' : 'log in with google'}
               </GoogleButton>
             )}
-            onSuccess={googleSignup}
+            onSuccess={signup ? googleSignup : googleLogin}
             onFailure={() => { }}
             cookiePolicy={'single_host_origin'}
           />
@@ -164,7 +180,7 @@ export function SignupDialog(props) {
           onChange={handleEmailChange}
           fullWidth
           error={emailErr}
-          />
+        />
 
         <TextField
           value={password}
