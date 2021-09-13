@@ -9,21 +9,18 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import SettingsIcon from '@material-ui/icons/Settings'
+import PersonIcon from '@material-ui/icons/Person'
 
-import { SeasonContext } from '../../contexts/season'
-import { ellipseAddress } from '../../helpers/utilities'
+import { UserContext } from '../../contexts/user'
 import { Settings } from '../settings'
-import { SignupDialog } from '../dialogs/signupDialog'
 
 export default function MobileMenu(props) {
   const classes = useStyles()
   const history = useHistory()
-  const season = useContext(SeasonContext)
   const anchorRef = React.useRef(null);
 
   const [settings, openSettings] = useState(false);
-  const [signupDialog, showSignupDialog] = useState(false)
+  const user = useContext(UserContext)
 
   return (
     <SwipeableDrawer
@@ -42,12 +39,12 @@ export default function MobileMenu(props) {
           ))}
 
           <ListItem style={{ marginTop: '10px' }}>
-            {season.playerInfo.playerId
-              ? <Button endIcon={<SettingsIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
-                {season.playerInfo.name}
+            {user.info.id
+              ? <Button startIcon={<PersonIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
+                {user.info.name}
               </Button>
 
-              : <Button onClick={() => showSignupDialog(true)}>
+              : <Button onClick={() => user.showSignupDialog(true)}>
                 signup / login
               </Button>}
           </ListItem>
@@ -56,8 +53,6 @@ export default function MobileMenu(props) {
       </Box>
 
       <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} marginTop={'60px'} />
-
-      <SignupDialog open={signupDialog} close={() => showSignupDialog(false)} />
 
     </SwipeableDrawer>
   );

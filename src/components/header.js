@@ -17,7 +17,7 @@ import InfoIcon from '@material-ui/icons/Info'
 import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
-import SettingsIcon from '@material-ui/icons/Settings'
+import PersonIcon from '@material-ui/icons/Person'
 
 import MobileMenu from './mobile/menu'
 import { Settings } from './settings'
@@ -130,7 +130,7 @@ function Header() {
 
       <Grid item>
         {user.info.id
-          ? <Button endIcon={<SettingsIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
+          ? <Button startIcon={<PersonIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
             {user.info.name}
           </Button>
           : <Button onClick={() => user.showSignupDialog(true)}>
