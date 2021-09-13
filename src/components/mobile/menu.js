@@ -40,7 +40,12 @@ export default function MobileMenu(props) {
 
           <ListItem style={{ marginTop: '10px' }}>
             {user.info.id
-              ? <Button startIcon={<PersonIcon />} onClick={(e) => { e.stopPropagation(); openSettings(true) }} ref={anchorRef}>
+              ? <Button
+                startIcon={<PersonIcon />}
+                onClick={(e) => { e.stopPropagation(); openSettings(true) }}
+                ref={anchorRef}
+                style={{ textTransform: 'none' }}
+              >
                 {user.info.name}
               </Button>
 
@@ -54,7 +59,7 @@ export default function MobileMenu(props) {
 
       <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} marginTop={'60px'} />
 
-    </SwipeableDrawer>
+    </SwipeableDrawer >
   );
 }
 

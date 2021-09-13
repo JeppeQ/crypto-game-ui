@@ -130,7 +130,7 @@ function Header() {
 
       <Grid item>
         {user.info.id
-          ? <Button startIcon={<PersonIcon />} onClick={() => openSettings(true)} ref={anchorRef}>
+          ? <Button startIcon={<PersonIcon />} onClick={() => openSettings(true)} ref={anchorRef} style={{ textTransform: 'none' }}>
             {user.info.name}
           </Button>
           : <Button onClick={() => user.showSignupDialog(true)}>
