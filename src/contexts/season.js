@@ -1,12 +1,14 @@
-import React, { createContext, useState, useEffect } from "react"
+import React, { createContext, useState, useEffect, useContext } from "react"
 import { DateTime } from "luxon"
 
 import * as seasonApi from "../api/season"
 import * as playerApi from "../api/player"
+import { UserContext } from "./user"
 
 export const SeasonContext = createContext()
 
 export const SeasonProvider = ({ children }) => {
+  const user = useContext(UserContext)
   const [info, setInfo] = useState({})
   const [players, setPlayers] = useState()
   const [active, setActive] = useState(false)
@@ -37,7 +39,7 @@ export const SeasonProvider = ({ children }) => {
 
     return () => clearInterval(periodicFetch)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [user.info.id])
 
   const setSeasonActive = (tourney) => {
     const now = DateTime.utc()
