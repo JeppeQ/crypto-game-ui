@@ -4,11 +4,11 @@ import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Skeleton from '@material-ui/lab/Skeleton'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles';
+import Skeleton from '@mui/material/Skeleton'
 
 import { LeaderboardTable } from '../components/tables/leaderboardTable'
 import { SeasonContext } from '../contexts/season'
@@ -21,7 +21,7 @@ function Leaderboard() {
     <Scrollbars
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
-      <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
+      <Grid container direction='column' alignItems='center' justifyContent='center' className={classes.mainContainer}>
         <motion.div
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
@@ -53,12 +53,14 @@ function Leaderboard() {
             </Box>
           </Box>
 
-          <LeaderboardTable />
+          <Box className={classes.mobile}>
+            <LeaderboardTable />
+          </Box>
 
         </motion.div>
       </Grid >
     </Scrollbars>
-  )
+  );
 }
 
 export default Leaderboard
@@ -92,9 +94,6 @@ const useStyles = makeStyles({
     borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
     boxShadow: '0px 2px 10px rgba(0, 255, 243, 0.2)'
   },
-  tableContainer: {
-    width: '1050px',
-  },
   infoBoxContainer: {
     width: '1050px',
     display: 'flex',
@@ -106,4 +105,10 @@ const useStyles = makeStyles({
       alignItems: 'flex-start'
     }
   },
+  mobile: {
+    '@media (max-width: 1050px)': {
+      width: '95%',
+      overflowX: 'auto'
+    }
+  }
 });

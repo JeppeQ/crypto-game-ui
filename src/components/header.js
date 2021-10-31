@@ -4,20 +4,20 @@ import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import ReactGA from 'react-ga'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import EcoIcon from '@material-ui/icons/Eco'
-import MenuIcon from '@material-ui/icons/Menu'
-import EqualizerIcon from '@material-ui/icons/Equalizer'
-import LocalAtmIcon from '@material-ui/icons/LocalAtm'
-import InfoIcon from '@material-ui/icons/Info'
-import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import AnnouncementIcon from '@material-ui/icons/Announcement'
-import PersonIcon from '@material-ui/icons/Person'
+import makeStyles from '@mui/styles/makeStyles';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import AcUnitIcon from '@mui/icons-material/AcUnit'
+import MenuIcon from '@mui/icons-material/Menu'
+import EqualizerIcon from '@mui/icons-material/Equalizer'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
+import InfoIcon from '@mui/icons-material/Info'
+import PlusOneIcon from '@mui/icons-material/PlusOne';
+import useMediaQuery from '@mui/material/useMediaQuery'
+import AnnouncementIcon from '@mui/icons-material/Announcement'
+import PersonIcon from '@mui/icons-material/Person'
 
 import MobileMenu from './mobile/menu'
 import { Settings } from './settings'
@@ -80,8 +80,8 @@ function Header() {
   if (mobile) {
     return (
       <React.Fragment>
-        <Grid container className={classes.header} style={{ height: '60px', padding: '0' }} alignItems='center' justify='space-between'>
-          <IconButton onClick={() => openMenu(true)}>
+        <Grid container className={classes.header} style={{ height: '60px', padding: '0' }} alignItems='center' justifyContent='space-between'>
+          <IconButton onClick={() => openMenu(true)} size="large">
             <MenuIcon fontSize='large' />
           </IconButton>
           <Box style={{ letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>
@@ -91,11 +91,11 @@ function Header() {
         </Grid>
         <MobileMenu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
       </React.Fragment>
-    )
+    );
   }
 
   return (
-    <Grid container className={classes.header} justify='space-between' alignItems='center'>
+    <Grid container className={classes.header} justifyContent='space-between' alignItems='center'>
       <Grid item>
         <Grid container>
 
@@ -110,9 +110,9 @@ function Header() {
 
           <Link to={'/news'} onClick={() => localStorage.setItem('news_one', true)}>
             <Box className={clsx(classes.logo, classes.item)}>
-              <EcoIcon className={classes.content} />
+              <AcUnitIcon className={classes.content} />
               {!localStorage.getItem('news_one') && <Box>
-                <ExposurePlus1Icon className={classes.newUpdate} />
+                <PlusOneIcon className={classes.newUpdate} />
               </Box>}
             </Box>
           </Link>
@@ -141,7 +141,7 @@ function Header() {
       <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} />
 
     </Grid>
-  )
+  );
 }
 
 export default Header
@@ -164,7 +164,8 @@ const useStyles = makeStyles({
     borderRight: '2px solid black',
     transform: 'skew(-35deg)',
     letterSpacing: '3px',
-    fontSize: '14px'
+    fontSize: '14px',
+    lineHeight: '1.43'
   },
   logo: {
     width: '100px',

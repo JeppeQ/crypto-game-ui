@@ -4,9 +4,9 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 import clsx from 'clsx'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles';
 
 import { MarketTable } from '../components/tables/marketTable'
 import { PortfolioTable } from '../components/tables/portfolioTable'
@@ -53,9 +53,11 @@ function Trade() {
             <Box className={clsx(classes.assetsContainer, classes.customBox)}>
               <PortfolioTable />
             </Box>
-            
+
           </Box>
+
           <MarketTable />
+
         </motion.div>
       </Box>
     </Scrollbars >

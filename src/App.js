@@ -7,9 +7,11 @@ import {
 import { isBrowser } from "react-device-detect"
 import ReactGA from 'react-ga'
 
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Box from '@material-ui/core/Box'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import {
+  CssBaseline,
+  Box
+} from '@mui/material'
 
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
@@ -28,24 +30,26 @@ function App() {
     <Router>
       <Box className='background'>
         {isBrowser && BackgroundEffect()}
-        <ThemeProvider theme={mainTheme}>
-          <CssBaseline />
-          <UserProvider>
-            <SeasonProvider>
-              <Box className='main'>
-                <Header />
-                <Switch>
-                  {routes.map((route, index) => {
-                    return <Route key={index} path={route.path} component={route.content} />
-                  })}
-                </Switch>
-              </Box>
-            </SeasonProvider>
-          </UserProvider>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={mainTheme}>
+            <CssBaseline />
+            <UserProvider>
+              <SeasonProvider>
+                <Box className='main'>
+                  <Header />
+                  <Switch>
+                    {routes.map((route, index) => {
+                      return <Route key={index} path={route.path} component={route.content} />
+                    })}
+                  </Switch>
+                </Box>
+              </SeasonProvider>
+            </UserProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </Box>
     </Router>
-  )
+  );
 }
 
 function BackgroundEffect() {

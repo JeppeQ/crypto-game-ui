@@ -2,16 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import clsx from 'clsx'
 import GoogleLogin from 'react-google-login'
 
-import Dialog from '@material-ui/core/Dialog'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import Dialog from '@mui/material/Dialog'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
 
 import { styles } from './styles'
 import Google from '../../assets/images/google-icon.svg'
 import logo from '../../assets/images/logo.png'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { UserContext } from '../../contexts/user'
 import * as userApi from '../../api/user'
 

@@ -5,14 +5,14 @@ import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon"
 import clsx from 'clsx'
 
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Skeleton from '@material-ui/lab/Skeleton'
-import TwitterIcon from '@material-ui/icons/Twitter'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography'
+import Skeleton from '@mui/material/Skeleton'
+import TwitterIcon from '@mui/icons-material/Twitter'
 
 import { SeasonContext } from '../contexts/season'
 import { CountDown } from '../components/countDown'
@@ -41,7 +41,7 @@ function Overview() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#1E2530', borderRadius: '5px', opacity: '0.8' }} />}
       autoHide
     >
-      <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
+      <Grid container direction='column' alignItems='center' justifyContent='center' className={classes.mainContainer}>
         <motion.div
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
@@ -59,14 +59,14 @@ function Overview() {
               <Typography color='textPrimary' variant='h3'>
                 {season.info.price
                   ? <NumberFormat value={season.info.price} displayType={'text'} prefix={'$'} />
-                  : <Skeleton variant="rect" animation="wave" width={150} height={32} style={{ borderRadius: '4px' }} />
+                  : <Skeleton variant="rectangular" animation="wave" width={150} height={32} style={{ borderRadius: '4px' }} />
                 }
               </Typography>
             </Box>
 
             <Box className={clsx(classes.infoBox, classes.customBox)}>
 
-              {!season.info.start && <Skeleton variant="rect" animation="wave" width={200} height={70} style={{ borderRadius: '4px' }} />}
+              {!season.info.start && <Skeleton variant="rectangular" animation="wave" width={200} height={70} style={{ borderRadius: '4px' }} />}
 
               {season.info.start &&
                 (DateTime.fromISO(season.info.start) > DateTime.utc()
@@ -174,8 +174,7 @@ function Overview() {
         </motion.div>
       </Grid >
     </Scrollbars >
-
-  )
+  );
 }
 
 export default Overview

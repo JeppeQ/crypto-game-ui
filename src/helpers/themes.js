@@ -1,19 +1,21 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles';
 
-export const mainTheme = createMuiTheme({
+export const mainTheme = createTheme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: '#058665',
+      contrastText: '#fff'
     },
     secondary: {
       main: '#c50606',
+      contrastText: '#fff'
     }
   },
   typography: {
     fontSize: 15,
     body1: {
-      fontSize: '15px'
+      fontSize: '15px',
     },
     h3: {
       letterSpacing: '1px',
@@ -38,50 +40,68 @@ export const mainTheme = createMuiTheme({
       fontStyle: 'italic'
     }
   },
-  overrides: {
+  components: {
     MuiPaper: {
-      root: {
-        backgroundColor: '#1E2530'
+      styleOverrides: {
+        root: {
+          backgroundColor: '#1E2530',
+          backgroundImage: 'none'
+        }
       }
     },
     MuiButton: {
-      label: {
-        fontFamily: 'system-ui',
-        color: 'white'
+      styleOverrides: {
+        root: {
+          fontFamily: 'system-ui',
+          color: 'white'
+        }
       }
     },
     MuiSlider: {
-      valueLabel: {
-        fontSize: '11px'
+      styleOverrides: {
+        valueLabel: {
+          fontSize: '11px'
+        }
       }
     },
     MuiDataGrid: {
-      root: {
-        borderRadius: '0',
-        border: ''
+      styleOverrides: {
+        root: {
+          borderRadius: '0',
+          border: ''
+        }
       }
     },
     MuiDialog: {
-      paper: {
-        margin: '10px'
+      styleOverrides: {
+        paper: {
+          margin: '10px',
+          backgroundImage: 'none'
+        }
       }
     },
     MuiMenuItem: {
-      root: {
-        paddingTop: '12px',
-        paddingBottom: '12px'
+      styleOverrides: {
+        root: {
+          paddingTop: '12px',
+          paddingBottom: '12px'
+        }
       }
     },
     MuiTooltip: {
-      tooltip: {
-        backgroundColor: '#464545'
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#464545'
+        }
       }
     },
     MuiOutlinedInput: {
-      input: {
-        '&:-webkit-autofill': {
-          '-webkit-box-shadow': '0 0 0 100px #1E2530 inset',
-          '-webkit-text-fill-color': '#fff'
+      styleOverrides: {
+        input: {
+          '&:-webkit-autofill': {
+            '-webkit-box-shadow': '0 0 0 100px #1E2530 inset',
+            '-webkit-text-fill-color': '#fff'
+          }
         }
       }
     }

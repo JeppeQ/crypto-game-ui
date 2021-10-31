@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx'
 
-import Box from '@material-ui/core/Box'
-import InputBase from '@material-ui/core/InputBase'
-import IconButton from '@material-ui/core/IconButton'
-import SearchIcon from '@material-ui/icons/Search'
-import ClearIcon from '@material-ui/icons/Clear'
+import Box from '@mui/material/Box'
+import InputBase from '@mui/material/InputBase'
+import IconButton from '@mui/material/IconButton'
+import SearchIcon from '@mui/icons-material/Search'
+import ClearIcon from '@mui/icons-material/Clear'
 
 export function SearchBar(props) {
   const classes = useStyles()
@@ -29,7 +29,7 @@ export function SearchBar(props) {
 
   return (
     <Box className={clsx(classes.searchBar, classes.customBox)}>
-      <IconButton type='submit' aria-label='search'>
+      <IconButton type='submit' aria-label='search' size="large">
         {props.value && <Box className={classes.activeGlow} />}
         <SearchIcon />
       </IconButton>
@@ -42,7 +42,7 @@ export function SearchBar(props) {
         endAdornment={props.value && <ClearIcon className={classes.removeSearch} onClick={removeSearch} />}
       />
     </Box>
-  )
+  );
 }
 
 const useStyles = makeStyles({
