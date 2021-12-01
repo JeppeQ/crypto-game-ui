@@ -1,23 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { motion } from 'framer-motion'
-import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
-import { DateTime } from "luxon"
-import clsx from 'clsx'
-
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
-import makeStyles from '@mui/styles/makeStyles';
-import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
-import TwitterIcon from '@mui/icons-material/Twitter'
-
-import { SeasonContext } from '../contexts/season'
-import { CountDown } from '../components/countDown'
-import { UserContext } from '../contexts/user'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles'
+import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { DateTime } from "luxon"
+import React, { useContext, useState } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
+import NumberFormat from 'react-number-format'
 import * as seasonApi from '../api/season'
+import { CountDown } from '../components/countDown'
+import { SeasonContext } from '../contexts/season'
+import { UserContext } from '../contexts/user'
 
 function Overview() {
   const classes = useStyles()
@@ -144,9 +140,10 @@ function Overview() {
           </Box>
           <Box mb={1}>
             <Typography className={classes.breadText}>
+              Players appear on the leaderboard once they have made their first trade.
               The leaderboard keeps track of all players and their current positions.
               The players' portfolio and trading history can be seen there.
-              Leaderboard is updated every 10 min.
+              Leaderboard is updated every minute.
             </Typography>
           </Box>
           <Typography className={classes.breadText}>
@@ -167,9 +164,6 @@ function Overview() {
             <Typography className={classes.breadText} style={{ width: 'fit-content', marginRight: '20px' }}>
               cryptoseasonsapp@gmail.com
             </Typography>
-            <Link target="_blank" href="https://twitter.com/JeppeQin" color='textPrimary'>
-              <TwitterIcon />
-            </Link>
           </Box>
         </motion.div>
       </Grid >

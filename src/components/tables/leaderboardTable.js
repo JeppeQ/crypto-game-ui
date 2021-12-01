@@ -131,6 +131,7 @@ export function LeaderboardTable() {
         <Typography variant='h3'>Leaderboard</Typography>
         <SearchBar search={value => searchPlayer(value)} value={search} placeholder={'Search name...'} />
       </Box>
+      
       <Box className={_classes.tableContainer}>
         <Table className={_classes.table}>
           <TableHead>
@@ -148,7 +149,9 @@ export function LeaderboardTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+
             {first && loadingRow()}
+
             {!first && leaderboard.map(row => (
               <TableRow key={row.id}>
                 <TableCell>{row.rank}</TableCell>
@@ -167,6 +170,7 @@ export function LeaderboardTable() {
                 </TableCell>
               </TableRow>
             ))}
+
             <TableRow>
               <TableCell />
               <TableCell />
@@ -182,14 +186,17 @@ export function LeaderboardTable() {
                 </Box>
               </TableCell>
             </TableRow>
+
           </TableBody>
         </Table>
       </Box>
+
       {viewHistory && <HistoryDialog
         open={viewHistory !== null}
         close={() => setViewHistory(null)}
         player={viewHistory}
       />}
+
     </React.Fragment>
   )
 }
